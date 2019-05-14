@@ -1,0 +1,102 @@
+{
+  "title": "anyRTC云平台",
+  "description": "anyRTC云平台",
+  "author": "anyRTC",
+  "output.name": "site",
+  "language": "zh-hans",
+  "gitbook": "3.2.3",
+  "styles": {
+    "website": "assets/styles/website.css"
+  },
+  "root": ".",
+  "plugins": [
+    "simpletabs",
+    "-lunr", 
+    "-search", 
+    "search-pro",
+    "-sharing",
+    "sharing-plus",
+    "github@^2.0.0",
+    "github-buttons",
+    "edit-link@^2.0.2",
+    "anchors@^0.7.1",
+    "include-codeblock@^3.0.2",
+    "splitter@^0.0.8",
+    "tbfed-pagefooter@^0.0.1",
+    "expandable-chapters",
+    "ar-intopic-toc",
+    "custom-favicon"
+  ],
+
+  "pluginsConfig": {
+    "favicon": "assets/images/favicon.ico",
+    "theme-default": {
+      "showLevel": false
+    },
+    "github": {
+      "url": "https://github.com/anyRTC"
+    },
+    "github-buttons": {
+      "buttons": [
+        {
+          "user": "anyRTC",
+          "repo": "Documentation",
+          "type": "star",
+          "size": "small",
+          "count": true
+        }
+      ]
+    },
+    "sharing": {
+      "douban": false,
+      "facebook": false,
+      "google": false,
+      "hatenaBookmark": false,
+      "instapaper": false,
+      "line": false,
+      "linkedin": false,
+      "messenger": false,
+      "pocket": false,
+      "qq": false,
+      "qzone": false,
+      "stumbleupon": false,
+      "twitter": false,
+      "viber": false,
+      "vk": false,
+      "weibo": false,
+      "whatsapp": false,
+      "all": [
+        "douban",
+        "facebook",
+        "google",
+        "twitter",
+        "qq",
+        "qzone",
+        "weibo",
+        "whatsapp"
+      ]
+    },
+    "include-codeblock": {
+      "template": "ace",
+      "unindent": true,
+      "edit": true
+    },
+    "tbfed-pagefooter": {
+      "copyright": "© 2016-2019 铂渊信息技术（上海）有限公司",
+      "modify_label": "该文件修订时间：",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    "edit-link": {
+      "base": "https://github.com/anyRTC/Documentation/",
+      "label": "编辑本页"
+    },
+    "ar-intopic-toc": {
+      "selector": ".markdown-section h3",
+      "visible": true,
+      "label": {
+        "de": "",
+        "en": ""
+      }
+    }
+  }
+}
