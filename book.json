@@ -87,7 +87,7 @@
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
     "edit-link": {
-      "base": "https://github.com/anyRTC/Documentation/",
+      "base": "https://github.com/anyRTC/Documentation/blob/master/",
       "label": "编辑本页"
     },
     "ar-intopic-toc": {
