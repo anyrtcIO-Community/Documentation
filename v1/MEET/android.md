@@ -1,12 +1,27 @@
-# Android
-
 ## 一、概述
 
 #### 简介
 
-多人音视频可以实现一对一单聊和多人群聊，适用于社交、会议、在线教育、培训等场景
+#### Demo体验
 
+请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
 
+- [iOS Demo下载](https://www.pgyer.com/xoTQ)
+
+- [Android Demo下载](https://www.pgyer.com/eU0U)
+
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
+
+#### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-iOS)
+
+- [Android Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-Android)
+
+- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
+- 
 ## 二、集成指南
 
 #### 适用范围
@@ -21,22 +36,14 @@
 
 #### 导入SDK
 
-**Gradle方式导入（推荐）**
+**Gradle方式导入）**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/meet/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/meet/_latestVersion)
 
 ```
-implementation 'org.anyrtc:meet_kit:3.0.0'
+dependencies {
+  compile 'org.ar:meet_kit:3.0.0'
+}
 
 ```
-
-**手动导入**
-
-* 前往GitHub[下载Demo](https://github.com/AnyRTC/anyRTC-Meeting-Android)，找到**meet_kit-release.aar**文件；
-
-* 将meet_kit-release.aar文件放入你项目的libs目录下，并在build文件中声明，如下图   
-
-
-![1.png](http://anyrtcboard.oss-cn-beijing.aliyuncs.com/document/20190128150807.png)
-
 
 #### 权限说明
 
@@ -55,6 +62,8 @@ implementation 'org.anyrtc:meet_kit:3.0.0'
 ```
 -dontwarn org.anyrtc.**
 -keep class org.anyrtc.**{*;}
+-dontwarn org.ar.**
+-keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
@@ -154,7 +163,7 @@ ARMeetOption arMeetOption = ARMeetEngine.Inst().getARMeetOption();
 
 **定义**
 ```
-setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile, ARVideoCommon.ARMediaType mediaType, ARMeetType meetType, boolean isHost)
+setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile,ARVideoCommon.ARVideoFrameRate videoFps, ARVideoCommon.ARMediaType mediaType, ARMeetType meetType, boolean isHost)
 
 ```
 **参数**
@@ -164,6 +173,7 @@ setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation m
 isDefaultFrontCamera | boolean | 是否默认前置摄像头 true 前置 false 后置  默认true
 videoOrientation | ARVideoOrientation |视频方向 默认竖直
 videoProfile | ARVideoProfile | 视频分辨率  默认360x640
+videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 mediaType | ARMediaType |发布媒体类型 Video音视频 Audio 音频 默认音视频
 meetType|ARMeetType|会议类型 默认普通模式
 isHost|boolean|是否是主持人 默认false (主持人模式下生效)
@@ -210,36 +220,20 @@ render | long | 底层视频渲染对象
 
 0/1/2：没有相机权限/打开相机成功/打开相机失败
 
-#### 3. 设置token验证
+
+#### 3. 加入会议
 
 **定义**
 
 ```
-boolean setUserToken(String userToken) 
+boolean joinRTCByToken(String token,String anyRTCId, String userId, String userData) 
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-userToken | String | token字符串:客户端向自己服务器申请
-
-**说明**
-
-设置token验证必须放在joinRTC之前
-
-#### 4. 加入会议
-
-**定义**
-
-```
-boolean joinRTC(String anyRTCId, String userId, String userData) 
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
+token|String|令牌:客户端向自己服务申请获得，参考企业级安全指南
 anyRTCId | String | 会议号 (在开发者业务系统中保持唯一的Id)
 userId | String | 开发者自己平台的用户Id
 userData | String | 开发者自己平台的相关信息（昵称，头像等），可选
@@ -250,7 +244,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 true 加入成功 false 加入失败
 
 
-#### 5. 设置显示其他人的视频窗口
+#### 4. 设置显示其他人的视频窗口
 
 **定义**
 
@@ -269,7 +263,7 @@ render | long |  底层视频渲染对象
 
 该方法用于与会者入会成功后，视频即将显示的回调中（onRTCOpenRemoteVideoRender）使用
 
-#### 6. 发送消息
+#### 5. 发送消息
 
 **定义**
 
@@ -290,7 +284,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 
 true 发送成功 false 发送失败
 
-#### 7. 设置驾驶模式
+#### 6. 设置驾驶模式
 
 **定义**
 
@@ -305,7 +299,7 @@ void setDriverMode(boolean enable)
 enable | boolean | bEnable 打开或关闭驾驶模式 true 打开 false 关闭。
 
 
-#### 8. 离开会议
+#### 7. 离开会议
 
 **定义**
 
@@ -313,7 +307,7 @@ enable | boolean | bEnable 打开或关闭驾驶模式 true 打开 false 关闭�
 void leave()
 ```
 
-#### 9. 释放会议对象
+#### 8. 释放会议对象
 
 **定义**
 
@@ -326,7 +320,7 @@ void clean()
 包含离开会议
 
 
-#### 10. 设置回音消除
+#### 9. 设置回音消除
 
 **定义**
 
@@ -343,27 +337,10 @@ enable | boolean | 是否打开回音消除 true打开 false 关闭 默认关闭
 
 **说明**
 
-必须在joinRTC()之前调用
+必须在joinRTCByToken()之前调用
 
-#### 11. 设置token验证
 
-**定义**
-
-```
-boolean setUserToken(String userToken) 
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-userToken | String | token字符串:客户端向自己服务器申请
-
-**说明**
-
-必须在joinRTC()之前调用
-
-#### 12. 设置本地音频是否传输
+#### 10. 设置本地音频是否传输
 
 **定义**
 
@@ -381,7 +358,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 13. 设置本地视频是否传输
+#### 11. 设置本地视频是否传输
 
 **定义**
 
@@ -399,7 +376,7 @@ enable | boolean| 打开或关闭本地视频传输
 
 true为传输视频，false为不传输视频，默认视频传输
 
-#### 14. 获取本地音频传输是否打开
+#### 12. 获取本地音频传输是否打开
 
 **定义**
 
@@ -411,7 +388,7 @@ true为传输视频，false为不传输视频，默认视频传输
 
 音频传输与否
 
-#### 15. 获取本地视频传输是否打开
+#### 13. 获取本地视频传输是否打开
 
 **定义**
 
@@ -423,7 +400,7 @@ boolean getLocalVideoEnabled()
 
 视频传输与否
 
-#### 16. 切换前后摄像头
+#### 14. 切换前后摄像头
 
 **定义**
 
@@ -431,7 +408,7 @@ boolean getLocalVideoEnabled()
 void switchCamera()
 ```
 
-#### 17. 设置本地前置摄像头镜像是否打开
+#### 15. 设置本地前置摄像头镜像是否打开
 
 **定义**
 
@@ -445,7 +422,7 @@ void setFrontCameraMirrorEnable(boolean bEnable)
 ---|:---:|---
 enable | boolean | true为打开，alse为关闭 
 
-#### 18. 前置摄像头是否镜像
+#### 16. 前置摄像头是否镜像
 
 **定义**
 
@@ -457,7 +434,7 @@ enable | boolean | true为打开，alse为关闭
 
 是否镜像，默认关闭。
 
-#### 19. 不接收某人视频
+#### 17. 不接收某人视频
 
 **定义**
 
@@ -473,7 +450,7 @@ mute | boolean | true禁止，false接收
 publishId | String | RTC服务生成的通道Id 
 
 
-#### 20. 不接收某人音频
+#### 28. 不接收某人音频
 
 **定义**
 
@@ -488,7 +465,7 @@ void muteRemoteAudioStream(String publishId,  boolean mute)
 mute | boolean | true禁止，false接收
 publishId | String | RTC服务生成的通道Id 
 
-#### 21. 设置视频网络状态是否打开
+#### 19. 设置视频网络状态是否打开
 
 **定义**
 
@@ -506,7 +483,7 @@ enable | boolean | true打开，false关闭
 
 默认视频网络状态关闭
 
-#### 22. 获取当前视频网络状态是否打开
+#### 20. 获取当前视频网络状态是否打开
 
 **定义**
 
@@ -518,7 +495,7 @@ boolean networkStatusEnabled()
 
 视频网络状态检测打开与否
 
-#### 23. 设置音频检测
+#### 21. 设置音频检测
 
 **定义**
 
@@ -536,7 +513,7 @@ open | boolean | 是否开启音频检测
 
 默认音频检测打开
 
-#### 24. 获取音频检测是否打开
+#### 22. 获取音频检测是否打开
 
 **定义**
 
@@ -547,7 +524,7 @@ boolean isOpenAudioCheck()
 
 音频检测打开与否
 
-#### 25. 设置视频竖屏
+#### 23. 设置视频竖屏
 
 **定义**
 
@@ -555,7 +532,7 @@ boolean isOpenAudioCheck()
 void setScreenToPortrait()
 ```
 
-#### 26. 设置视频横屏
+#### 24. 设置视频横屏
 
 **定义**
 
@@ -563,7 +540,7 @@ void setScreenToPortrait()
 void setScreenToLandscape()
 ```
 
-#### 27. 打开共享通道
+#### 25. 打开共享通道
 
 **定义**
 
@@ -582,7 +559,7 @@ type | int | 共享类型，自己平台设定，比如1为白板，2为文档
 结果会走onRTCShareEnable()回调
 
 
-#### 28. 设置共享信息
+#### 26. 设置共享信息
 
 **定义**
 
@@ -600,7 +577,7 @@ shareInfo | String | 自定义的共享相关信息(限制512字节)
 
 其他人将收到OnRtcUserShareOpen()回调
 
-#### 29. 关闭共享通道
+#### 27. 关闭共享通道
 
 **定义**
 
@@ -618,7 +595,7 @@ type | int | 共享类型，canShare方法设定的
 
 其他人将收到onRTCShareClose()回调
 
-#### 30. 广播一路视频
+#### 28. 广播一路视频
 
 **定义**
 
@@ -637,7 +614,7 @@ enable | boolean |是否广播 setUserToken
 
 **仅用于主持人模式**，主持人设置true（广播）后，其他人将收到此路视频显示的回调（onRTCOpenVideoRender），false 其他人将收到此路视频关闭的回调（onRTCCloseVideoRender）
 
-#### 31. 设置单聊
+#### 29. 设置单聊
 
 **定义**
 
@@ -656,7 +633,7 @@ enable | boolean |是否单聊  true单聊 false结束单聊
 
 **仅用于主持人模式**，主持人设置后，其他人将听不到主持人的声音，只有单聊的用户能听到
 
-#### 32. 设置zoom模式
+#### 30. 设置zoom模式
 
 **定义**
 
@@ -669,13 +646,13 @@ muteRemoteAudioStream
 参数名 | 类型 | 描述
 ---|:---:|---
 mode | ARMeetZoomMode |zoom模式
-
+ 
 
 **说明**  
 
 **仅用于Zoom模式**，设置zoom模式
 
-#### 33. 设置当前页数
+#### 31. 设置当前页数
 
 **定义**
 
@@ -688,13 +665,13 @@ void setZoomPage( int page)
 参数名 | 类型 | 描述
 ---|:---:|---
 page | int |当前页数
-
+ 
 
 **说明**  
 
 **仅用于Zoom模式**，设置zoom模式下当前页数
 
-#### 34. 设置当前页数及显示个数
+#### 32. 设置当前页数及显示个数
 
 **定义**
 
@@ -713,6 +690,7 @@ nIdx | int |当前页数
 
 **仅用于Zoom模式**，设置当前页数及显示个数
 
+
 ---
 
 
@@ -723,14 +701,14 @@ nIdx | int |当前页数
 **定义**
 
 ```
-void onRTCJoinMeetOK(String anyrtcId);
+void onRTCJoinMeetOK(String meetId);
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-anyrtcId | String | 会议号 (在joinRTC方法里的第一个参数)
+meetId | String | 会议号 (在joinRTC方法里的第一个参数)
 
 **说明**  
 
@@ -741,7 +719,7 @@ anyrtcId | String | 会议号 (在joinRTC方法里的第一个参数)
 **定义**
 
 ```
-void onRTCJoinMeetFailed(String anyrtcId, int code, String reason)
+void onRTCJoinMeetFailed(String meetId, int code, String reason)
 ```
 
 **参数**

@@ -1,5 +1,3 @@
-# Android
-
 ## 一、概述
 
 #### 简介
@@ -10,9 +8,9 @@
 
 - [iOS Demo下载](https://www.pgyer.com/SYA3)
 
-- [Android Demo下载](https://www.pgyer.com/LfFY)
+- [Android Demo下载](https://www.pgyer.com/GVI3)
 
-- [Web Demo 体验](https://www.anyrtc.io/demo/dispatch)
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/dispatch)
 
 #### 源码 GitHub
 
@@ -22,7 +20,8 @@
 
 - [Android Demo 源码下载](https://github.com/anyRTC/AR-Talk-Android)
 
-
+- [Web Demo 源码下载](https://github.com/anyRTC/AR-Talk-Web)
+- 
 ## 二、集成指南
 
 #### 适用范围
@@ -37,21 +36,14 @@
 
 #### 导入SDK
 
-**Gradle方式导入（推荐）**
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/rtmax/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/rtmax/_latestVersion)
+
 
 ```
-implementation 'org.anyrtc:rtmax_kit:3.0.0'
-
+dependencies {
+  compile 'org.ar:rtmax_kit:3.0.1'
+}
 ```
-
-**手动导入**
-
-* 前往GitHub [下载 Demo](https://github.com/anyRTC/AR-Talk-Android)，找到**rtmax_kit-release.aar**文件；
-
-* 将rtmax_kit-release.aar文件放入你项目的libs目录下，并在build文件中声明，如下图
-
-![1.png](http://anyrtcboard.oss-cn-beijing.aliyuncs.com/document/20190128150850.png)
-
 
 #### 权限说明
 
@@ -70,6 +62,8 @@ implementation 'org.anyrtc:rtmax_kit:3.0.0'
 ```
 -dontwarn org.anyrtc.**
 -keep class org.anyrtc.**{*;}
+-dontwarn org.ar.**
+-keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
@@ -170,7 +164,7 @@ ARMaxOption option = ARMaxEngine.Inst().getArMaxOption()
 
 **定义**
 ```
-void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile) 
+void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile,ARVideoCommon.ARVideoFrameRate videoFps) 
 ```
 **参数**
 
@@ -179,12 +173,13 @@ void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientat
 isDefaultFrontCamera | boolean | 是否默认前置摄像头 true 前置 false 后置  默认true
 videoOrientation | ARVideoOrientation |视频方向 默认竖直
 videoProfile | ARVideoProfile | 视频分辨率  默认360x640
-
+videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 **说明**  
 
 可通过上面方法配置，也可单独设置
 
----
+
+--- 
 
 ### ARMaxKit 类
 
@@ -196,6 +191,11 @@ videoProfile | ARVideoProfile | 视频分辨率  默认360x640
 ARMaxKit arMaxKit = new ARMaxKit(ARMaxEvent maxEvent)
 
 ```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+maxEvent | ARMaxEvent | ARMaxEvent回调实现类
 
 #### 2. 加入对讲组
 
@@ -790,7 +790,7 @@ void leaveTalkGroup()
 ```
 void clear()
 ```
----
+--- 
 
 ### ARMaxEvent 回调类
 

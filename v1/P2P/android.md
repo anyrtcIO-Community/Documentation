@@ -1,10 +1,24 @@
-# Android
-
 ## 一、概述
 
 #### 简介
 
-P2P音视频可以实现一对一单聊，内置推送服务，保证必达；支持视频、语音、优先视频等多种呼叫模式，适用于网络电话、社交、企业通信等场景。
+#### Demo体验
+
+请根据需求选择渠道安装，安装完P2P Demo后，可体验点对点音视频呼叫，监看等功能。
+
+- [iOS Demo下载](https://itunes.apple.com/cn/app/anyrtc点对点/id1316858730?mt=8)
+
+- [Android Demo下载](https://www.pgyer.com/3blO)
+
+
+#### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-Android)
+
 
 ## 二、集成指南
 
@@ -20,20 +34,25 @@ P2P音视频可以实现一对一单聊，内置推送服务，保证必达；�
 
 #### 导入SDK
 
-**Gradle方式导入（推荐）**
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/p2p/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/p2p/_latestVersion)
+
+添加Jcenter仓库 Gradle依赖：
 
 ```
-implementation 'org.anyrtc:rtp2pcall_kit:3.0.0'
-
+dependencies {
+   compile 'org.ar:rtp2pcall_kit:3.0.1'
+}
 ```
 
-**手动导入**
-
-* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-P2P-Android)，找到**rtp2pcall_kit-release.aar**文件；
-
-* 将rtp2pcall_kit-release.aar文件放入你项目的libs目录下，并在build文件中声明，如下图
-
-![1.png](http://anyrtcboard.oss-cn-beijing.aliyuncs.com/document/20190128150907.png)
+或者 Maven
+```
+<dependency>
+  <groupId>org.ar</groupId>
+  <artifactId>rtp2pcall_kit</artifactId>
+  <version>3.0.1</version>
+  <type>pom</type>
+</dependency>
+```
 
 
 #### 权限说明
@@ -53,6 +72,8 @@ implementation 'org.anyrtc:rtp2pcall_kit:3.0.0'
 ```
 -dontwarn org.anyrtc.**
 -keep class org.anyrtc.**{*;}
+-dontwarn org.ar.**
+-keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
@@ -154,7 +175,7 @@ ARP2POption option = ARP2PEngine.Inst().getP2POption()
 
 **定义**
 ```
-void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile) 
+void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation mScreenOriention, ARVideoCommon.ARVideoProfile videoProfile,ARVideoCommon.ARVideoFrameRate videoFps) 
 ```
 **参数**
 
@@ -163,10 +184,12 @@ void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientat
 isDefaultFrontCamera | boolean | 是否默认前置摄像头 true 前置 false 后置  默认true
 videoOrientation | ARVideoOrientation |视频方向 默认竖直
 videoProfile | ARVideoProfile | 视频分辨率  默认360x640
+videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 
 **说明**  
 
 可通过上面方法配置，也可单独设置
+
 
 ---
 

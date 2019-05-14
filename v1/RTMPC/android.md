@@ -1,16 +1,31 @@
-# Android
-
 ## 一、概述
 
 #### 简介
 
-互动连麦基于RTMP 基础上添加RTC实时互动的功能；推流断线重连，拉流秒开，最大支持4人同时互动连麦，观众人数不限，适用于游戏直播、美女秀场等场景
+#### Demo体验
+
+请根据需求选择渠道安装，安装完直播互动连麦Demo后，可体验在线直播多人连麦功能。
+
+- [iOS Demo下载](https://www.pgyer.com/X9HH)
+
+- [Android Demo下载](https://www.pgyer.com/app/qrcode/Zuap)
+
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
+
+#### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-RTMPC-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTMPC-Android)
+
 
 ## 二、集成指南
 
 #### 适用范围
 
-本集成文档适用于Android ARRtmpc SDK 3.0.0版本
+本集成文档适用于Android ARRtmpc SDK 3.0.0版本。
 
 #### 准备环境
 
@@ -20,20 +35,25 @@
 
 #### 导入SDK
 
-**Gradle方式导入（推荐）**
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/rtmpc/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/rtmpc/_latestVersion)
+
+添加Jcenter仓库 Gradle依赖：
 
 ```
-implementation 'org.anyrtc:rtmpc_hybrid:3.0.0'
-
+dependencies {
+   compile 'org.ar:rtmpc_hybrid:3.0.0'
+}
 ```
 
-**手动导入**
-
-* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTMPC-Android)，找到**rtmpc_hybrid-release.aar**文件；
-
-* 将rtmpc_hybrid-release.aar文件放入你项目的libs目录下，并在build文件中声明，如下图
-
-![1.png](http://anyrtcboard.oss-cn-beijing.aliyuncs.com/document/20190128150859.png)
+或者 Maven
+```
+<dependency>
+  <groupId>org.ar</groupId>
+  <artifactId>rtmpc_hybrid</artifactId>
+  <version>3.0.0</version>
+  <type>pom</type>
+</dependency>
+```
 
 
 #### 权限说明
@@ -53,6 +73,8 @@ implementation 'org.anyrtc:rtmpc_hybrid:3.0.0'
 ```
 -dontwarn org.anyrtc.**
 -keep class org.anyrtc.**{*;}
+-dontwarn org.ar.**
+-keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
@@ -150,7 +172,7 @@ ARRtmpcHosterOption arHostOption = ARRtmpcEngine.Inst().getHosterOption();
 
 **定义**
 ```
-void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation videoOrientation, ARVideoCommon.ARVideoProfile videoProfile, ARVideoCommon.ARMediaType mediaType, ARRtmpcLineLayoutTemplate lineLayoutTemplate)
+void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation videoOrientation, ARVideoCommon.ARVideoProfile videoProfile, ARVideoCommon.ARVideoFrameRate videoFps, ARVideoCommon.ARMediaType mediaType, ARRtmpcLineLayoutTemplate lineLayoutTemplate)
 
 ```
 **参数**
@@ -160,6 +182,7 @@ void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientat
 isDefaultFrontCamera | boolean | 是否默认前置摄像头 true 前置 false 后置  默认true
 videoOrientation | ARVideoOrientation |视频方向 默认竖直
 videoProfile | ARVideoProfile | 视频分辨率  默认360x640
+videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 mediaType | ARMediaType |发布媒体类型 Video音视频 Audio 音频 默认音视频
 lineLayoutTemplate|ARRtmpcLineLayoutTemplate|连麦合成画面布局样式
 
@@ -223,36 +246,20 @@ pushUrl | String | 推流地址
 
 传入推流地址开始推流
 
-#### 4. 设置token验证
+
+#### 3. 创建RTC连接
 
 **定义**
 
 ```
-boolean setUserToken(String userToken) 
+int createRTCLine(String token,String anyrtcId,  String userId, String userData)
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-userToken | String | token字符串:客户端向自己服务器申请
-
-**说明**
-
-设置token验证必须放在joinRTCLine之前
-
-#### 4. 加入RTC连接
-
-**定义**
-
-```
-int joinRTCLine(String anyrtcId,  String userId, String userData)
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
+token|String|令牌:客户端向自己服务申请获得，参考企业级安全指南
 anyrtcId | String | 在开发者业务系统中保持唯一的Id（必填） 
 userId | String | 主播在开发者自己平台的Id
 userData | String | 播在开发者自己平台的相关信息（昵称，头像等）
@@ -265,7 +272,7 @@ userData | String | 播在开发者自己平台的相关信息（昵称，头像
 
 该方法须在开始推流（startRtmpPlay）方法后调用
 
-#### 5. 同意游客连麦请求
+#### 4. 同意游客连麦请求
 
 **定义**
 
@@ -278,13 +285,13 @@ void acceptRTCLine(String peerId)
 参数名 | 类型 | 描述
 ---|:---:|---
 peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用户，每次连麦随机生成)） 
-
+ 
 
 **说明**  
 
 调用此方法即可同意游客的连麦请求。
 
-#### 6.拒绝游客连麦请求
+#### 5.拒绝游客连麦请求
 
 **定义**
 
@@ -297,13 +304,13 @@ void rejectRTCLine(String peerId)
 参数名 | 类型 | 描述
 ---|:---:|---
 peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用户，每次连麦随机生成)） 
-
+ 
 
 **说明**  
 
 调用此方法即可拒绝游客的连麦请求
 
-#### 7.挂断游客连麦
+#### 6.挂断游客连麦
 
 **定义**
 
@@ -316,13 +323,13 @@ void hangupRTCLine(String peerId)
 参数名 | 类型 | 描述
 ---|:---:|---
 peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用户，每次连麦随机生成)） 
-
+ 
 
 **说明**  
 
 调用此方法即可挂断与游客的连麦
 
-#### 8.停止推流
+#### 7.停止推流
 
 **定义**
 
@@ -333,7 +340,7 @@ void stopRtmpStream()
 
 停止推流
 
-#### 9.设置其他人视频窗口
+#### 8.设置其他人视频窗口
 
 **定义**
 
@@ -352,7 +359,7 @@ publishId | String | RTC服务生成是视频通道Id
 
 该方法用于游客申请连麦接通后，游客视频连麦接通回调中（OnRTCOpenRemoteVideoRender）使用
 
-#### 10. 发送消息
+#### 9. 发送消息
 
 **定义**
 
@@ -374,7 +381,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 
 true 发送成功 false 发送失败
 
-#### 11. 关闭RTC连接
+#### 10. 关闭RTC连接
 
 **定义**
 
@@ -386,7 +393,7 @@ void closeRTCLine()
 
 一般不调用。主播端如果调用此方法，将会关闭RTC服务，游客端将会收主播已离开onRTCLineLeave回调。
 
-#### 12. 设置合成流连麦视频窗口位置
+#### 11. 设置合成流连麦视频窗口位置
 
 **定义**
 
@@ -405,7 +412,7 @@ ePadhor | int |  横向的间距（左右间距：最左边或者最后边的视
 ePadver|int|竖向的间距（上下间距：最上面或者最下面离边框的距离）
 nWLineWidth|int|合成小视频白边宽度（上下间距：最上面或者最下面离边框的距离）
 
-#### 13. 设置合成视频显示模板
+#### 12. 设置合成视频显示模板
 
 **定义**
 
@@ -419,7 +426,7 @@ void setMixVideoModel(ARRtmpcLineLayoutTemplate layoutTemplate)
 ---|:---:|---
 layoutTemplate|ARRtmpcLineLayoutTemplate|布局样式
 
-#### 14. 设置视频的默认背景图片
+#### 13. 设置视频的默认背景图片
 
 **定义**
 
@@ -441,7 +448,7 @@ filePath|String|图片的路径
 
 一定要打开读取权限，仅支持jpg和png的图片格式（仅支持640*640分辨率以内）
 
-#### 15. 设置本地音频是否传输
+#### 14. 设置本地音频是否传输
 
 **定义**
 
@@ -459,7 +466,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 16. 设置本地视频是否传输
+#### 15. 设置本地视频是否传输
 
 **定义**
 
@@ -478,7 +485,7 @@ enable | boolean| 打开或关闭本地视频传输
 true为传输视频，false为不传输视频，默认视频传输
 
 
-#### 17. 切换前后摄像头
+#### 16. 切换前后摄像头
 
 **定义**
 
@@ -487,7 +494,7 @@ void switchCamera()
 
 ```
 
-#### 18. 设置录像地址（地址为拉流地址）
+#### 17. 设置录像地址（地址为拉流地址）
 
 **定义**
 
@@ -505,7 +512,7 @@ url | String| 设置Rtmp录制地址，需放在开始推流方法前.并且**�
 
 设置录像地址（地址为拉流地址）
 
-#### 19. 设置前置摄像头镜像是否打开
+#### 18. 设置前置摄像头镜像是否打开
 
 **定义**
 
@@ -523,7 +530,7 @@ enable | boolean| true 打开 false 关闭
 
 是否打开镜像模式，默认关闭
 
-#### 20. 设置相机支持范围内的焦距
+#### 19. 设置相机支持范围内的焦距
 
 **定义**
 
@@ -565,7 +572,7 @@ int getCameraZoom()
 
 当前焦距
 
-#### 22. 判断是否可变焦
+#### 23. 判断是否可变焦
 
 **定义**
 
@@ -581,7 +588,7 @@ boolean isSmoothZoomSupported()
 **说明**  
 在设置变焦前先用该方法判断是否支持变焦
 
-#### 23. 打开关闭摄像头闪光灯
+#### 24. 打开关闭摄像头闪光灯
 
 **定义**
 
@@ -595,7 +602,7 @@ void openCameraTorchMode(final boolean open)
 ---|:---:|---
 open | boolean | 是否开启闪光灯
 
-#### 24. 设置音频检测
+#### 25. 设置音频检测
 
 **定义**
 
@@ -614,7 +621,7 @@ open | boolean | 是否开启音频检测
 默认音频检测打开
 
 
-#### 25.设置视频横屏模式
+#### 26.设置视频横屏模式
 
 **定义**
 
@@ -622,7 +629,7 @@ open | boolean | 是否开启音频检测
  void setScreenToLandscape()
 ```
 
-#### 26.设置视频竖屏模式
+#### 27.设置视频竖屏模式
 
 **定义**
 
@@ -630,7 +637,7 @@ open | boolean | 是否开启音频检测
 void setScreenToPortrait()
 ```
 
-#### 27. 设置左侧logo水印
+#### 28. 设置左侧logo水印
 
 **定义**
 
@@ -651,7 +658,7 @@ y | int | 距左上角Y轴距离
 仅支持jpg图片，注意安卓动态权限处理
 
 
-#### 28. 设置右侧logo水印
+#### 29. 设置右侧logo水印
 
 **定义**
 
@@ -671,12 +678,12 @@ y | int | 距右上角Y轴距离
 
 仅支持jpg图片，注意安卓动态权限处理
 
-#### 29.销毁主播端
+#### 30.销毁主播端
 
 **定义**
 
 ```
-void clear() 
+void clean() 
 ```
 ### ARRtmpcHosterEvent主播回调类
 
@@ -1018,7 +1025,7 @@ ARRtmpcGuestKit guestKit = new ARRtmpcGuestKit(ARRtmpcGuestEvent guestEvent);
 guestEvent | ARRtmpcGuestEvent | 回调实现类
 
 #### 2. 开始播放RTMP流
-
+ 
 **定义**
 ```
  void startRtmpPlay( String pullUrl,  long render)
@@ -1032,16 +1039,17 @@ pullUrl | String | 拉流地址
 render | long |SDK底层视频显示对象
 
 #### 3. 加入RTC连接
-
+ 
 **定义**
 ```
-int joinRTCLine(String anyRTCId,String userId, String userData)
+int joinRTCLine( String token,String anyRTCId,String userId, String userData)
 
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
+token|String|令牌:客户端向自己服务申请获得，参考企业级安全指南
 anyRTCId | String | 主播对应的anyRTCId 
 userId | String |游客业务平台的用户id
 userData | String |游客业务平台自定义数据

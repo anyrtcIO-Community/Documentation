@@ -1,16 +1,34 @@
-# Android
-
 ## 一、概述
 
 #### 简介
 
-实时直播SDK能够实现一对一、一对多的纯音频和视频实时直播，相比RTMPC延时更低、极简API接口。适用于在线娃娃机、智能硬件、在线医疗、视频招聘、相亲交友等多种场景。
+anyRTC提供对实时直播场景的支持，ARRtcpEngine SDK 能够实现一对一、一对多的纯音频和视频实时直播，相比RTMPC延时更低、极简API接口。适用于在线娃娃机、智能硬件、在线医疗、视频招聘、相亲交友等多种场景。
+
+#### Demo体验
+
+请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
+
+- [iOS Demo下载](https://www.pgyer.com/kRHw)
+
+- [Android Demo下载](https://www.pgyer.com/so6a)
+
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
+
+#### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Android)
+
+- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Web)
 
 ## 二、集成指南
 
 #### 适用范围
 
-本集成文档适用于Android RTCPEngine SDK 3.0.0 版本。
+本集成文档适用于Android RTCP SDK 3.0.0 版本。
 
 #### 准备环境
 
@@ -20,20 +38,26 @@
 
 #### 导入SDK
 
-**Gradle方式导入（推荐）**
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/rtcp/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/rtcp/_latestVersion)
+
+
+添加Jcenter仓库 Gradle依赖：
 
 ```
-implementation 'org.anyrtc:rtcp_kit:3.0.0'
-
+dependencies {
+  compile 'org.ar:rtcp_kit:3.0.1'
+}
 ```
 
-**手动导入**
-
-* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-Android)，找到**rtcp-release.aar**文件；
-
-* 将rtcp-release.aar文件放入项目的libs目录下，并在build.gradle文件中声明，如下图
-
-![1.png](http://anyrtcboard.oss-cn-beijing.aliyuncs.com/document/20190128150839.png)
+或者 Maven
+```
+<dependency>
+  <groupId>org.ar</groupId>
+  <artifactId>rtcp_kit</artifactId>
+  <version>3.0.1</version>
+  <type>pom</type>
+</dependency>
+```
 
 
 #### 权限说明
@@ -53,6 +77,8 @@ implementation 'org.anyrtc:rtcp_kit:3.0.0'
 ```
 -dontwarn org.anyrtc.**
 -keep class org.anyrtc.**{*;}
+-dontwarn org.ar.**
+-keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
@@ -160,7 +186,7 @@ ARRtcpOption rtcpOption = ARRtcpEngine.Inst().getARRtcpOption();
 
 **定义**
 ```
-void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation videoOrientation, ARVideoCommon.ARVideoProfile videoProfile, ARVideoCommon.ARMediaType mediaType) 
+void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientation videoOrientation, ARVideoCommon.ARVideoProfile videoProfile, ARVideoCommon.ARVideoFrameRate videoFps) 
 
 ```
 **参数**
@@ -170,7 +196,7 @@ void setOptionParams(boolean isDefaultFrontCamera, ARVideoCommon.ARVideoOrientat
 isDefaultFrontCamera | boolean | 是否默认前置摄像头 true 前置 false 后置  默认true
 videoOrientation | ARVideoOrientation |视频方向 默认竖直
 videoProfile | ARVideoProfile | 视频分辨率  默认360x640
-mediaType | ARMediaType |发布媒体类型 Video音视频 Audio 音频 默认音视频
+videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 
 ### ARRtcpKit 类
 
@@ -369,9 +395,8 @@ enable | boolean | true为打开，alse为关闭
 
 参数名 | 类型 | 描述
 ---|:---:|---
-mute | boolean | true禁止，false接收
 rtcpId | String | 流ID
-
+mute | boolean | true禁止，false接收
 
 #### 15. 不接收某人音频
 
@@ -385,47 +410,30 @@ void muteRemoteAudioStream(String rtcpId,  boolean mute)
 
 参数名 | 类型 | 描述
 ---|:---:|---
-mute | boolean | true禁止，false接收
 rtcpId | String | 流ID
+mute | boolean | true禁止，false接收
 
 
-#### 16. 设置token验证
+#### 16. 发布媒体
 
 **定义**
 
 ```
-boolean setUserToken(String token) 
+int publishByToken( String token,  ARVideoCommon.ARMediaType mediaType)
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-userToken | String | token字符串:客户端向自己服务器申请
-
-**说明**
-
-设置token验证必须放在publish、subscribe之前
-
-#### 17. 发布媒体
-
-**定义**
-
-```
-int publish(String anyrtcId)
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-anyRTCId | String| 该参数可以随意填写，但是不能为空,如果发布成功，SDK会给你分配一个频道ID
+token | String| 令牌:客户端向自己服务申请获得，参考企业级安全指南
+mediaType | ARMediaType | 发布媒体类型
 
 **返回值**
 
 发布结果,0/1:发布失败（没有RECORD_AUDIO权限）/发布成功。
 
-#### 18. 取消发布媒体
+#### 17. 取消发布媒体
 
 **定义**
 
@@ -433,12 +441,12 @@ anyRTCId | String| 该参数可以随意填写，但是不能为空,如果发布
  void unPublish()
 ```
 
-#### 19. 订阅视频
+#### 18. 订阅视频
 
 **定义**
 
 ```
-int subscribe(String rtcpId)
+int subscribe(String rtcpId,String token)
 ```
 
 **参数**
@@ -446,8 +454,9 @@ int subscribe(String rtcpId)
 参数名 | 类型 | 描述
 ---|:---:|---
 rtcpId | String | 订阅视频的频道Id
+token | String | 令牌:客户端向自己服务申请获得，参考企业级安全指南
 
-#### 20. 取消订阅媒体流
+#### 19. 取消订阅媒体流
 
 **定义**
 
@@ -463,7 +472,7 @@ rtcpId | String| 媒体频道Id
 
 
 
-#### 22. 停止视频采集
+#### 20. 停止视频采集
 
 **定义**
 
@@ -474,20 +483,8 @@ void stopCapture()
 
 停止视频采集
 
-#### 23. 关闭离开
 
-**定义**
-
-```
-void clear()
-```
-**说明**  
-
-停止采集，释放SDK
-
-
-
-#### 24. 设置音频检测
+#### 21. 设置音频检测
 
 **定义**
 
@@ -505,7 +502,7 @@ open | boolean | 是否开启音频检测
 
 默认音频检测打开
 
-#### 25. 获取音频检测是否打开
+#### 22. 获取音频检测是否打开
 
 **定义**
 
@@ -517,7 +514,7 @@ boolean isOpenAudioCheck()
 音频检测打开与否
 
 
-#### 26. 设置视频网络状态是否打开
+#### 23. 打开或关闭网络状态监测
 
 **定义**
 
@@ -535,7 +532,7 @@ enable | boolean | true打开，false关闭
 
 默认视频网络状态关闭
 
-#### 27. 获取当前视频网络状态是否打开
+#### 24. 获取网络监测是否打开
 
 **定义**
 
@@ -546,6 +543,90 @@ boolean networkStatusEnabled()
 **返回值**
 
 视频网络状态检测打开与否
+
+#### 25. 发布辅流
+
+**定义**
+
+```
+void publishEx()
+```
+
+
+#### 26. 取消发布辅流
+
+**定义**
+
+```
+ void unPublishEx()
+```
+
+#### 27.设置是否采用ARCamera
+
+**定义**
+
+```
+void setUsedARCamera( boolean usedARCamera)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+usedARCamera | boolean | true 使用ARCamera，false 不使用ARCamera采集的数据
+
+**说明**
+
+默认使用ARCamera， 如果设置为false，必须调用setByteBufferFrameCaptured才能本地显示
+
+#### 28.设置本地显示的视频数据
+
+**定义**
+
+```
+void setByteBufferFrameCaptured( byte[] data,  int width,  int height,  int rotation,  long timeStamp)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+data | byte[] | true 使用ARCamera，false 不使用ARCamera采集的数据
+width | int | 宽
+height | int | 高
+rotation | int | 旋转角度
+timeStamp | long | 时间戳
+
+**说明**
+
+不使用ARCamera，必须调用setByteBufferFrameCaptured才能本地显示
+
+#### 29.设置ARCamera视频数据回调
+
+**定义**
+
+```
+void setARCameraCaptureObserver( ARCameraCapturerObserver capturerObserver)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+capturerObserver | ARCameraCapturerObserver | 回调
+
+
+
+#### 30. 关闭离开
+
+**定义**
+
+```
+void clean()
+```
+**说明**  
+
+停止采集，释放SDK
 
 ### ARRtcpEvent 回调接口类
 
@@ -579,7 +660,37 @@ void onPublishFailed(int code, String reason);
 code | int | 失败的code值
 reason | String | 错误原因
 
-#### 3. 订阅通道成功的回调
+#### 3. 发布辅流媒体成功回调
+
+**定义**
+
+```
+void onPublishExOK(String rtcpId,String liveInfo);
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+rtcpId | String | 通道Id
+liveInfo | String | 直播信息
+
+#### 4. 发布辅流媒体失败回调
+
+**定义**
+
+```
+void onPublishExFailed(int code, String reason);
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+code | int | 失败的code值
+reason | String | 错误原因
+
+#### 5. 订阅通道成功的回调
 
 **定义**
 
@@ -593,7 +704,7 @@ void onSubscribeOK(String rtcpId)
 ---|:---:|---
 rtcpId | String | 通道Id
 
-#### 4. 订阅通道失败的回调
+#### 6. 订阅通道失败的回调
 
 **定义**
 
@@ -609,7 +720,7 @@ rtcpId | String | 通道Id
 code | int | 失败的code值
 reason | String | 错误原因
 
-#### 5. 订阅后音视频即将显示的回调
+#### 7. 订阅后音视频即将显示的回调
 
 **定义**
 
@@ -623,7 +734,7 @@ void onRTCOpenRemoteVideoRender(String rtcpId);
 ---|:---:|---
 rtcpId | String | 通道Id
 
-#### 6. 订阅的音视频离开的回调
+#### 8. 订阅的音视频离开的回调
 
 **定义**
 
@@ -637,7 +748,7 @@ void onRTCCloseRemoteVideoRender(String rtcpId);
 ---|:---:|---
 rtcpId | String | 通道Id
 
-#### 7. 订阅音频后成功的回调
+#### 9. 订阅音频后成功的回调
 
 **定义**
 
@@ -651,7 +762,7 @@ void onRTCOpenRemoteAudioTrack(String rtcpId);
 ---|:---:|---
 rtcpId | String | 通道Id
 
-#### 8. 订阅的音频离开的回调
+#### 10. 订阅的音频离开的回调
 
 **定义**
 
@@ -665,7 +776,7 @@ void onRTCCloseRemoteAudioTrack(String rtcpId)
 ---|:---:|---
 rtcpId |String | 通道Id
 
-#### 9. 订阅的流 音视频状态回调
+#### 11. 订阅的流 音视频状态回调
 
 **定义**
 
@@ -681,7 +792,7 @@ rtcpId |String | 通道Id
 audio | boolean | true 音频打开 false 音频关闭
 video | boolean | true 视频打开 false 视频关闭
 
-#### 10. 本地RTC音频检测
+#### 12. 本地RTC音频检测
 
 **定义**
 
@@ -700,7 +811,7 @@ time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫
 
 自己本地音频检测
 
-#### 11. 远程（其他人）RTC音频检测
+#### 13. 远程（其他人）RTC音频检测
 
 **定义**
 
@@ -720,7 +831,7 @@ time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫
 
 对方关闭音频传输后（setLocalAudioEnable为false）,该回调将不再回调对方音频状态；对方关闭音频检测后（setAudioActiveCheck为false）,该回调也将不再回调对方音频状态。
 
-#### 12. 本地网络状态
+#### 14. 本地网络状态
 
 **定义**
 
@@ -736,7 +847,7 @@ nNetSpeed | int |网络上行
 nPacketLost | int | 丢包率(1~100)
 netQuality | ARNetQuality | 网络质量
 
-#### 13. 远程（其他人）网络状态
+#### 15. 远程（其他人）网络状态
 
 **定义**
 
@@ -789,7 +900,7 @@ AnyRTC_SERVER_NOT_OPEN | 208 | 服务未开通
 AnyRTC_ALLOC_NO_RES | 209 | 没有服务器资源
 AnyRTC_SERVER_NOT_SURPPORT | 210 | 不支持的服务
 AnyRTC_FORCE_EXIT | 211 | 强制离开
-
+  
   
 
 
