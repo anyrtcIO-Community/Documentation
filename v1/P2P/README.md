@@ -8,9 +8,9 @@ P2P音视频可以实现一对一单聊，内置推送服务，保证必达；�
 
 请根据需求选择渠道安装，安装完成后，可体验点对点呼叫功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_p2p_ios)
+- [iOS Demo下载](https://itunes.apple.com/cn/app/anyrtc点对点/id1316858730?mt=8)
 
-- [Android Demo下载](https://www.pgyer.com/anyrtc_p2p_android)
+- [Android Demo下载](https://www.pgyer.com/3blO)
 
 ### 源码GitHub
 
