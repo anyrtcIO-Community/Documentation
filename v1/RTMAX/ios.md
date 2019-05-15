@@ -6,6 +6,26 @@
 
 智能调度能够实现公网对讲、视频上报、音视频呼叫，满足公安、消防、政府机构、机场、铁路、港口、物流运输等场景
 
+### Demo 体验
+
+请根据需求选择渠道安装，安装完对讲调度Demo后，可体验多人实时对讲，智能调度等功能。
+
+- [iOS Demo下载](https://www.pgyer.com/SYA3)
+
+- [Android Demo下载](https://www.pgyer.com/GVI3)
+
+- [Web Demo 体验](https://demos.anyrtc.io/ar-talk/)
+
+### 源码 GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/anyRTC/AR-Talk-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/AR-Talk-Android)
+
+- [Web Demo 源码下载](https://github.com/anyRTC/AR-Talk-Web)
+
 ## 二、集成指南
 
 ### 适用范围
@@ -1278,14 +1298,13 @@ content | NSString | 消息内容
 
 ## 四、更新日志
 
-**Version 3.0.0 （2019-01-18）**
+**Version 3.0.0 （2019-05-15）**
 
 * SDK版本升级3.0，API接口变更，更加简洁规范
 * 更改SDK配置项，配置更简单
 * 断网重连优化
 * 分辨率选项增加，帧率可配置
 * 添加用户服务级token安全认证，服务更安全
-* 解决
 
 **Version 2.0.0 （2017-09-30）**
 

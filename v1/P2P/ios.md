@@ -6,6 +6,23 @@
 
 P2P音视频可以实现一对一单聊，内置推送服务，保证必达；支持视频、语音、优先视频等多种呼叫模式，适用于网络电话、社交、企业通信等场景。
 
+### Demo体验
+
+请根据需求选择渠道安装，安装完P2P Demo后，可体验点对点音视频呼叫，监看等功能。
+
+- [iOS Demo下载](https://itunes.apple.com/cn/app/anyrtc点对点/id1316858730?mt=8)
+
+- [Android Demo下载](https://www.pgyer.com/3blO)
+
+
+### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-Android)
+
 ## 二、集成指南
 
 
@@ -553,9 +570,9 @@ content | NSString | 消息内容
 
 ## 四、更新日志
 
-**Version 3.0.0 （2019-01-18）**
+**Version 3.0.0 （2019-05-15）**
 
-* SDK版本升级3.0，API接口变更，更加简洁规范
+* SDK版本升级3.0，API接口变更
 
 **Version 2.0.0 （2017-09-30）**
 

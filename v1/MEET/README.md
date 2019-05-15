@@ -8,11 +8,11 @@
 
 请根据需求选择渠道安装，安装完成后，可体验多人音视频功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_meeting_ios)
+- [iOS Demo下载](https://www.pgyer.com/xoTQ)
 
-- [Android Demo下载](https://www.pgyer.com/anyRTC_Meeting)
+- [Android Demo下载](https://www.pgyer.com/eU0U)
 
-- [Web Demo 体验](https://www.anyrtc.io/demo/meeting)
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
 
 ### 源码GitHub
 
@@ -21,6 +21,7 @@
 - [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-iOS)
 
 - [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Android)
+
 - [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
 
 
