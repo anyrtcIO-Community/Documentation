@@ -175,7 +175,7 @@ call.turnOn(userId， userToken);
 | 参数名    |  类型  | 描述                                   |
 | --------- | :----: | -------------------------------------- |
 | userId    | string | 自定义用户ID                           |
-| userToken | string | 如果开启userToken验证，携带的userToken |
+| userToken | string | 第三方认证所需要携带的userToken（非必填） |
 
 **说明**
 
