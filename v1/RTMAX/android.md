@@ -10,7 +10,7 @@
 
 - [Android Demo下载](https://www.pgyer.com/GVI3)
 
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/dispatch)
+- [Web Demo 体验](https://demos.anyrtc.io/ar-talk/)
 
 #### 源码 GitHub
 
