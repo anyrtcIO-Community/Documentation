@@ -28,9 +28,7 @@ initEngineWithARInfo() | 配置开发者信息
 
 参数名 | 说明
 ---|---
-String strDeveloperId |开发者ID
 String strAppId | AppId
-String strAESKey | Key
 String strToken | Token
 
 > 注:使用ARBoardSDK必须先配置开发者信息，可从www.anyrtc.cc管理中心获取。

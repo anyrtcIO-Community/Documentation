@@ -6,6 +6,26 @@
 
 多人音视频可以实现一对一单聊和多人群聊，适用于社交、会议、在线教育、培训等场景
 
+### Demo体验
+
+请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
+
+- [iOS Demo下载](https://www.pgyer.com/xoTQ)
+
+- [Android Demo下载](https://www.pgyer.com/eU0U)
+
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
+
+### 源码GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-iOS)
+
+- [Android Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-Android)
+
+- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
+
 
 ## 二、集成指南
 
@@ -1110,9 +1130,9 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 
 ## 四、更新日志
 
-**Version 3.0.0 （2019-01-18）**
+**Version 3.0.0 （2019-05-15）**
 
-* SDK版本升级3.0，API接口变更，更加简洁规范
+* SDK版本升级3.0，API接口变更
 
 **Version 2.0.0 （2017-09-30）**
 

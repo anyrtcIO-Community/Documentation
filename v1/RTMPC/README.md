@@ -6,20 +6,18 @@
 
 ### Demo体验
 
-请根据需求选择渠道安装，安装完RTMPC Demo后，可体验互动直播连麦功能
+请根据需求选择渠道安装，安装完直播互动连麦Demo后，可体验在线直播多人连麦功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_rtmpc_ios)
+- [iOS Demo下载](https://www.pgyer.com/X9HH)
 
-- [Android Demo下载](https://www.pgyer.com/anyrtc_rtmpc_android)
+- [Android Demo下载](https://www.pgyer.com/app/qrcode/Zuap)
 
-- [Web Demo 体验](https://www.anyrtc.io/demo/lianmai)
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
 
 ### 源码GitHub
 
-源码仅供开发者参考，适用于SDK调试，便于快速集成
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
 
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-RTMPC-iOS)
+- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-RTMPC-iOS)
 
 - [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTMPC-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-RTMPC-Web)

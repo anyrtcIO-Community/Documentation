@@ -10,11 +10,11 @@
 
 请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_rtcp_ios)
+- [iOS Demo下载](https://www.pgyer.com/kRHw)
 
-- [Android Demo下载](https://www.pgyer.com/anyrtc_rtcp1)
+- [Android Demo下载](https://www.pgyer.com/so6a)
 
-- [Web Demo 体验](https://www.anyrtc.io/demo/rtcp)
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
 
 ### 源码GitHub
 

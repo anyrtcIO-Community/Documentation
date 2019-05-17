@@ -35,22 +35,22 @@
 
 #### 导入SDK
 
-**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/anyrtc_dev/anyRTCWaWaClient/images/download.svg) ](https://bintray.com/dyncanyrtc/anyrtc_dev/anyRTCWaWaClient/_latestVersion)
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/wawa/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/wawa/_latestVersion)
 
 添加Jcenter仓库 Gradle依赖：
 
 ```
 dependencies {
-   compile 'org.anyrtc:anyrtcwawaclient:1.0.0'
+   compile 'org.ar:anyrtcwawaclient:3.0.1'
 }
 ```
 
 或者 Maven
 ```
 <dependency>
-  <groupId>org.anyrtc</groupId>
+  <groupId>org.ar</groupId>
   <artifactId>anyrtcwawaclient</artifactId>
-  <version>1.0.0</version>
+  <version>3.0.1</version>
   <type>pom</type>
 </dependency>
 ```
