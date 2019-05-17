@@ -40,7 +40,7 @@ anyRTC提供对实时直播场景的支持，RTCPEngine SDK 能够实现一对�
 ```
 npm install ar-rtcp --save-dev
 
-import ArMeetKit from 'ar-rtcp';
+import ArRtcpKit from 'ar-rtcp';
 ```
 
 - 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
@@ -67,7 +67,7 @@ import ArRtcpKit from 'ar-rtcp';
 #### 1. 实例化对象
 
 ```
-var ARRtcpKit = new ARRtcpKit(Options);
+var rtcp = new ARRtcpKit(Options);
 ```
 
 ##### 参数
@@ -105,7 +105,7 @@ var ARRtcpKit = new ARRtcpKit(Options);
 ##### 示例
 
 ```
-ARRtcpKit.setUserToken(userToken);
+rtcp.setUserToken(userToken);
 ```
 
 ##### 参数
@@ -123,7 +123,7 @@ ARRtcpKit.setUserToken(userToken);
 ##### 示例
 
 ```
-ARRtcpKit.initAppInfo(appid, apptoken); 
+rtcp.initAppInfo(appid, apptoken); 
 ```
 
 ##### 参数
@@ -142,7 +142,7 @@ ARRtcpKit.initAppInfo(appid, apptoken);
 ##### 示例
 
 ```
-ARRtcpKit.configServer(address);
+rtcp.configServer(address);
 ```
 
 ##### 参数
@@ -160,7 +160,7 @@ ARRtcpKit.configServer(address);
 ##### 示例
 
 ```
-ARRtcpKit.getSDKVersion();
+rtcp.getSDKVersion();
 ```
 
 **返回值**
@@ -178,7 +178,7 @@ ARRtcpKit SDK版本号。
 ##### 示例
 
 ```
-Meet.setLocalVideoCapturer(constraints);
+rtcp.setLocalVideoCapturer(constraints);
 ```
 
 ##### 参数
@@ -224,7 +224,7 @@ Meet.setLocalVideoCapturer(constraints);
 ##### 示例
 
 ```
-ARRtcpKit.setLocalAudioEnable(enable);
+rtcp.setLocalAudioEnable(enable);
 ```
 
 ##### 参数
@@ -242,7 +242,7 @@ ARRtcpKit.setLocalAudioEnable(enable);
 ##### 示例
 
 ```
-ARRtcpKit.setLocalVideoEnable(enable);
+rtcp.setLocalVideoEnable(enable);
 ```
 
 ##### 参数
@@ -260,7 +260,7 @@ ARRtcpKit.setLocalVideoEnable(enable);
 ##### 示例
 
 ```
-ARRtcpKit.getLocalVideoEnable();
+rtcp.getLocalVideoEnable();
 ```
 
 ##### 说明
@@ -272,7 +272,7 @@ ARRtcpKit.getLocalVideoEnable();
 ##### 示例
 
 ```
-ARRtcpKit.getLocalAudioEnable();
+rtcp.getLocalAudioEnable();
 ```
 
 ##### 说明
@@ -284,7 +284,7 @@ ARRtcpKit.getLocalAudioEnable();
 ##### 示例
 
 ```
-ARRtcpKit.publish(mediaType);
+rtcp.publish(mediaType);
 ```
 
 ##### 参数
@@ -302,7 +302,7 @@ ARRtcpKit.publish(mediaType);
 ##### 示例
 
 ```
-ARRtcpKit.unPublish();
+rtcp.unPublish();
 ```
 
 ##### 说明
@@ -314,7 +314,7 @@ ARRtcpKit.unPublish();
 ##### 示例
 
 ```
-ARRtcpKit.publishEx(scrnStream);
+rtcp.publishEx(scrnStream);
 ```
 
 ##### 参数
@@ -332,7 +332,7 @@ ARRtcpKit.publishEx(scrnStream);
 ##### 示例
 
 ```
-ARRtcpKit.unPublishEx();
+rtcp.unPublishEx();
 ```
 
 ##### 说明
@@ -344,7 +344,7 @@ ARRtcpKit.unPublishEx();
 ##### 示例
 
 ```
-ARRtcpKit.subscribe(rtcpId);
+rtcp.subscribe(rtcpId);
 ```
 
 ##### 参数
@@ -362,7 +362,7 @@ ARRtcpKit.subscribe(rtcpId);
 ##### 示例
 
 ```
-ARRtcpKit.unSubscribe(rtcpId);
+rtcp.unSubscribe(rtcpId);
 ```
 
 ##### 参数
@@ -380,7 +380,7 @@ ARRtcpKit.unSubscribe(rtcpId);
 ##### 示例
 
 ```
-ARRtcpKit.close();
+rtcp.close();
 ```
 
 ##### 说明
@@ -396,7 +396,7 @@ ARRtcpKit.close();
 ##### 示例
 
 ```
-ARRtcpKit.on("exstream-subscribed", function(pubId, mediaRender){});
+rtcp.on("exstream-subscribed", function(pubId, mediaRender){});
 ```
 
 ##### 参数
@@ -414,7 +414,7 @@ ARRtcpKit.on("exstream-subscribed", function(pubId, mediaRender){});
 ##### 示例
 
 ```
-ARRtcpKit.on("exstream-unsubscribed", function(pubId){});
+rtcp.on("exstream-unsubscribed", function(pubId){});
 ```
 
 ##### 参数
@@ -432,7 +432,7 @@ ARRtcpKit.on("exstream-unsubscribed", function(pubId){});
 ##### 示例
 
 ```
-ARRtcpKit.on("stream-subscribed", function(pubId, mediaRender){});
+rtcp.on("stream-subscribed", function(pubId, mediaRender){});
 ```
 
 ##### 参数
@@ -450,7 +450,7 @@ ARRtcpKit.on("stream-subscribed", function(pubId, mediaRender){});
 ##### 示例
 
 ```
-ARRtcpKit.on("stream-unsubscribed", function(pubId){});
+rtcp.on("stream-unsubscribed", function(pubId){});
 ```
 
 ##### 参数
@@ -468,7 +468,7 @@ ARRtcpKit.on("stream-unsubscribed", function(pubId){});
 ##### 示例
 
 ```
-ARRtcpKit.on("audio-volume", function(isRemote, pubId, audioLevel){});
+rtcp.on("audio-volume", function(isRemote, pubId, audioLevel){});
 ```
 
 ##### 参数
@@ -488,7 +488,7 @@ ARRtcpKit.on("audio-volume", function(isRemote, pubId, audioLevel){});
 ##### 示例
 
 ```
-ARRtcpKit.on("network-status", function(isRemote, pubId, videoBytes, ARNetQuality){});
+rtcp.on("network-status", function(isRemote, pubId, videoBytes, ARNetQuality){});
 ```
 
 ##### 参数
@@ -509,7 +509,7 @@ ARRtcpKit.on("network-status", function(isRemote, pubId, videoBytes, ARNetQualit
 ##### 示例
 
 ```
-ARRtcpKit.on("join-success", function(){});
+rtcp.on("join-success", function(){});
 ```
 
 #### 8. 加入频道失败
@@ -517,7 +517,7 @@ ARRtcpKit.on("join-success", function(){});
 ##### 示例
 
 ```
-ARRtcpKit.on("join-failed", function(code){});
+rtcp.on("join-failed", function(code){});
 ```
 
 ##### 参数
@@ -531,7 +531,7 @@ ARRtcpKit.on("join-failed", function(code){});
 ##### 示例
 
 ```
-ARRtcpKit.on("stream-published", function(pubId){});
+rtcp.on("stream-published", function(pubId){});
 ```
 
 ##### 参数
@@ -549,7 +549,7 @@ ARRtcpKit.on("stream-published", function(pubId){});
 ##### 示例
 
 ```
-ARRtcpKit.on("stream-publish-failed", function(){});
+rtcp.on("stream-publish-failed", function(){});
 ```
 
 发布媒体流失败。
@@ -559,7 +559,7 @@ ARRtcpKit.on("stream-publish-failed", function(){});
 ##### 示例
 
 ```
-ARRtcpKit.on("exstream-published", function(pubId){});
+rtcp.on("exstream-published", function(pubId){});
 ```
 
 ##### 参数
@@ -577,7 +577,7 @@ ARRtcpKit.on("exstream-published", function(pubId){});
 ##### 示例
 
 ```
-ARRtcpKit.on("server-disconnect", function(){});
+rtcp.on("server-disconnect", function(){});
 ```
 
 ##### 说明

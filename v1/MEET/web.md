@@ -70,7 +70,7 @@ import ArMeetKit from 'ar-meet';
 ##### 示例
 
 ```
-let ARMeetKit = new ArMeetKit(Options);
+let meet = new ArMeetKit(Options);
 ```
 
 ##### 参数
@@ -111,7 +111,7 @@ let ARMeetKit = new ArMeetKit(Options);
 ##### 示例
 
 ```
-ARMeetKit.initAppInfo(appId, appToken);
+meet.initAppInfo(appId, appToken);
 ```
 
 ##### 参数
@@ -130,7 +130,7 @@ ARMeetKit.initAppInfo(appId, appToken);
 ##### 示例
 
 ```
-ARMeetKit.configServer(address);
+meet.configServer(address);
 ```
 
 ##### 参数
@@ -148,7 +148,7 @@ ARMeetKit.configServer(address);
 ##### 示例
 
 ```
-ARMeetKit.getSDKVersion();
+meet.getSDKVersion();
 ```
 
 ##### 说明
@@ -208,7 +208,7 @@ Meet.setLocalVideoCapturer(constraints);
 ##### 示例
 
 ```
-ARMeetKit.setLocalVideoEnable(enable);
+meet.setLocalVideoEnable(enable);
 ```
 
 ##### 参数
@@ -222,7 +222,7 @@ ARMeetKit.setLocalVideoEnable(enable);
 ##### 示例
 
 ```
-ARMeetKit.setLocalAudioEnable(enable);
+meet.setLocalAudioEnable(enable);
 ```
 
 ##### 参数
@@ -236,7 +236,7 @@ ARMeetKit.setLocalAudioEnable(enable);
 ##### 示例
 
 ```
-ARMeetKit.getLocalVideoEnable();
+meet.getLocalVideoEnable();
 ```
 
 ##### 说明
@@ -248,7 +248,7 @@ ARMeetKit.getLocalVideoEnable();
 ##### 示例
 
 ```
-ARMeetKit.getLocalAudioEnable();
+meet.getLocalAudioEnable();
 ```
 
 ##### 说明
@@ -260,7 +260,7 @@ ARMeetKit.getLocalAudioEnable();
 ##### 示例
 
 ```
-ARMeetKit.setRemoteAVEnable(peerId, audioEnable, videoEnable);
+meet.setRemoteAVEnable(peerId, audioEnable, videoEnable);
 ```
 
 ##### 参数
@@ -276,7 +276,7 @@ ARMeetKit.setRemoteAVEnable(peerId, audioEnable, videoEnable);
 ##### 示例
 
 ```
-ARMeetKit.openShare(type);
+meet.openShare(type);
 ```
 
 ##### 参数
@@ -294,7 +294,7 @@ ARMeetKit.openShare(type);
 ##### 示例
 
 ```
-ARMeetKit.setShareInfo(shareInfo);
+meet.setShareInfo(shareInfo);
 ```
 
 ##### 参数
@@ -312,7 +312,7 @@ ARMeetKit.setShareInfo(shareInfo);
 ##### 示例
 
 ```
-ARMeetKit.closeShare(type);
+meet.closeShare(type);
 ```
 
 ##### 参数
@@ -330,7 +330,7 @@ ARMeetKit.closeShare(type);
 ##### 示例
 
 ```
-ARMeetKit.startScreenCap(scrnStream);
+meet.startScreenCap(scrnStream);
 ```
 
 ##### 参数
@@ -348,7 +348,7 @@ ARMeetKit.startScreenCap(scrnStream);
 ##### 示例
 
 ```
-ARMeetKit.stopScreenCap();
+meet.stopScreenCap();
 ```
 
 ##### 说明
@@ -360,7 +360,7 @@ ARMeetKit.stopScreenCap();
 ##### 示例
 
 ```
-ARMeetKit.joinRTC(roomId, userToken);
+meet.joinRTC(roomId, userToken);
 ```
 
 ##### 参数
@@ -375,7 +375,7 @@ ARMeetKit.joinRTC(roomId, userToken);
 ##### 示例
 
 ```
-ARMeetKit.sendUserMessage(userName, userHeaderUrl, content);
+meet.sendUserMessage(userName, userHeaderUrl, content);
 ```
 
 ##### 参数
@@ -391,7 +391,7 @@ ARMeetKit.sendUserMessage(userName, userHeaderUrl, content);
 ##### 示例
 
 ```
-ARMeetKit.setBroadCast(enable, peerId);
+meet.setBroadCast(enable, peerId);
 ```
 
 ##### 参数
@@ -410,7 +410,7 @@ ARMeetKit.setBroadCast(enable, peerId);
 ##### 示例
 
 ```
-ARMeetKit.setTalkOnly(enable, peerId);
+meet.setTalkOnly(enable, peerId);
 ```
 
 ##### 参数
@@ -429,7 +429,7 @@ ARMeetKit.setTalkOnly(enable, peerId);
 ##### 示例
 
 ```
-ARMeetKit.leaveRTC();
+meet.leaveRTC();
 ```
 
 ##### 说明
@@ -441,7 +441,7 @@ ARMeetKit.leaveRTC();
 ##### 示例
 
 ```
-ARMeetKit.setAudioActiveCheck(enable);
+meet.setAudioActiveCheck(enable);
 ```
 
 ##### 参数
@@ -455,7 +455,7 @@ ARMeetKit.setAudioActiveCheck(enable);
 ##### 示例
 
 ```
-ARMeetKit.getAudioActiveCheck();
+meet.getAudioActiveCheck();
 ```
 
 ##### 说明
@@ -467,7 +467,7 @@ ARMeetKit.getAudioActiveCheck();
 ##### 示例
 
 ```
-ARMeetKit.setNetworkStatus(enable);
+meet.setNetworkStatus(enable);
 ```
 
 ##### 参数
@@ -481,7 +481,7 @@ ARMeetKit.setNetworkStatus(enable);
 ##### 示例
 
 ```
-ARMeetKit.getNetworkStatus();
+meet.getNetworkStatus();
 ```
 
 ##### 说明
@@ -493,7 +493,7 @@ ARMeetKit.getNetworkStatus();
 ##### 示例
 
 ```
-ARMeetKit.setZoomMode(zoomMode);
+meet.setZoomMode(zoomMode);
 ```
 
 ##### 参数
@@ -507,7 +507,7 @@ ARMeetKit.setZoomMode(zoomMode);
 ##### 示例
 
 ```
-ARMeetKit.switchZoomMode(zoomMode);
+meet.switchZoomMode(zoomMode);
 ```
 
 ##### 参数
@@ -521,7 +521,7 @@ ARMeetKit.switchZoomMode(zoomMode);
 ##### 示例
 
 ```
-ARMeetKit.getUserList();
+meet.getUserList();
 ```
 
 ##### 说明
@@ -535,7 +535,7 @@ ARMeetKit.getUserList();
 ##### 示例
 
 ```
-ARMeetKit.on('join-success', () => {});
+meet.on('join-success', () => {});
 ```
 
 #### 2. 加入会议失败
@@ -543,7 +543,7 @@ ARMeetKit.on('join-success', () => {});
 ##### 示例
 
 ```
-ARMeetKit.on('join-failed', (code) => {});
+meet.on('join-failed', (code) => {});
 ```
 
 ##### 参数
@@ -557,7 +557,7 @@ ARMeetKit.on('join-failed', (code) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
+meet.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 ```
 
 ##### 参数
@@ -578,7 +578,7 @@ ARMeetKit.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('stream-unsubscribed', (peerId, pubId, userData) => {});
+meet.on('stream-unsubscribed', (peerId, pubId, userData) => {});
 ```
 
 ##### 参数
@@ -598,7 +598,7 @@ ARMeetKit.on('stream-unsubscribed', (peerId, pubId, userData) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {});
+meet.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 ```
 
 ##### 参数
@@ -619,7 +619,7 @@ ARMeetKit.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {}
 ##### 示例
 
 ```
-ARMeetKit.on('exstream-unsubscribed', (peerId, pubId, userData) => {});
+meet.on('exstream-unsubscribed', (peerId, pubId, userData) => {});
 ```
 
 ##### 参数
@@ -641,7 +641,7 @@ ARMeetKit.on('exstream-unsubscribed', (peerId, pubId, userData) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('av-status', (isRemote, pubId, audioEnable, videoEnable) => {});
+meet.on('av-status', (isRemote, pubId, audioEnable, videoEnable) => {});
 ```
 
 ##### 参数
@@ -662,7 +662,7 @@ ARMeetKit.on('av-status', (isRemote, pubId, audioEnable, videoEnable) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('audio-volume', (isRemote, pubId, audioVolume) => {});
+meet.on('audio-volume', (isRemote, pubId, audioVolume) => {});
 ```
 
 ##### 参数
@@ -682,7 +682,7 @@ ARMeetKit.on('audio-volume', (isRemote, pubId, audioVolume) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('network-status', (isRemote, pubId, videoBytes, ARNetQulity) => {});
+meet.on('network-status', (isRemote, pubId, videoBytes, ARNetQulity) => {});
 ```
 
 ##### 参数
@@ -703,7 +703,7 @@ ARMeetKit.on('network-status', (isRemote, pubId, videoBytes, ARNetQulity) => {})
 ##### 示例
 
 ```
-ARMeetKit.on('share-opened', (shareType, shareInfo, userId, userData) => {});
+meet.on('share-opened', (shareType, shareInfo, userId, userData) => {});
 ```
 
 ##### 参数
@@ -724,7 +724,7 @@ ARMeetKit.on('share-opened', (shareType, shareInfo, userId, userData) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('share-closed', () => {});
+meet.on('share-closed', () => {});
 ```
 
 ##### 说明
@@ -736,7 +736,7 @@ ARMeetKit.on('share-closed', () => {});
 ##### 示例
 
 ```
-ARMeetKit.on('share-result', (isOpen) => {});
+meet.on('share-result', (isOpen) => {});
 ```
 
 ##### 参数
@@ -754,7 +754,7 @@ ARMeetKit.on('share-result', (isOpen) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('user-message', (userId, userName, userAvatar, msgContent) => {});
+meet.on('user-message', (userId, userName, userAvatar, msgContent) => {});
 ```
 
 ##### 参数
@@ -775,7 +775,7 @@ ARMeetKit.on('user-message', (userId, userName, userAvatar, msgContent) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('local-video-size', (videoWidth, videoHeight) => {});
+meet.on('local-video-size', (videoWidth, videoHeight) => {});
 ```
 
 ##### 参数
@@ -794,7 +794,7 @@ ARMeetKit.on('local-video-size', (videoWidth, videoHeight) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('hoster-online', (peerId, userId, userData) => {});
+meet.on('hoster-online', (peerId, userId, userData) => {});
 ```
 
 ##### 参数
@@ -814,7 +814,7 @@ ARMeetKit.on('hoster-online', (peerId, userId, userData) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('hoster-offline', (peerId) => {});
+meet.on('hoster-offline', (peerId) => {});
 ```
 
 ##### 参数
@@ -832,7 +832,7 @@ ARMeetKit.on('hoster-offline', (peerId) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('talk-only-on', (peerId, userId, userData) => {});
+meet.on('talk-only-on', (peerId, userId, userData) => {});
 ```
 
 ##### 参数
@@ -852,7 +852,7 @@ ARMeetKit.on('talk-only-on', (peerId, userId, userData) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('talk-only-off', (peerId) => {});
+meet.on('talk-only-off', (peerId) => {});
 ```
 
 ##### 参数
@@ -870,7 +870,7 @@ ARMeetKit.on('talk-only-off', (peerId) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('zoom-info', (zoomMode, pubRender) => {});
+meet.on('zoom-info', (zoomMode, pubRender) => {});
 ```
 
 ##### 参数
@@ -889,7 +889,7 @@ ARMeetKit.on('zoom-info', (zoomMode, pubRender) => {});
 ##### 示例
 
 ```
-ARMeetKit.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
+meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 ```
 
 ##### 参数

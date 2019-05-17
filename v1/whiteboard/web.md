@@ -63,18 +63,15 @@ DomId | Element | Div容器的id属性
 #### 2. 连接画板服务
 ##### 示例
 ```
-Board.initEngineWithARInfo(devId, appId, appKey, appToken, domain); 
+Board.initEngineWithARInfo(appId, appToken); 
 
 ```
 
 ##### 参数
 参数名 | 类型 | 描述 
 ---|---|---
-devId | String | anyRTC云平台的开发者id
 appId | String | anyRTC云平台的应用id
-appKey | String | anyRTC云平台的应用的appKey
 appToken | String | anyRTC云平台的应用的appToken
-domain | String | anyRTC云平台的应用的业务域名
 
 ##### 说明
 该方法为配置开发者信息，上述参数均可在[https://www.anyrtc.io/ ](https://www.anyrtc.io/)应用管理中获得。
