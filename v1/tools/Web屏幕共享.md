@@ -35,7 +35,7 @@ import getScreenStream from 'ar-share-screen';
 
 **js 引用**
 
-* 点击[下载 SDK](https://github.com/anyRTC/anyRTC-Meet-web)
+* 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArShareScreen.3.0.0.js?_blank)
 
 * 引用
 
@@ -43,7 +43,7 @@ import getScreenStream from 'ar-share-screen';
 <!-- 先再头部引入样式 -->
 <link rel="stylesheet" href="路径/index.css">
 
-<script src="路径/ArShareScreen.js"></script>
+<script src="路径/ArShareScreen.3.0.0.js"></script>
 ```
 
 ## 三、API接口文档

@@ -54,11 +54,11 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://github.com/anyRTC/anyRTC-Meet-web)
+- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.0.js)
 - 引用
 
 ```
-<script src="yourAssetsPath/ArMeetKit.js"></script>
+<script src="yourAssetsPath/ArMeetKit.3.0.0.js"></script>
 ```
 
 ## 三、API接口文档

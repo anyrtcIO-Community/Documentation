@@ -53,11 +53,11 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://github.com/anyRTC/anyRTC-Rtcp-web)
+- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.0.js)
 - 引用
 
 ```
-<script src="yourAssetsPath/ArRtcpKit.js"></script>
+<script src="yourAssetsPath/ArRtcpKit.3.0.0.js"></script>
 ```
 
 ## 三、API接口文档

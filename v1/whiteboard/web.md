@@ -37,6 +37,8 @@ anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 
 
 ### 导入SDK
 
+##### npm 市场
+
 * 安装指最新版本的SDK：
 
 ```
@@ -46,6 +48,14 @@ import Board from 'ar-whiteboard';
 import 'ar-whiteboard/lib/index.css';
 ```
 
+##### js 引用
+
+- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArWhiteBoard.3.0.0.js)
+- 引用
+
+```
+<script src="yourAssetsPath/ArWhiteBoard.3.0.0.js"></script>
+```
 
 ## 三、API接口文档
 ### ARWhiteboard API方法介绍

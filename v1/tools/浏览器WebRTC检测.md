@@ -55,11 +55,11 @@ import ArDetect from 'ar-detect';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://github.com/anyRTC/anyRTC-Detect-web)
+- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArDetect.3.0.0.js?_blank)
 - 引用
 
 ```
-<script src="yourAssetsPath/ArDetect.js"></script>
+<script src="yourAssetsPath/ArDetect.3.0.0.js"></script>
 ```
 
 ## 三、API接口文档
