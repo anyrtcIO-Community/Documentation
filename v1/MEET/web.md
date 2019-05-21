@@ -906,6 +906,10 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 
 ## 四、更新日志
 
+**Version 3.0.2 （2019-05-21）**
+
+- 修复会议窗口显像过慢的问题
+
 **Version 3.0.1 （2019-05-21）**
 
 - 修复开启屏幕共享的用户离会之后屏幕共享提示框残留的问题
