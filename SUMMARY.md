@@ -45,5 +45,6 @@
 * [FAQ](v1/FAQ/README.md)
     * [iOS常见问题](v1/FAQ/iOS常见问题.md)
     * [Android常见问题](v1/FAQ/Android常见问题.md)
+    * [Web常见问题](v1/FAQ/Web常见问题.md)
     * [其它常见问题](v1/FAQ/其它常见问题.md)
     * [计费说明](v1/FAQ/计费说明.md)
