@@ -43,7 +43,7 @@ npm install ar-rtcp --save-dev
 import ArRtcpKit from 'ar-rtcp';
 ```
 
-- 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+- 安装或更新至最新版本：
 
 ```
 npm install ar-rtcp@latest --save-dev
@@ -53,7 +53,7 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.0.js)
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```

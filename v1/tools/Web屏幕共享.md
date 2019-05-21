@@ -25,7 +25,7 @@ npm install ar-share-screen --save-dev
 import getScreenStream from "ar-share-screen";
 ```
 
-* 安装最新版本：
+* 安装或更新至最新版本：
 
 ```
 npm install ar-share-screen@latest --save-dev
@@ -35,7 +35,7 @@ import getScreenStream from 'ar-share-screen';
 
 **js 引用**
 
-* 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArShareScreen.3.0.0.js?_blank)
+* 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArShareScreen.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
 
 * 引用
 

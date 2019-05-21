@@ -39,7 +39,7 @@ anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 
 
 ##### npm 市场
 
-* 安装指最新版本的SDK：
+* 安装或更新至最新版本：
 
 ```
 npm install ar-whiteboard@latest --save-dev
@@ -50,7 +50,7 @@ import 'ar-whiteboard/lib/index.css';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArWhiteBoard.3.0.0.js)
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArWhiteBoard.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```

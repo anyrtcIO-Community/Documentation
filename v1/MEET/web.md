@@ -44,7 +44,7 @@ npm install ar-meet --save-dev
 import ArMeetKit from 'ar-meet';
 ```
 
-- 安装最新的SDK：
+- 安装或更新至最新版本：
 
 ```
 npm install ar-meet@latest --save-dev
@@ -54,11 +54,11 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.0.js)
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.1.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
-<script src="yourAssetsPath/ArMeetKit.3.0.0.js"></script>
+<script src="yourAssetsPath/ArMeetKit.3.0.1.js"></script>
 ```
 
 ## 三、API接口文档
@@ -906,7 +906,11 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 
 ## 四、更新日志
 
-**Version 3.0.0 （2019-01-18）**
+**Version 3.0.1 （2019-05-21）**
+
+- 修复开启屏幕共享的用户离会之后屏幕共享提示框残留的问题
+
+**Version 3.0.0 （2019-05-18）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
 

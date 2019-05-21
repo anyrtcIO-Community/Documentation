@@ -35,10 +35,13 @@ npm install ar-call@latest --save-dev
 import ArCall from 'ar-call';
 ```
 
-**`script`引入**
+##### js 引用
+
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
+- 引用
 
 ```
-<script src="yourAssetsPath/ArCallKit.js"></script>
+<script src="yourAssetsPath/ArCallKit.3.0.0.js"></script>
 ```
 
 ## 三、API接口文档

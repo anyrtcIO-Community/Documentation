@@ -45,7 +45,7 @@ npm install ar-detect --save-dev
 import ArDetect from 'ar-detect';
 ```
 
-- 安装(更新)最新的版本：
+- 安装或更新至最新版本：
 
 ```
 npm install ar-detect@latest --save-dev
@@ -55,7 +55,7 @@ import ArDetect from 'ar-detect';
 
 ##### js 引用
 
-- 点击[下载 SDK](https://docs.anyrtc.io/download/js/ArDetect.3.0.0.js?_blank)
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArDetect.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
