@@ -43,14 +43,14 @@ anyRTC提供在线抓娃娃机场景的支持，RTCWaWaJiEngine SDK 提供极简
 
 **手动导入**
 
-* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTCWaWaJiEngine.framework；
+* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-WaWa-Client-iOS)，找到RTCWaWaJiEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTCWaWaJiEngine.framework添加到你的工程目录中
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-9655284250ad1070.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_01](/assets/images/ios_rtcp_01.png)
 
 * 打开General->Embedded Binaries中添加RTCWaWaJiEngine.framework
 
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-7dbc0f736825ad6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
 
 ### 权限说明
 
@@ -82,7 +82,7 @@ anyRTC提供在线抓娃娃机场景的支持，RTCWaWaJiEngine SDK 提供极简
 
 勾选Audio, AirPlay and Picture in Picture
 
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-b402ff28caf96212.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
 
 ## 三、API接口文档
 

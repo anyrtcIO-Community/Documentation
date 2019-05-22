@@ -57,11 +57,11 @@ pod 'RTMPCHybirdEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMPCHybirdEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMPCHybirdEngine.framework添加到你的工程目录中
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-8a39e387120ee698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_01](/assets/images/ios_rtmpc_01.png)
 
 * 打开General->Embedded Binaries中添加RTMPCHybirdEngine.framework
 
-![2.png](https://upload-images.jianshu.io/upload_images/2478176-0690ad64fca2b49e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_02](/assets/images/ios_rtmpc_02.png)
 
 ### 权限说明
 
@@ -93,7 +93,7 @@ pod 'RTMPCHybirdEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![3.png](https://upload-images.jianshu.io/upload_images/2478176-0e875d7203186625.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_03](/assets/images/ios_rtmpc_03.png)
 
 ## 三、API接口文档
 

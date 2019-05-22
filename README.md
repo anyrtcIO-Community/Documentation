@@ -21,15 +21,15 @@ RTMaxEngine SDK | 指挥调度 | 适用于安防监控、智能家居 | 高清�
 
 * 前往[anyRTC官网](https://www.anyrtc.io)注册成为开发者；
 
-![image](https://upload-images.jianshu.io/upload_images/2478176-7316e0e0935a0412.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![home_01](/assets/images/home_01.png)
 
 * 点击左侧应用管理，选择创建应用；
 
-![image](https://upload-images.jianshu.io/upload_images/2478176-0a94bf4a6099b812.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![home_02](/assets/images/home_02.png)
 
 * 创建成功后即可查看该项目对应的配置信息。
 
-![image](https://upload-images.jianshu.io/upload_images/2478176-da945562f2418c20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![home_03](/assets/images/home_03.png)
 
 ### 开发者社区
 
