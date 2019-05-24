@@ -464,7 +464,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
 **说明**
 
-该方法用于与会者接通后，与会者视频接通回调中(onRTCOpenVideoRender)使用。 
+该方法用于与会者接通后，与会者视频接通回调中(onRTCOpenRemoteVideoRender)使用。 
 
 #### 21. 设置某个人的显示模式
 

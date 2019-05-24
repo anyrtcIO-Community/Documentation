@@ -50,7 +50,7 @@ pod 'RTCPEngine'
 * 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
 
 ```
-pod 'RTCPEngine', '3.0.0'
+pod 'RTCPEngine', '3.0.1'
 ```
 
 **手动导入**
@@ -759,6 +759,10 @@ packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
 ## 四、更新日志
+
+**Version 3.0.1 （2019-05-24）**
+
+* 修复观看端不操作锁屏问题
 
 **Version 3.0.0 （2019-05-15）**
 

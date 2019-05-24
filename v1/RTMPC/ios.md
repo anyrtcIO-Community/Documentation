@@ -46,10 +46,10 @@
 ```
 pod 'RTMPCHybirdEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.1 版本为例）：
 
 ```
-pod 'RTMPCHybirdEngine', '3.0.0'
+pod 'RTMPCHybirdEngine', '3.0.1'
 ```
 
 **手动导入**
@@ -1700,6 +1700,28 @@ serverId和roomId参数用于请求人员列表。
 - (void)onRTCLiveStop;
 ```
 
+#### 23. 获取视频的原始采集数据
+
+**定义**
+
+```
+- (CVPixelBufferRef)onRTCCaptureVideoPixelBuffer:(CMSampleBufferRef)sampleBuffer;
+```
+
+**参数**
+
+| 参数名       |       类型        | 描述     |
+| ------------ | :---------------: | -------- |
+| sampleBuffer | CMSampleBufferRef | 视频数据 |
+
+**返回值**
+
+视频对象（处理过或者没做处理）。
+
+**说明**
+
+获取视频原始数据，先设置摄像机类型为ARRtmpCameraTypeThreeFilter
+
 ### ARShareDelegate 接口类
 
 #### 1. 判断是否可以开启共享回调
@@ -1744,6 +1766,16 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 打开共享的人关闭了共享。 
 
 ## 四、更新日志
+
+**Version 3.0.1 （2019-05-23）**
+
+* 游客端添加"获取视频的原始采集数据"的回调</br>
+
+```
+//获取视频的原始采集数据
+- (CVPixelBufferRef)onRTCCaptureVideoPixelBuffer:(CMSampleBufferRef)sampleBuffer;
+```
+* 修复音频模式下不操作会锁屏的问题。
 
 **Version 3.0.0 （2019-05-15）**
 
