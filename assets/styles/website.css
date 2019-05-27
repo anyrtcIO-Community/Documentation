@@ -16,9 +16,9 @@
 .navigation.navigation-prev {
   display: none;
 }
-/* .summary .gitbook-link {
+.summary .gitbook-link {
   display: none !important;
-} */
+}
 
 /* 重置gitbook */
 .book-summary ul.summary li a:hover {
