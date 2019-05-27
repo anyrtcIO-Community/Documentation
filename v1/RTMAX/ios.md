@@ -59,10 +59,10 @@ pod 'RTMaxEngine', '3.0.0'
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMaxEngine.framework添加到你的工程目录中
 
-![1.png](https://upload-images.jianshu.io/upload_images/2557494-ae48287ca07844cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-* 打开General->Embedded Binaries中添加RTCPEngine.framework
+![ios_max_01](/assets/images/ios_max_01.png)
+* 打开General->Embedded Binaries中添加RTMaxEngine.framework
 
-![2.png](https://upload-images.jianshu.io/upload_images/2557494-d7f23242be674a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_max_02](/assets/images/ios_max_02.png)
 
 ### 权限说明
 
@@ -94,7 +94,7 @@ pod 'RTMaxEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![3.png](https://upload-images.jianshu.io/upload_images/2557494-e17c5e2ceb2fbadd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_max_03](/assets/images/ios_max_03.png)
 
 
 ## 三、API接口文档

@@ -50,7 +50,7 @@ pod 'RTCPEngine'
 * 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
 
 ```
-pod 'RTCPEngine', '3.0.0'
+pod 'RTCPEngine', '3.0.1'
 ```
 
 **手动导入**
@@ -58,11 +58,11 @@ pod 'RTCPEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTCPEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTCPEngine.framework添加到你的工程目录中
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-9655284250ad1070.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_01](/assets/images/ios_rtcp_01.png)
 
 * 打开General->Embedded Binaries中添加RTCPEngine.framework
 
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-7dbc0f736825ad6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
 
 ### 权限说明
 
@@ -94,7 +94,7 @@ pod 'RTCPEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-b402ff28caf96212.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
 
 ## 三、API接口文档
 
@@ -759,6 +759,10 @@ packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
 ## 四、更新日志
+
+**Version 3.0.1 （2019-05-24）**
+
+* 修复观看端不操作锁屏问题
 
 **Version 3.0.0 （2019-05-15）**
 

@@ -46,10 +46,10 @@
 ```
 pod 'RTMPCHybirdEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.1 版本为例）：
 
 ```
-pod 'RTMPCHybirdEngine', '3.0.0'
+pod 'RTMPCHybirdEngine', '3.0.1'
 ```
 
 **手动导入**
@@ -57,11 +57,11 @@ pod 'RTMPCHybirdEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMPCHybirdEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMPCHybirdEngine.framework添加到你的工程目录中
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-8a39e387120ee698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_01](/assets/images/ios_rtmpc_01.png)
 
 * 打开General->Embedded Binaries中添加RTMPCHybirdEngine.framework
 
-![2.png](https://upload-images.jianshu.io/upload_images/2478176-0690ad64fca2b49e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_02](/assets/images/ios_rtmpc_02.png)
 
 ### 权限说明
 
@@ -93,7 +93,7 @@ pod 'RTMPCHybirdEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![3.png](https://upload-images.jianshu.io/upload_images/2478176-0e875d7203186625.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_rtmpc_03](/assets/images/ios_rtmpc_03.png)
 
 ## 三、API接口文档
 
@@ -1700,6 +1700,28 @@ serverId和roomId参数用于请求人员列表。
 - (void)onRTCLiveStop;
 ```
 
+#### 23. 获取视频的原始采集数据
+
+**定义**
+
+```
+- (CVPixelBufferRef)onRTCCaptureVideoPixelBuffer:(CMSampleBufferRef)sampleBuffer;
+```
+
+**参数**
+
+| 参数名       |       类型        | 描述     |
+| ------------ | :---------------: | -------- |
+| sampleBuffer | CMSampleBufferRef | 视频数据 |
+
+**返回值**
+
+视频对象（处理过或者没做处理）。
+
+**说明**
+
+获取视频原始数据，先设置摄像机类型为ARRtmpCameraTypeThreeFilter
+
 ### ARShareDelegate 接口类
 
 #### 1. 判断是否可以开启共享回调
@@ -1744,6 +1766,16 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 打开共享的人关闭了共享。 
 
 ## 四、更新日志
+
+**Version 3.0.1 （2019-05-23）**
+
+* 游客端添加"获取视频的原始采集数据"的回调</br>
+
+```
+//获取视频的原始采集数据
+- (CVPixelBufferRef)onRTCCaptureVideoPixelBuffer:(CMSampleBufferRef)sampleBuffer;
+```
+* 修复音频模式下不操作会锁屏的问题。
 
 **Version 3.0.0 （2019-05-15）**
 

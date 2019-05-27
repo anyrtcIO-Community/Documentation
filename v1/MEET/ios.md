@@ -59,11 +59,11 @@ pod 'RTMeetEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMeetEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMeetEngine.framework添加到你的工程目录中
-![1.png](https://upload-images.jianshu.io/upload_images/2478176-f327de13d139f5c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_meet_01](/assets/images/ios_meet_01.png)
 
 * 打开General->Embedded Binaries中添加RTMeetEngine.framework
 
-![2.png](https://upload-images.jianshu.io/upload_images/2478176-86cfb0d92d92507d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_meet_02](/assets/images/ios_meet_02.png)
 
 ### 权限说明
 
@@ -95,7 +95,7 @@ pod 'RTMeetEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![3.png](https://upload-images.jianshu.io/upload_images/2478176-fa3e83e0db3fe0bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_meet_03](/assets/images/ios_meet_03.png)
 
 ## 三、API接口文档
 
@@ -464,7 +464,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
 **说明**
 
-该方法用于与会者接通后，与会者视频接通回调中(onRTCOpenVideoRender)使用。 
+该方法用于与会者接通后，与会者视频接通回调中(onRTCOpenRemoteVideoRender)使用。 
 
 #### 21. 设置某个人的显示模式
 

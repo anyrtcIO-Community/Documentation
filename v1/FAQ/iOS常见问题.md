@@ -2,7 +2,7 @@
 
 #### iOS进入后台后，听不到其他端说话了？
 打开TARGETS->Capabilities->Background Models 选中Audio,AirPlay,and Picture in Picture
-![](https://upload-images.jianshu.io/upload_images/2557494-11cc7c9988142c7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ios_question_01](/assets/images/ios_question_01.png)
 
 #### 手动集成SDK，运行时出现Reason: image not found的错误怎么回事？
 打开TARGETS->General->Embedded Binaries 点击+号把anyRTC SDK添加进来即可
