@@ -54,11 +54,11 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.1.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.4.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
-<script src="yourAssetsPath/ArMeetKit.3.0.1.js"></script>
+<script src="yourAssetsPath/ArMeetKit.版本.js"></script>
 ```
 
 ## 三、API接口文档
@@ -157,12 +157,36 @@ meet.getSDKVersion();
 
 ### ARMeetKit 接口类
 
-#### 1. 预览本地音视频
+#### 1. 获取媒体设备
 
 ##### 示例
 
 ```
-Meet.setLocalVideoCapturer(constraints);
+meet.getDevices(deviceType);
+```
+
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| deviceType  | string | 媒体设备类型`videoinput`、`audioinput`、`audiooutput`，分别是摄像头、麦克风、扬声器 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data对象，包含所查询的设备列表，如果deviceType为空则返回videoinput、videooutput、audioinput三个类型的设备列表
+
+##### 说明
+
+获取设备列表，根据设备列表的id可以切换指定摄像头以及指定扬声器作为音频输出设备。
+
+#### 2. 预览本地音视频
+
+##### 示例
+
+```
+meet.setLocalVideoCapturer(constraints);
 ```
 
 ##### 参数
@@ -203,7 +227,52 @@ Meet.setLocalVideoCapturer(constraints);
 
 预览本地音视频，如果`video.enable`为`true`时，表示允许采集摄像头；`video.deviceId`表示采集指定摄像头的媒体流。
 
-#### 2. 设置本地视频是否传输
+#### 3. 切换设备
+
+##### 示例
+
+```
+meet.switchDevice(constraints);
+```
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| constraints | Object | 音视频配置（非必填项） |
+
+**constraints**
+
+| 参数名 |  类型  | 描述       |
+| ------ | :----: | ---------- |
+| video  | Object | 视频配置； |
+| audio  | Object | 音频配置； |
+
+| video    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集摄像头， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+| audio    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集麦克风， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data
+
+| data        |      描述      |
+| ----------- | :------------: |
+| mediaStream |  MediaStream   |
+| mediaRender | HTMLDivElement |
+
+##### 说明
+
+切换设备获取新的媒体流，将新的mediaRender展示到页面。
+
+#### 4. 设置本地视频是否传输
 
 ##### 示例
 
@@ -217,7 +286,7 @@ meet.setLocalVideoEnable(enable);
 | ------ | :-----: | --------------------------------------------------- |
 | enable | Boolean | `true`为传输视频，`false`为不传输视频，默认视频传输 |
 
-#### 3. 设置本地音频是否传输
+#### 5. 设置本地音频是否传输
 
 ##### 示例
 
@@ -231,7 +300,7 @@ meet.setLocalAudioEnable(enable);
 | ------ | :-----: | --------------------------------------------------- |
 | enable | Boolean | `true`为传输视频，`false`为不传输视频，默认视频传输 |
 
-#### 4. 获取本地视频传输是否打开
+#### 6. 获取本地视频传输是否打开
 
 ##### 示例
 
@@ -243,7 +312,7 @@ meet.getLocalVideoEnable();
 
 视频是否传输。 
 
-#### 5. 获取本地音频传输是否打开
+#### 7. 获取本地音频传输是否打开
 
 ##### 示例
 
@@ -255,7 +324,7 @@ meet.getLocalAudioEnable();
 
 音频是否传输。 
 
-#### 6. 设置远端音视频是否传输
+#### 8. 设置远端音视频是否传输
 
 ##### 示例
 
@@ -271,7 +340,7 @@ meet.setRemoteAVEnable(peerId, audioEnable, videoEnable);
 | audioEnable | Boolean | 音频是否传输                                               |
 | videoEnable | Boolean | 视频是否传输                                               |
 
-#### 7. 打开共享通道
+#### 9. 打开共享通道
 
 ##### 示例
 
@@ -289,7 +358,7 @@ meet.openShare(type);
 
 打开共享通道之后，将会收到`share-result`回调。
 
-#### 8. 设置共享信息
+#### 10. 设置共享信息
 
 ##### 示例
 
@@ -307,7 +376,7 @@ meet.setShareInfo(shareInfo);
 
 打开共享通道成功(`share-result` )之后调用，其他端在收到`share-opened`回调时将收到该参数。
 
-#### 9. 关闭共享通道
+#### 11. 关闭共享通道
 
 ##### 示例
 
@@ -325,7 +394,7 @@ meet.closeShare(type);
 
 结束共享，其他参会者将会收到`share-closed`
 
-#### 10. 开始屏幕共享
+#### 12. 开始屏幕共享
 
 ##### 示例
 
@@ -343,7 +412,7 @@ meet.startScreenCap(scrnStream);
 
 该接口表示发布该屏幕共享流，发布共享流之前，需要获取到屏幕共享流，具体使用请前往npm 市场查看[ar-share-screen](<https://www.npmjs.com/package/ar-share-screen>)。
 
-#### 11. 结束屏幕共享
+#### 13. 结束屏幕共享
 
 ##### 示例
 
@@ -355,7 +424,7 @@ meet.stopScreenCap();
 
 停止该屏幕共享流。
 
-#### 12. 加入房间
+#### 14. 加入房间
 
 ##### 示例
 
@@ -370,7 +439,7 @@ meet.joinRTC(roomId, userToken);
 | roomId    | String | 房间唯一标识ID                                               |
 | userToken | String | 用于企业认证，如果开通了企业认证的客户，需要使用该方法进行初始化设置 |
 
-#### 13. 发送用户实时消息
+#### 15. 发送用户实时消息
 
 ##### 示例
 
@@ -386,7 +455,7 @@ meet.sendUserMessage(userName, userHeaderUrl, content);
 | userHeaderUrl | String | 自定义头像URL（最大512字节）                   |
 | content       | String | 自定义消息内容，推荐JSON字符串（最大1024字节） |
 
-#### 14. 设置某路视频广播 -- (仅主持人模式有效)
+#### 16. 设置某路视频广播 -- (仅主持人模式有效)
 
 ##### 示例
 
@@ -405,7 +474,7 @@ meet.setBroadCast(enable, peerId);
 
 主持人模式，主持人可以看到所有用户的图像，与会者只能看到主持人模式，如果主持人广播某人的视频，其他都可以看到被广播者的图像。取消广播，将会移除被广播者的图像。
 
-#### 15. 设置是否单独聊天 -- (仅主持人模式有效)
+#### 17. 设置是否单独聊天 -- (仅主持人模式有效)
 
 ##### 示例
 
@@ -424,7 +493,7 @@ meet.setTalkOnly(enable, peerId);
 
 主持人设置单聊对象，房间内的人将不能听到单聊双方的语音。
 
-#### 16. 离开房间
+#### 18. 离开房间
 
 ##### 示例
 
@@ -436,7 +505,7 @@ meet.leaveRTC();
 
 释放实例。离开页面或退出房间时需要调用此方法，其他端才会收到用户离开的回调，否则会有视图残留在页面。
 
-#### 17. 设置音频检测是否打开
+#### 19. 设置音频检测是否打开
 
 ##### 示例
 
@@ -450,7 +519,7 @@ meet.setAudioActiveCheck(enable);
 | ------ | :-----: | --------------------------------- |
 | enable | Boolean | `true`打开，`false`关闭，默认关闭 |
 
-#### 18. 获取音频检测是否打开
+#### 20. 获取音频检测是否打开
 
 ##### 示例
 
@@ -462,7 +531,7 @@ meet.getAudioActiveCheck();
 
 获取网络状态。 
 
-#### 19. 设置网络质量是否打开
+#### 21. 设置网络质量是否打开
 
 ##### 示例
 
@@ -476,7 +545,7 @@ meet.setNetworkStatus(enable);
 | ------ | :-----: | --------------------------------- |
 | enable | Boolean | `true`打开，`false`关闭，默认关闭 |
 
-#### 20. 获取当前网络状态是否打开
+#### 22. 获取当前网络状态是否打开
 
 ##### 示例
 
@@ -488,7 +557,7 @@ meet.getNetworkStatus();
 
 获取网络状态。 
 
-#### 21. 设置zoom模式
+#### 23. 设置zoom模式
 
 ##### 示例
 
@@ -502,7 +571,7 @@ meet.setZoomMode(zoomMode);
 | -------- | :----: | ------------------------------------------------ |
 | zoomMode | Number | `0`为演讲者模式；`1`为画廊模式；默认演讲者模式。 |
 
-#### 22. 切换zoom模式
+#### 24. 切换zoom模式
 
 ##### 示例
 
@@ -516,7 +585,7 @@ meet.switchZoomMode(zoomMode);
 | -------- | :----: | ------------------------------------------------ |
 | zoomMode | Number | `0`为演讲者模式；`1`为画廊模式；默认演讲者模式。 |
 
-#### 23. 获取人员列表
+#### 25. 获取人员列表
 
 ##### 示例
 
@@ -557,7 +626,7 @@ meet.on('join-failed', (code) => {});
 ##### 示例
 
 ```
-meet.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
+meet.on('stream-subscribed', (peerId, pubId, userId, userData, mediaRender) => {});
 ```
 
 ##### 参数
@@ -566,6 +635,7 @@ meet.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 | ----------- | :----: | ------------------------------------------------------------ |
 | peerId      | String | RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)   |
 | pubId       | String | RTC服务生成媒体流的唯一标识ID                                |
+| userId      | String | 自定义用户ID(该加入人员的用户信息，初始化实例时携带的`userId`) |
 | userData    | String | 自定义用户数据(该加入人员的用户信息，初始化实例时携带的`userData`) |
 | mediaRender | String | 远程视频                                                     |
 
@@ -578,7 +648,7 @@ meet.on('stream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 ##### 示例
 
 ```
-meet.on('stream-unsubscribed', (peerId, pubId, userData) => {});
+meet.on('stream-unsubscribed', (peerId, pubId, userId, userData) => {});
 ```
 
 ##### 参数
@@ -587,6 +657,7 @@ meet.on('stream-unsubscribed', (peerId, pubId, userData) => {});
 | -------- | :----: | ------------------------------------------------------------ |
 | peerId   | String | RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)   |
 | pubId    | String | RTC服务生成媒体流的唯一标识ID                                |
+| userId   | String | 自定义用户ID(该加入人员的用户信息，初始化实例时携带的`userId`) |
 | userData | String | 自定义用户数据(该加入人员的用户信息，初始化实例时携带的`userData`) |
 
 ##### 说明
@@ -598,7 +669,7 @@ meet.on('stream-unsubscribed', (peerId, pubId, userData) => {});
 ##### 示例
 
 ```
-meet.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {});
+meet.on('exstream-subscribed', (peerId, pubId, userId, userData, mediaRender) => {});
 ```
 
 ##### 参数
@@ -607,6 +678,7 @@ meet.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 | ----------- | :----: | ------------------------------------------------------------ |
 | peerId      | String | RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)   |
 | pubId       | String | RTC服务生成媒体流的唯一标识ID                                |
+| userId      | String | 自定义用户ID(该加入人员的用户信息，初始化实例时携带的`userId`) |
 | userData    | String | 自定义用户数据(该加入人员的用户信息，初始化实例时携带的`userData`) |
 | mediaRender | String | 远程视频                                                     |
 
@@ -619,7 +691,7 @@ meet.on('exstream-subscribed', (peerId, pubId, userData, mediaRender) => {});
 ##### 示例
 
 ```
-meet.on('exstream-unsubscribed', (peerId, pubId, userData) => {});
+meet.on('exstream-unsubscribed', (peerId, pubId, userId, userData) => {});
 ```
 
 ##### 参数
@@ -628,6 +700,7 @@ meet.on('exstream-unsubscribed', (peerId, pubId, userData) => {});
 | -------- | :----: | ------------------------------------------------------------ |
 | peerId   | String | RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)   |
 | pubId    | String | RTC服务生成媒体流的唯一标识ID                                |
+| userId   | String | 自定义用户ID(该加入人员的用户信息，初始化实例时携带的`userId`) |
 | userData | String | 自定义用户数据(该加入人员的用户信息，初始化实例时携带的`userData`) |
 
 ##### 说明
@@ -906,6 +979,18 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 
 ## 四、更新日志
 
+**Version 3.0.5 （2019-05-27）**
+
+- 更新文档，文档添加`getDevices`和`switchDevice`的介绍
+
+- 修复远程图像显示不全的问题
+
+**Version 3.0.4 （2019-05-24）**
+
+- `stream-subscribed`、`exstream-subscribed`、`stream-unsubscribed`、`exstream-unsubscribed`回调添加userId回调参数，作为第三个回调参数返回
+
+- 修复切换摄像头的内部错误
+
 **Version 3.0.2 （2019-05-21）**
 
 - 修复会议窗口显像过慢的问题
@@ -917,10 +1002,6 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 **Version 3.0.0 （2019-05-18）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
-
-**Version 2.0.0 （2017-09-30）**
-
-- SDK版本升级2.0，梳理、完善SDK
 
 ## 五、错误码对照表
 

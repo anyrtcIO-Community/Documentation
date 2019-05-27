@@ -53,11 +53,11 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.4.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
-<script src="yourAssetsPath/ArRtcpKit.3.0.0.js"></script>
+<script src="yourAssetsPath/ArRtcpKit.版本号.js"></script>
 ```
 
 ## 三、API接口文档
@@ -173,7 +173,31 @@ ARRtcpKit SDK版本号。
 
 ### ARMeetKit 接口类
 
-#### 1. 预览本地音视频
+#### 1. 获取媒体设备
+
+##### 示例
+
+```
+meet.getDevices(deviceType);
+```
+
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| deviceType  | string | 媒体设备类型`videoinput`、`audioinput`、`audiooutput`，分别是摄像头、麦克风、扬声器 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data对象，包含所查询的设备列表，如果deviceType为空则返回videoinput、videooutput、audioinput三个类型的设备列表
+
+##### 说明
+
+获取设备列表，根据设备列表的id可以切换指定摄像头以及指定扬声器作为音频输出设备。
+
+#### 2. 预览本地音视频
 
 ##### 示例
 
@@ -219,7 +243,52 @@ rtcp.setLocalVideoCapturer(constraints);
 
 预览本地音视频，如果`video.enable`为`true`时，表示允许采集摄像头；`video.deviceId`表示采集指定摄像头的媒体流。
 
-#### 2. 设置本地音频是否传输
+#### 3. 切换设备
+
+##### 示例
+
+```
+meet.switchDevice(constraints);
+```
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| constraints | Object | 音视频配置（非必填项） |
+
+**constraints**
+
+| 参数名 |  类型  | 描述       |
+| ------ | :----: | ---------- |
+| video  | Object | 视频配置； |
+| audio  | Object | 音频配置； |
+
+| video    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集摄像头， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+| audio    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集麦克风， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data
+
+| data        |      描述      |
+| ----------- | :------------: |
+| mediaStream |  MediaStream   |
+| mediaRender | HTMLDivElement |
+
+##### 说明
+
+切换设备获取新的媒体流，将新的mediaRender展示到页面。
+
+#### 4. 设置本地音频是否传输
 
 ##### 示例
 
@@ -237,7 +306,7 @@ rtcp.setLocalAudioEnable(enable);
 
 该方法需要在setLocalVideoCapturer回调成功之后才能调用。
 
-#### 3. 设置本地视频是否传输
+#### 5. 设置本地视频是否传输
 
 ##### 示例
 
@@ -255,7 +324,7 @@ rtcp.setLocalVideoEnable(enable);
 
 该方法需要在setLocalVideoCapturer回调成功之后才能调用。
 
-#### 4. 获取本地视频传输是否打开
+#### 6. 获取本地视频传输是否打开
 
 ##### 示例
 
@@ -267,7 +336,7 @@ rtcp.getLocalVideoEnable();
 
 获取本地视频是否传输。
 
-#### 5. 获取本地音频传输是否打开
+#### 7. 获取本地音频传输是否打开
 
 ##### 示例
 
@@ -279,7 +348,7 @@ rtcp.getLocalAudioEnable();
 
 获取本地音频是否传输。
 
-#### 6. 发布媒体
+#### 8. 发布媒体
 
 ##### 示例
 
@@ -297,7 +366,7 @@ rtcp.publish(mediaType);
 
 如果发布成功，回调中会分配一个频道Id，用户订阅该频道即可观看发布者图像
 
-#### 7. 取消发布媒体
+#### 9. 取消发布媒体
 
 ##### 示例
 
@@ -309,7 +378,7 @@ rtcp.unPublish();
 
 取消发布媒体。
 
-#### 8. 发布辅流
+#### 10. 发布辅流
 
 ##### 示例
 
@@ -327,7 +396,7 @@ rtcp.publishEx(scrnStream);
 
 发布辅流（屏幕共享流），发布共享流之前，需要获取到屏幕共享流，具体使用请查看[ar-share-screen](<https://www.npmjs.com/package/ar-share-screen>)。
 
-#### 9. 取消发布辅流
+#### 11. 取消发布辅流
 
 ##### 示例
 
@@ -339,7 +408,7 @@ rtcp.unPublishEx();
 
 取消发布辅流。
 
-#### 10. 媒体订阅
+#### 12. 媒体订阅
 
 ##### 示例
 
@@ -357,7 +426,7 @@ rtcp.subscribe(rtcpId);
 
 媒体订阅。
 
-#### 11. 取消媒体订阅
+#### 13. 取消媒体订阅
 
 ##### 示例
 
@@ -375,7 +444,7 @@ rtcp.unSubscribe(rtcpId);
 
 取消媒体订阅。
 
-#### 12. 结束直播
+#### 14. 结束直播
 
 ##### 示例
 
@@ -586,13 +655,15 @@ rtcp.on("server-disconnect", function(){});
 
 ## 四、更新日志
 
+**Version 3.0.4 （2019-05-27）**
+
+- 更新文档，文档添加`getDevices`和`switchDevice`的介绍
+
+- 修复远程图像显示不全的问题
+
 **Version 3.0.0 （2019-01-24）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
-
-**Version 2.0.0 （2017-09-30）**
-
-- DK版本升级2.0，梳理、完善SDK
 
 ## 五、错误码对照表		
 

@@ -37,11 +37,11 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.2.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
-<script src="yourAssetsPath/ArCallKit.3.0.0.js"></script>
+<script src="yourAssetsPath/ArCallKit.版本.js"></script>
 ```
 
 ## 三、API接口文档
@@ -119,6 +119,30 @@ call.getSDKVersion();
 
 获取ARCall SDK版本号
 
+#### 获取媒体设备
+
+##### 示例
+
+```
+meet.getDevices(deviceType);
+```
+
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| deviceType  | string | 媒体设备类型`videoinput`、`audioinput`、`audiooutput`，分别是摄像头、麦克风、扬声器 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data对象，包含所查询的设备列表，如果deviceType为空则返回videoinput、videooutput、audioinput三个类型的设备列表
+
+##### 说明
+
+获取设备列表，根据设备列表的id可以切换指定摄像头以及指定扬声器作为音频输出设备。
+
 #### 采集本地视频窗口
 
 **定义**
@@ -143,6 +167,51 @@ call.setLocalVideoCapturer(constraints);
 **说明**
 
 返回`Promise`对象。
+
+#### 切换设备
+
+##### 示例
+
+```
+meet.switchDevice(constraints);
+```
+##### 参数
+
+| 参数名      |  类型  | 描述                             |
+| ----------- | :----: | -------------------------------- |
+| constraints | Object | 音视频配置（非必填项） |
+
+**constraints**
+
+| 参数名 |  类型  | 描述       |
+| ------ | :----: | ---------- |
+| video  | Object | 视频配置； |
+| audio  | Object | 音频配置； |
+
+| video    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集摄像头， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+| audio    |  类型   | 描述                                         |
+| -------- | :-----: | -------------------------------------------- |
+| enable   | Boolean | `true`为采集麦克风， `false`;                |
+| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+
+**Return**
+
+`Promise`对象
+
+`Promise.then` 返回的参数data
+
+| data        |      描述      |
+| ----------- | :------------: |
+| mediaStream |  MediaStream   |
+| mediaRender | HTMLDivElement |
+
+##### 说明
+
+切换设备获取新的媒体流，将新的mediaRender展示到页面。
 
 #### 设置坐席身份
 
@@ -460,7 +529,7 @@ call.on("end-call", (peerUserId, errCode) => {
 **定义**
 
 ```
-call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
+call.on("stream-subscribed", (peerUserId, renderId, peerUserId, peerUserData, render) => {
 
 });
 ```
@@ -471,6 +540,7 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
 | ------------ | :------------: | -------------------- |
 | peerUserId   |     string     | 对方的自定义userId   |
 | renderId     |     string     | 视频窗口标识ID       |
+| peerUserId   |     string     | 对方的自定义userId   |
 | peerUserData |     string     | 对方的自定义userData |
 | render       | HTMLDIVElement | 媒体窗口             |
 
@@ -483,7 +553,7 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
 **定义**
 
 ```
-call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
+call.on("stream-unsubscribed", (peerUserId, renderId, peerUserId, peerUserData) => {
 
 });
 ```
@@ -494,6 +564,7 @@ call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
 | ------------ | :----: | -------------------- |
 | peerUserId   | string | 对方的自定义userId   |
 | renderId     | string | 视频窗口标识ID       |
+| peerUserId   | string | 对方的自定义userId   |
 | peerUserData | string | 对方的自定义userData |
 
 **说明**
@@ -523,13 +594,15 @@ call.on("user-message", (peerUserId, msgContent) => {
 
 ## 四、更新日志
 
+**Version 3.0.2 （2019-05-27）**
+
+- 更新文档，文档添加`getDevices`和`switchDevice`的介绍
+
+- 修复远程图像显示不全的问题
+
 **Version 3.0.0 （2019-01-18）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
-
-**Version 2.0.0 （2017-09-30）**
-
-- SDK版本升级2.0，梳理、完善SDK
 
 ## 五、错误码对照表
 

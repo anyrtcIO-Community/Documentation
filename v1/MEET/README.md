@@ -2,6 +2,7 @@
 
 ### 简介
 
+anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频、高安全性、全平台运行、丰富的会议管理功能，支持视频、语音多人会议，适用于会议、培训、互动等多人移动会议。
 多人音视频可以实现一对一单聊和多人群聊，适用于社交、会议、在线教育、培训等场景。
 
 ### Demo体验
@@ -23,6 +24,3 @@
 - [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Android)
 
 - [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
-
-
-

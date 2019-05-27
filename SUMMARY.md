@@ -14,6 +14,7 @@
         * [Android](v1/MEET/android.md)
         * [iOS](v1/MEET/ios.md)
         * [Web](v1/MEET/web.md)
+        * [微信小程序](v1/MEET/miniapp.md)
     * [点对点](v1/P2P/README.md)
         * [Android](v1/P2P/android.md)
         * [iOS](v1/P2P/ios.md)
