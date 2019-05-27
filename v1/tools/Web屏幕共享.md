@@ -35,15 +35,13 @@ import getScreenStream from 'ar-share-screen';
 
 **js 引用**
 
-* 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArShareScreen.3.0.0.js)，`ctrl+s`或`command+s`保存到本地
+* 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArShareScreen.3.0.1.js)，`ctrl+s`或`command+s`保存到本地
 
 * 引用
 
 ```
 <!-- 先再头部引入样式 -->
-<link rel="stylesheet" href="路径/index.css">
-
-<script src="路径/ArShareScreen.3.0.0.js"></script>
+<script src="路径/ArShareScreen.版本号.js"></script>
 ```
 
 ## 三、API接口文档
@@ -96,10 +94,10 @@ getScreenStream.then(e => {
 
 ## 四、更新日志
 
+**Version 3.0.1 （2019-05-27）**
+
+* 更新文档
+
 **Version 3.0.0 （2019-01-18）**
 
 * SDK版本升级3.0，API接口变更，更加简洁规范
-
-**Version 2.0.0 （2017-09-30）**
-
-* SDK版本升级2.0，梳理、完善SDK
