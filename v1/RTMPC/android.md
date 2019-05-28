@@ -1,8 +1,10 @@
 ## 一、概述
 
-#### 简介
+### 简介
 
-#### Demo体验
+互动连麦基于RTMP 基础上添加RTC实时互动的功能；推流断线重连，拉流秒开，最大支持4人同时互动连麦，观众人数不限，适用于游戏直播、美女秀场等场景
+
+### Demo体验
 
 请根据需求选择渠道安装，安装完直播互动连麦Demo后，可体验在线直播多人连麦功能。
 
@@ -12,7 +14,7 @@
 
 - [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
 
-#### 源码GitHub
+### 源码GitHub
 
 源码仅供开发者参考，适用于SDK调试，便于快速集成。
 
@@ -23,17 +25,17 @@
 
 ## 二、集成指南
 
-#### 适用范围
+### 适用范围
 
 本集成文档适用于Android ARRtmpc SDK 3.0.0版本。
 
-#### 准备环境
+### 准备环境
 
 - Android Studio 2.1或以上版本
 - Android 版本不低于 4.0.3 且支持音视频的 Android 设备（不支持模拟器）
 - Android 设备已经连接到有效网络
 
-#### 导入SDK
+### 导入SDK
 
 **Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/rtmpc/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/rtmpc/_latestVersion)
 
@@ -41,7 +43,7 @@
 
 ```
 dependencies {
-   compile 'org.ar:rtmpc_hybrid:3.0.0'
+   compile 'org.ar:rtmpc_hybrid:3.0.3'
 }
 ```
 
@@ -50,7 +52,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtmpc_hybrid</artifactId>
-  <version>3.0.0</version>
+  <version>3.0.3</version>
   <type>pom</type>
 </dependency>
 ```
@@ -83,7 +85,7 @@ dependencies {
 
 ### ARRtmpcEngine 类
 
-#### 1. 初始化并配置开发者信息
+### 1. 初始化并配置开发者信息
 
 **定义**
 
@@ -102,7 +104,7 @@ token | String  | token
 
 该方法为配置开发者信息，上述参数均可在https://www.anyrtc.io/ 应用管理中获得；建议在Application调用。
 
-#### 2. 配置私有云
+### 2. 配置私有云
 
 **定义**
 
@@ -120,7 +122,7 @@ port | int | 私有云服务端口
 
 配置私有云信息，当使用私有云时才需要进行配置，默认无需配置。
 
-#### 3. 获取SDK版本号
+### 3. 获取SDK版本号
 
 **定义**
 
@@ -131,7 +133,7 @@ String getSdkVersion()
 
 SDK版本号
 
-#### 4. 关闭硬解码(安卓特有)
+### 4. 关闭硬解码(安卓特有)
 
 **定义**
 
@@ -139,14 +141,14 @@ SDK版本号
 void disableHWDecode()
 ```
 
-#### 5. 关闭硬编码(安卓特有)
+### 5. 关闭硬编码(安卓特有)
 
 **定义**
 
 ```
 void disableHWEncode()
 ```
-#### 6. 设置日志显示级别
+### 6. 设置日志显示级别
 
 **定义**
 
@@ -161,14 +163,14 @@ logLevel | ARLogLevel | 日志显示级别
 ---
 ### ARRtmpcHosterOption主播端配置类
 
-#### 1. 获取配置类
+### 1. 获取配置类
 
 **定义**
 
 ```
 ARRtmpcHosterOption arHostOption = ARRtmpcEngine.Inst().getHosterOption();
 ```
-#### 2. 设置可配置参数
+### 2. 设置可配置参数
 
 **定义**
 ```
@@ -194,7 +196,7 @@ lineLayoutTemplate|ARRtmpcLineLayoutTemplate|连麦合成画面布局样式
 
 ### ARRtmpcHosterKit主播类
 
-#### 1. 实例化ARRtmpcHosterKit对象
+### 1. 实例化ARRtmpcHosterKit对象
 
 **定义**
 
@@ -208,7 +210,7 @@ ARRtmpcHosterKit hostKit = new ARRtmpcHosterKit(ARRtmpcHosterEvent hosterEvent);
 ---|:---:|---
 hosterEvent | ARRtmpcHosterEvent | 回调实现类
 
-#### 2. 设置本地视频采集窗口
+### 2. 设置本地视频采集窗口
 
 **定义**
 
@@ -227,7 +229,7 @@ render | long | 底层视频渲染对象
 
 0/1/2：没有相机权限/打开相机成功/打开相机失败
 
-#### 3. 开始推流
+### 3. 开始推流
 
 **定义**
 
@@ -247,7 +249,7 @@ pushUrl | String | 推流地址
 传入推流地址开始推流
 
 
-#### 3. 创建RTC连接
+### 3. 创建RTC连接
 
 **定义**
 
@@ -272,7 +274,7 @@ userData | String | 播在开发者自己平台的相关信息（昵称，头像
 
 该方法须在开始推流（startRtmpPlay）方法后调用
 
-#### 4. 同意游客连麦请求
+### 4. 同意游客连麦请求
 
 **定义**
 
@@ -291,7 +293,7 @@ peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用�
 
 调用此方法即可同意游客的连麦请求。
 
-#### 5.拒绝游客连麦请求
+### 5.拒绝游客连麦请求
 
 **定义**
 
@@ -310,7 +312,7 @@ peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用�
 
 调用此方法即可拒绝游客的连麦请求
 
-#### 6.挂断游客连麦
+### 6.挂断游客连麦
 
 **定义**
 
@@ -329,7 +331,7 @@ peerId | String | RTC服务生成的连麦者标识Id 。(用于标识连麦用�
 
 调用此方法即可挂断与游客的连麦
 
-#### 7.停止推流
+### 7.停止推流
 
 **定义**
 
@@ -340,7 +342,7 @@ void stopRtmpStream()
 
 停止推流
 
-#### 8.设置其他人视频窗口
+### 8.设置其他人视频窗口
 
 **定义**
 
@@ -359,7 +361,7 @@ publishId | String | RTC服务生成是视频通道Id
 
 该方法用于游客申请连麦接通后，游客视频连麦接通回调中（OnRTCOpenRemoteVideoRender）使用
 
-#### 9. 发送消息
+### 9. 发送消息
 
 **定义**
 
@@ -381,7 +383,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 
 true 发送成功 false 发送失败
 
-#### 10. 关闭RTC连接
+### 10. 关闭RTC连接
 
 **定义**
 
@@ -393,7 +395,7 @@ void closeRTCLine()
 
 一般不调用。主播端如果调用此方法，将会关闭RTC服务，游客端将会收主播已离开onRTCLineLeave回调。
 
-#### 11. 设置合成流连麦视频窗口位置
+### 11. 设置合成流连麦视频窗口位置
 
 **定义**
 
@@ -412,7 +414,7 @@ ePadhor | int |  横向的间距（左右间距：最左边或者最后边的视
 ePadver|int|竖向的间距（上下间距：最上面或者最下面离边框的距离）
 nWLineWidth|int|合成小视频白边宽度（上下间距：最上面或者最下面离边框的距离）
 
-#### 12. 设置合成视频显示模板
+### 12. 设置合成视频显示模板
 
 **定义**
 
@@ -426,7 +428,7 @@ void setMixVideoModel(ARRtmpcLineLayoutTemplate layoutTemplate)
 ---|:---:|---
 layoutTemplate|ARRtmpcLineLayoutTemplate|布局样式
 
-#### 13. 设置视频的默认背景图片
+### 13. 设置视频的默认背景图片
 
 **定义**
 
@@ -448,7 +450,7 @@ filePath|String|图片的路径
 
 一定要打开读取权限，仅支持jpg和png的图片格式（仅支持640*640分辨率以内）
 
-#### 14. 设置本地音频是否传输
+### 14. 设置本地音频是否传输
 
 **定义**
 
@@ -466,7 +468,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 15. 设置本地视频是否传输
+### 15. 设置本地视频是否传输
 
 **定义**
 
@@ -485,7 +487,7 @@ enable | boolean| 打开或关闭本地视频传输
 true为传输视频，false为不传输视频，默认视频传输
 
 
-#### 16. 切换前后摄像头
+### 16. 切换前后摄像头
 
 **定义**
 
@@ -494,7 +496,7 @@ void switchCamera()
 
 ```
 
-#### 17. 设置录像地址（地址为拉流地址）
+### 17. 设置录像地址（地址为拉流地址）
 
 **定义**
 
@@ -512,7 +514,7 @@ url | String| 设置Rtmp录制地址，需放在开始推流方法前.并且**�
 
 设置录像地址（地址为拉流地址）
 
-#### 18. 设置前置摄像头镜像是否打开
+### 18. 设置前置摄像头镜像是否打开
 
 **定义**
 
@@ -530,7 +532,7 @@ enable | boolean| true 打开 false 关闭
 
 是否打开镜像模式，默认关闭
 
-#### 19. 设置相机支持范围内的焦距
+### 19. 设置相机支持范围内的焦距
 
 **定义**
 
@@ -548,7 +550,7 @@ distance | int| 焦距
 
 设置相机支持范围内的焦距
 
-#### 21. 获取相机最大焦距
+### 20. 获取相机最大焦距
 
 **定义**
 
@@ -560,7 +562,7 @@ int getCameraMaxZoom()
 
 最大焦距
 
-#### 22. 获取相机当前焦距
+### 21. 获取相机当前焦距
 
 **定义**
 
@@ -572,7 +574,7 @@ int getCameraZoom()
 
 当前焦距
 
-#### 23. 判断是否可变焦
+### 22. 判断是否可变焦
 
 **定义**
 
@@ -588,7 +590,7 @@ boolean isSmoothZoomSupported()
 **说明**  
 在设置变焦前先用该方法判断是否支持变焦
 
-#### 24. 打开关闭摄像头闪光灯
+### 23. 打开关闭摄像头闪光灯
 
 **定义**
 
@@ -602,7 +604,7 @@ void openCameraTorchMode(final boolean open)
 ---|:---:|---
 open | boolean | 是否开启闪光灯
 
-#### 25. 设置音频检测
+### 24. 设置音频检测
 
 **定义**
 
@@ -621,7 +623,7 @@ open | boolean | 是否开启音频检测
 默认音频检测打开
 
 
-#### 26.设置视频横屏模式
+### 25.设置视频横屏模式
 
 **定义**
 
@@ -629,7 +631,7 @@ open | boolean | 是否开启音频检测
  void setScreenToLandscape()
 ```
 
-#### 27.设置视频竖屏模式
+### 26.设置视频竖屏模式
 
 **定义**
 
@@ -637,7 +639,7 @@ open | boolean | 是否开启音频检测
 void setScreenToPortrait()
 ```
 
-#### 28. 设置左侧logo水印
+### 27. 设置左侧logo水印
 
 **定义**
 
@@ -658,7 +660,7 @@ y | int | 距左上角Y轴距离
 仅支持jpg图片，注意安卓动态权限处理
 
 
-#### 29. 设置右侧logo水印
+### 28. 设置右侧logo水印
 
 **定义**
 
@@ -678,7 +680,7 @@ y | int | 距右上角Y轴距离
 
 仅支持jpg图片，注意安卓动态权限处理
 
-#### 30.销毁主播端
+### 29.销毁主播端
 
 **定义**
 
@@ -687,7 +689,7 @@ void clean()
 ```
 ### ARRtmpcHosterEvent主播回调类
 
-#### 1. RTMP服务连接成功
+### 1. RTMP服务连接成功
 
 **定义**
 
@@ -695,7 +697,7 @@ void clean()
 void onRtmpStreamOk()
 ```
 
-#### 2. RTMP 服务重连
+### 2. RTMP 服务重连
 
 **定义**
 
@@ -708,7 +710,7 @@ void onRtmpStreamReconnecting(int times)
 ---|:---:|---
 times | int| 重连次数
 
-#### 3. RTMP推流状态
+### 3. RTMP推流状态
 
 **定义**
 
@@ -722,7 +724,7 @@ void onRtmpStreamStatus(int delayTime, int netBand)
 times | int| 推流的延迟时间(单位：ms)
 netBand | int| 当前的上行的带宽（单位：byte）
 
-#### 4. RTMP服务连接失败
+### 4. RTMP服务连接失败
 
 **定义**
 
@@ -735,14 +737,14 @@ void onRtmpStreamFailed(int code)
 ---|:---:|---
 code | int| 状态码
 
-#### 4. RTMP服务关闭
+### 5. RTMP服务关闭
 
 **定义**
 
 ```
  void onRtmpStreamClosed()
 ```
-#### 5. 创建RTC服务结果
+### 6. 创建RTC服务结果
 
 **定义**
 
@@ -761,7 +763,7 @@ reason | String| 原因
 code==0 时，连接服务成功
 code为其他值时均为失败，具体可查看code对应说明
 
-#### 6. 主播收到游客连麦请求
+### 7. 主播收到游客连麦请求
 
 **定义**
 
@@ -777,7 +779,7 @@ userId | String| 游客在自己业务平台的UserId
 userData | String| 游客加入RTC连接的自定义参数体（可查看游客端加入RTC连接方法） 
 
 
-#### 7. 游客取消连麦申请
+### 8. 游客取消连麦申请
 
 **定义**
 
@@ -792,7 +794,7 @@ code | int| 状态码
 peerId | String| 连麦者标识id（用于标识连麦用户，每次连麦随机生成）
 
 
-#### 8. RTC服务关闭
+### 9. RTC服务关闭
 
 **定义**
 
@@ -806,7 +808,7 @@ void onRTCLineClosed(int code,String reason)
 code | int| 状态码
 reason | String| 说明
 
-#### 9. 连麦者视频即将显示回调
+### 10. 连麦者视频即将显示回调
 
 **定义**
 
@@ -827,7 +829,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 主播与游客的连麦接通后视频将要显示时回调此方法
 
-#### 10. 连麦者视频关闭
+### 11. 连麦者视频关闭
 
 **定义**
 
@@ -847,7 +849,7 @@ userId | String | 开发者自己平台的用户Id
 
 当与连麦的人断开连麦时会回调此方法
 
-#### 11. （语音连麦）连麦接通后
+### 12. （语音连麦）连麦接通后
 
 **定义**
 
@@ -868,7 +870,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 **语音模式下**，主播与游客的连麦接通后回调此方法
 
-#### 12. （语音连麦）连麦断开后
+### 13. （语音连麦）连麦断开后
 
 **定义**
 
@@ -888,7 +890,7 @@ userId | String | 开发者自己平台的用户Id
 
 **语音连麦模式下**，当与连麦的人断开连麦时会回调此方法
 
-#### 13. 连麦的人音视频状态回调
+### 14. 连麦的人音视频状态回调
 
 **定义**
 
@@ -904,7 +906,7 @@ peerId |String | 连麦者标识id（用于标识连麦用户，每次连麦随�
 audio | boolean | true 音频打开 false 音频关闭
 video | boolean | true 视频打开 false 视频关闭
 
-#### 14. 本地RTC音频检测
+### 15. 本地RTC音频检测
 
 **定义**
 
@@ -919,7 +921,7 @@ void onRTLocalAudioActive(int time);
 time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫秒）
 
 
-#### 15. 远程（连麦的人）RTC音频检测
+### 16. 远程（连麦的人）RTC音频检测
 
 **定义**
 
@@ -934,7 +936,7 @@ void onRTCRemoteAudioActive(String peerId, int level, int time);
 peerId |String | 连麦者标识id（用于标识连麦用户，每次连麦随机生成)  
 time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫秒）
 
-#### 15. 收到消息
+### 17. 收到消息
 
 **定义**
 
@@ -956,7 +958,7 @@ message | String | 消息内容
 
 收到其他人发送的消息，（该参数来源均为发送消息时所带参数）
 
-#### 16. 实时在线人数变化通知
+### 18. 实时在线人数变化通知
 
 **定义**
 
@@ -980,14 +982,14 @@ serverAddress和roomId参数用于请求人员列表
 
 ### ARRtmpcGuestOption游客端配置类
 
-#### 1. 获取配置类
+### 1. 获取配置类
 
 **定义**
 
 ```
 ARRtmpcGuestOption arGuestOption = ARRtmpcEngine.Inst().getGuestOption();
 ```
-#### 2. 设置可配置参数
+### 2. 设置可配置参数
 
 **定义**
 ```
@@ -1010,7 +1012,7 @@ mediaType | ARMediaType |发布媒体类型 Video音视频 Audio 音频 默认�
 
 ### ARRtmpcGuestKit游客类
 
-#### 1. 实例化ARRtmpcGuestKit对象
+### 1. 实例化ARRtmpcGuestKit对象
 
 **定义**
 
@@ -1024,7 +1026,7 @@ ARRtmpcGuestKit guestKit = new ARRtmpcGuestKit(ARRtmpcGuestEvent guestEvent);
 ---|:---:|---
 guestEvent | ARRtmpcGuestEvent | 回调实现类
 
-#### 2. 开始播放RTMP流
+### 2. 开始播放RTMP流
  
 **定义**
 ```
@@ -1038,7 +1040,7 @@ guestEvent | ARRtmpcGuestEvent | 回调实现类
 pullUrl | String | 拉流地址
 render | long |SDK底层视频显示对象
 
-#### 3. 加入RTC连接
+### 3. 加入RTC连接
  
 **定义**
 ```
@@ -1062,7 +1064,7 @@ userData | String |游客业务平台自定义数据
 
 此方法需在startRtmpPlay()之后调用
 
-#### 4. 设置本地视频采集窗口
+### 4. 设置本地视频采集窗口
 
 **定义**
 
@@ -1081,7 +1083,7 @@ render | long | 底层视频渲染对象
 
 0/1/2：没有相机权限/打开相机成功/打开相机失败
 
-#### 5.设置其他人视频窗口
+### 5.设置其他人视频窗口
 
 **定义**
 
@@ -1100,7 +1102,7 @@ publishId | String | RTC服务生成视频通道ID
 
 该方法用于（OnRTCOpenRemoteVideoRender）回调中使用
 
-#### 6.申请连麦
+### 6.申请连麦
 
 **定义**
 
@@ -1112,7 +1114,7 @@ int applyRTCLine()
 0/1：失败（没有录音权限）/成功
 
 
-#### 7.挂断连麦
+### 7.挂断连麦
 
 
 **定义**
@@ -1121,7 +1123,7 @@ int applyRTCLine()
 void hangupRTCLine()
 ```
 
-#### 8.关闭RTC连接
+### 8.关闭RTC连接
 
 **定义**
 
@@ -1133,7 +1135,7 @@ void leaveRTCLine()
 
 用于关闭RTC服务，将无法进行聊天互动，人员上下线等
 
-#### 9.设置视频横屏模式
+### 9.设置视频横屏模式
 
 **定义**
 
@@ -1141,7 +1143,7 @@ void leaveRTCLine()
  void setScreenToLandscape()
 ```
 
-#### 10.设置视频竖屏模式
+### 10.设置视频竖屏模式
 
 **定义**
 
@@ -1149,7 +1151,7 @@ void leaveRTCLine()
 void setScreenToPortrait()
 ```
 
-#### 11. 发送消息
+### 11. 发送消息
 
 **定义**
 
@@ -1172,7 +1174,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 true 发送成功 false 发送失败
 
 
-#### 12. 设置本地音频是否传输
+### 12. 设置本地音频是否传输
 
 **定义**
 
@@ -1190,7 +1192,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 13. 设置本地视频是否传输
+### 13. 设置本地视频是否传输
 
 **定义**
 
@@ -1209,7 +1211,7 @@ enable | boolean| 打开或关闭本地视频传输
 true为传输视频，false为不传输视频，默认视频传输
 
 
-#### 14. 切换前后摄像头
+### 14. 切换前后摄像头
 
 **定义**
 
@@ -1217,7 +1219,7 @@ true为传输视频，false为不传输视频，默认视频传输
 void switchCamera()
 
 ```
-#### 15. 设置音频检测
+### 15. 设置音频检测
 
 **定义**
 
@@ -1235,7 +1237,7 @@ open | boolean | 是否开启音频检测
 
 默认音频检测打开
 
-#### 16. 设置前置摄像头镜像是否打开
+### 16. 设置前置摄像头镜像是否打开
 
 **定义**
 
@@ -1253,7 +1255,7 @@ enable | boolean| true 打开 false 关闭
 
 是否打开镜像模式，默认关闭
 
-#### 17. 销毁游客端
+### 17. 销毁游客端
 
 **定义**
 
@@ -1263,8 +1265,7 @@ void clear()
 ---
 
 ### ARRtmpcGuestEvent主播回调类
-
-#### 1. RTMP连接成功
+### 1. RTMP连接成功
 
 **定义**
 
@@ -1272,7 +1273,7 @@ void clear()
 void onRtmpPlayerOk()
 ```
 
-#### 2. RTMP开始播放
+### 2. RTMP开始播放
 
 **定义**
 
@@ -1280,7 +1281,7 @@ void onRtmpPlayerOk()
 void onRtmpPlayerStart()
 ```
 
-#### 3. RTMP当前播放状态
+### 3. RTMP当前播放状态
 
 **定义**
 
@@ -1299,7 +1300,7 @@ bitrate | int|当前码率大小(单位：byte)
 
 在主播处于直播状态时，将会一直回调此方法
 
-#### 4. RTMP播放缓冲进度
+### 4. RTMP播放缓冲进度
 
 **定义**
 
@@ -1317,7 +1318,7 @@ percent| int|缓存百分比，0-100
 
 弱网下rtmp播放出现卡顿时，当前缓冲进度。nPercent为0时，页面可以进行缓冲提示。当为100时，缓冲提示去掉
 
-#### 5.RTMP播放器关闭
+### 5.RTMP播放器关闭
 
 **定义**
 
@@ -1335,7 +1336,7 @@ code| int|状态码
 
 主播停止推流将会回调此方法
 
-#### 6.RTC服务连接结果
+### 6.RTC服务连接结果
 
 **定义**
 
@@ -1354,7 +1355,7 @@ reason| String|说明
 code==0时，连接服务成功
 code为其他值时均为失败，具体可查看code对应说明
 
-#### 7.申请连麦结果
+### 7.申请连麦结果
 
 **定义**
 
@@ -1373,7 +1374,7 @@ code| int|状态码
 code==0时连麦成功
 code为其他值时均为失败，具体可查看code对应说明
 
-#### 8.主播挂断游客连麦
+### 8.主播挂断游客连麦
 
 **定义**
 
@@ -1387,7 +1388,7 @@ void onRTCHangupLine()
 视频直播中此时应移除本地连麦小窗口图像
 
 
-#### 9.断开RTC服务连接
+### 9.断开RTC服务连接
 
 **定义**
 
@@ -1402,7 +1403,7 @@ void onRTCLineLeave(int code,String reason)
 code| int|状态码
 
 
-#### 10. 其他人视频即将显示回调
+### 10. 其他人视频即将显示回调
 
 **定义**
 
@@ -1423,7 +1424,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 主播与游客的连麦接通后视频将要显示时回调此方法
 
-#### 10. 其他连麦者视频关闭
+### 11. 其他连麦者视频关闭
 
 **定义**
 
@@ -1443,7 +1444,7 @@ userId | String | 开发者自己平台的用户Id
 
 当与连麦的人断开连麦时会回调此方法
 
-#### 11. 其他连麦者（语音连麦）连麦接通后
+### 12. 其他连麦者（语音连麦）连麦接通后
 
 **定义**
 
@@ -1464,7 +1465,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 **语音模式下**，主播与游客的连麦接通后回调此方法
 
-#### 12. 其他连麦者（语音连麦）连麦断开后
+### 13. 其他连麦者（语音连麦）连麦断开后
 
 **定义**
 
@@ -1484,7 +1485,7 @@ userId | String | 开发者自己平台的用户Id
 
 **语音连麦模式下**，当与连麦的人断开连麦时会回调此方法
 
-#### 13. 连麦的人音视频状态回调
+### 14. 连麦的人音视频状态回调
 
 **定义**
 
@@ -1501,7 +1502,7 @@ audio | boolean | true 音频打开 false 音频关闭
 video | boolean | true 视频打开 false 视频关闭
 
 
-#### 14. 本地RTC音频检测
+### 15. 本地RTC音频检测
 
 **定义**
 
@@ -1516,7 +1517,7 @@ void onRTLocalAudioActive(int time);
 time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫秒）
 
 
-#### 15. 远程（连麦的人）RTC音频检测
+### 16. 远程（连麦的人）RTC音频检测
 
 **定义**
 
@@ -1531,7 +1532,7 @@ void onRTCRemoteAudioActive(String peerId, int level, int time);
 peerId |String | 连麦者标识id（用于标识连麦用户，每次连麦随机生成)  
 time | int | 音频检测在time毫秒内不会再回调该方法（单位：毫秒）
 
-#### 15. 收到消息
+### 17. 收到消息
 
 **定义**
 
@@ -1553,7 +1554,7 @@ message | String | 消息内容
 
 收到其他人发送的消息，（该参数来源均为发送消息时所带参数）
 
-#### 16. 实时在线人数变化通知
+### 18. 实时在线人数变化通知
 
 **定义**
 
@@ -1577,5 +1578,46 @@ serverAddress和roomId参数用于请求人员列表
 
 ## 四、更新日志
 
+**Version 3.0.0 （2019-05-15）**
+
+* SDK版本升级3.0，API接口变更
+
+**Version 2.0.0 （2017-09-30）**
+
+* SDK版本升级2.0，梳理、完善SDK
 
 ## 五、错误码对照表
+名称 | 值            | 备注
+---|------------------------------|----
+ARRtmp_OK | 0 | 正常
+ARRtmp_UNKNOW | 1 | 未知错误
+ARRtmp_EXCEPTION | 2 | SDK调用异常
+ARRtmp_EXP_UNINIT | 3 | SDK未初始化
+ARRtmp_EXP_PARAMS_INVALIDE | 4 | 参数非法
+ARRtmp_EXP_NO_NETWORK | 5 | 没有网络链接
+ARRtmp_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
+ARRtmp_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
+ARRtmp_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
+ARRtmp_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
+ARRtmp_NET_ERR | 100 | 网络错误 
+ARRtmp_NET_DISSCONNECT | 101 | 网络断开
+ARRtmp_LIVE_ERR | 102 | 直播出错
+ARRtmp_EXP_ERR | 103 | 异常错误
+ARRtmp_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
+ARRtmp_BAD_REQ | 201 | 服务不支持的错误请求
+ARRtmp_AUTH_FAIL | 202  | 认证失败
+ARRtmp_NO_USER | 203 | 此开发者信息不存在
+ARRtmp_SVR_ERR | 204 | 服务器内部错误
+ARRtmp_SQL_ERR | 205 | 服务器内部数据库错误
+ARRtmp_ARREARS | 206 | 账号欠费
+ARRtmp_LOCKED | 207 | 账号被锁定
+ARRtmp_SERVER_NOT_OPEN | 208 | 服务未开通
+ARRtmp_ALLOC_NO_RES | 209 | 没有服务器资源
+ARRtmp_SERVER_NOT_SURPPORT | 210 | 不支持的服务
+ARRtmp_FORCE_EXIT | 211 | 强制离开
+ARRtmp_NOT_START | 600 | 直播未开始
+ARRtmp_HOSTER_REJECT | 601 | 主播拒绝连麦
+ARRtmp_LINE_FULL | 602 | 连麦已满
+ARRtmp_CLOSE_ERR | 603 | 游客关闭错误，onRtmpPlayerClosed
+ARRtmp_HAS_OPENED | 604 | 直播已经开始，不能重复开启
+ARRtmp_IS_STOP | 605 | 直播已结束

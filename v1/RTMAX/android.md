@@ -1,8 +1,8 @@
 ## 一、概述
 
-#### 简介
-
-#### Demo 体验
+### 简介
+智能调度能够实现公网对讲、视频上报、音视频呼叫，满足公安、消防、政府机构、机场、铁路、港口、物流运输等场景
+### Demo 体验
 
 请根据需求选择渠道安装，安装完对讲调度Demo后，可体验多人实时对讲，智能调度等功能。
 
@@ -12,7 +12,7 @@
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-talk/)
 
-#### 源码 GitHub
+### 源码 GitHub
 
 源码仅供开发者参考，适用于SDK调试，便于快速集成。
 
@@ -24,28 +24,28 @@
 - 
 ## 二、集成指南
 
-#### 适用范围
+### 适用范围
 
 本集成文档适用于 Android ARRtmax SDK 3.0.0 版本。
 
-#### 准备环境
+### 准备环境
 
 - Android Studio 2.1 或以上版本
 - Android 版本不低于 4.0.3 且支持音视频的 Android 设备（不支持模拟器）
 - Android 设备已经连接到有效网络
 
-#### 导入SDK
+### 导入SDK
 
 **Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/rtmax/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/rtmax/_latestVersion)
 
 
 ```
 dependencies {
-  compile 'org.ar:rtmax_kit:3.0.1'
+  compile 'org.ar:rtmax_kit:3.0.2'
 }
 ```
 
-#### 权限说明
+### 权限说明
 
 使用ARRtmax SDK需以下权限
 
@@ -56,7 +56,7 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-#### 混淆配置
+### 混淆配置
 为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
 
 ```
@@ -72,7 +72,7 @@ dependencies {
 
 ### ARMaxEngine 类
 
-#### 1. 初始化并配置开发者信息
+### 1. 初始化并配置开发者信息
 
 **定义**
 
@@ -91,7 +91,7 @@ token | String  | token
 
 该方法为配置开发者信息，上述参数均可在https://www.anyrtc.io/ 应用管理中获得；建议在Application调用。
 
-#### 2. 配置私有云
+### 2. 配置私有云
 
 **定义**
 
@@ -109,7 +109,7 @@ port | int | 私有云服务端口
 
 配置私有云信息，当使用私有云时才需要进行配置，默认无需配置。
 
-#### 3. 获取SDK版本号
+### 3. 获取SDK版本号
 
 **定义**
 
@@ -120,7 +120,7 @@ String getSdkVersion()
 
 SDK版本号
 
-#### 4. 关闭硬解码(安卓特有)
+### 4. 关闭硬解码(安卓特有)
 
 **定义**
 
@@ -128,7 +128,7 @@ SDK版本号
 void disableHWDecode()
 ```
 
-#### 5. 关闭硬编码(安卓特有)
+### 5. 关闭硬编码(安卓特有)
 
 **定义**
 
@@ -136,7 +136,7 @@ void disableHWDecode()
 void disableHWEncode()
 ```
 
-#### 6. 设置日志显示级别
+### 6. 设置日志显示级别
 
 **定义**
 
@@ -152,7 +152,7 @@ logLevel | ARLogLevel | 日志显示级别
 
 ### ARMaxOption 配置类
 
-#### 1. 获取配置类
+### 1. 获取配置类
 
 **定义**
 
@@ -160,7 +160,7 @@ logLevel | ARLogLevel | 日志显示级别
 ARMaxOption option = ARMaxEngine.Inst().getArMaxOption()
 ```
 
-#### 2. 设置可配置参数
+### 2. 设置可配置参数
 
 **定义**
 ```
@@ -183,7 +183,7 @@ videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 
 ### ARMaxKit 类
 
-#### 1.实例化ARMaxKit对象
+### 1.实例化ARMaxKit对象
 
 **定义** 
 
@@ -197,7 +197,7 @@ ARMaxKit arMaxKit = new ARMaxKit(ARMaxEvent maxEvent)
 ---|:---:|---
 maxEvent | ARMaxEvent | ARMaxEvent回调实现类
 
-#### 2. 加入对讲组
+### 2. 加入对讲组
 
 **定义**
 
@@ -218,7 +218,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 0：成功
 
 
-#### 3. 切换对讲组
+### 3. 切换对讲组
 
 **定义**
 
@@ -238,7 +238,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 0：成功
 
 
-#### 4. 申请对讲
+### 4. 申请对讲
 
 **定义**
 
@@ -261,7 +261,7 @@ nPriority | int | 优先级
 0: 调用OK  -1:未登录  -2:正在对讲中  -3: 资源还在释放中 -4: 操作太过频繁
 
 
-#### 5. 取消对讲
+### 5. 取消对讲
 
 **定义**
 
@@ -273,7 +273,7 @@ void cancelTalk()
 申请对讲成功（onRTCApplyTalkOk）之后方可结束对讲 
 
 
-#### 6. 发起呼叫
+### 6. 发起呼叫
 
 **定义**
 
@@ -293,7 +293,7 @@ userData | String |自定义数据
 0:调用OK;-1:未登录;-2:没有通话-3:视频资源占用中;-5:本操作不支持自己对自己;-6:会话未创建（没有被呼叫用户）
 
 
-#### 7. 呼叫邀请
+### 7. 呼叫邀请
 
 **定义**
 
@@ -312,7 +312,7 @@ userData | String |自定义数据
 0:调用OK;-1:未登录;-2:没有通话-3:视频资源占用中;-5:本操作不支持自己对自己;-6:会话未创建（没有被呼叫用户）
 
 
-#### 8. 主叫端结束某一路正在进行的通话
+### 8. 主叫端结束某一路正在进行的通话
 
 **定义**
 
@@ -325,7 +325,7 @@ void endCall( String userId)
 ---|:---:|---
 userId | String | 指定用户userid
 
-#### 9. 接受呼叫或通话邀请
+### 9. 接受呼叫或通话邀请
 
 **定义**
 
@@ -339,7 +339,7 @@ int acceptCall( String callId)
 callId | String | 呼叫请求时收到的callId
 
 
-#### 10.拒绝呼叫
+### 10.拒绝呼叫
 
 **定义**
 
@@ -352,7 +352,7 @@ void rejectCall()
 ---|:---:|---
 callId | String | 呼叫请求时收到的callId
 
-#### 11.退出当前通话
+### 11.退出当前通话
 
 **定义**
 
@@ -361,7 +361,7 @@ void leaveCall()
 ```
 
 
-#### 12.发起视频监看（或者收到视频上报请求时查看视频）
+### 12.发起视频监看（或者收到视频上报请求时查看视频）
 
 **定义**
 
@@ -381,7 +381,7 @@ userData | String |自定义数据
 0: 调用OK  -1:未登录	-5:本操作不支持自己对自己
 
 
-#### 13.同意视频监看
+### 13.同意视频监看
 
 **定义**
 
@@ -399,7 +399,7 @@ hostId | String | 发起人的userid
 
 0: 调用OK  -1:未登录 -3:视频资源占用中 -5:本操作不支持自己对自己
 
-#### 14.拒绝视频监看
+### 14.拒绝视频监看
 
 **定义**
 
@@ -417,7 +417,7 @@ hostId | String | 发起人的userid
 
 0: 调用OK  -1:未登录 -3:视频资源占用中 -5:本操作不支持自己对自己
 
-#### 15.监看发起者关闭视频监看
+### 15.监看发起者关闭视频监看
 
 **定义**
 
@@ -431,7 +431,7 @@ void closeVideoMonitor( String userId)
 ---|:---:|---
 userId | String | 被监看用户的userid
 
-#### 16.视频上报
+### 16.视频上报
 
 **定义**
 
@@ -450,7 +450,7 @@ userId | String | 要向谁上报的用户userid
 接收端收到上报请求时，调用monitorVideo进行视频查看
 
 
-#### 17.上报者关闭视频上报
+### 17.上报者关闭视频上报
 
 **定义**
 
@@ -459,7 +459,7 @@ void closeReportVideo()
 ```
 
 
-#### 18. 发送消息
+### 18. 发送消息
 
 **定义**
 
@@ -481,7 +481,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 0 成功
 
 
-#### 19. 设置视频竖屏
+### 19. 设置视频竖屏
 
 **定义**
 
@@ -489,7 +489,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 void setScreenToPortrait()
 ```
 
-#### 20. 设置视频横屏
+### 20. 设置视频横屏
 
 **定义**
 
@@ -497,7 +497,7 @@ void setScreenToPortrait()
 void setScreenToLandscape()
 ```
 
-#### 21. 设置本地音频是否传输
+### 21. 设置本地音频是否传输
 
 **定义**
 
@@ -515,7 +515,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 22. 设置本地视频是否传输
+### 22. 设置本地视频是否传输
 
 **定义**
 
@@ -533,7 +533,7 @@ enable | boolean| 打开或关闭本地视频传输
 
 true为传输视频，false为不传输视频，默认视频传输
 
-#### 23. 设置本地视频采集窗口
+### 23. 设置本地视频采集窗口
 
 **定义**
 
@@ -553,7 +553,7 @@ render | long | 底层视频渲染对象
 0/1/2：没有相机权限/打开相机成功/打开相机失败
 
 
-#### 24. 停止本地视频采集
+### 24. 停止本地视频采集
 
 **定义**
 
@@ -561,7 +561,7 @@ render | long | 底层视频渲染对象
  void closeLocalVideoCapture()
 ```
 
-#### 25.设置其他人视频窗口
+### 25.设置其他人视频窗口
 
 **定义**
 
@@ -580,7 +580,7 @@ publishId | String | RTC服务生成的视频标识Id
 
 该方法用于视频呼叫接通后，回调（OnRTCOpenRemoteVideoRender）使用
 
-#### 26. 切换前后摄像头
+### 26. 切换前后摄像头
 
 **定义**
 
@@ -590,7 +590,7 @@ void switchCamera()
 
 
 
-#### 27. 关闭P2P通话
+### 27. 关闭P2P通话
 
 **定义**
 
@@ -602,7 +602,7 @@ void closeP2PTalk()
 在控制台强插对讲后，关闭和控制台之间的P2P通话
 
 
-#### 28. 设置录音文件的路径
+### 28. 设置录音文件的路径
 
 **定义**
 
@@ -622,7 +622,7 @@ talkP2PPath | String | 强插P2P文件保存路径（文件夹路径）
 0/1:设置成功/文件夹不存在
 
 
-#### 29. 设置本地前置摄像头镜像是否打开
+### 29. 设置本地前置摄像头镜像是否打开
 
 **定义**
 
@@ -638,7 +638,7 @@ enable | boolean | true为打开，alse为关闭
 
 
 
-#### 30. 设置视频网络状态是否打开
+### 30. 设置视频网络状态是否打开
 
 **定义**
 
@@ -656,7 +656,7 @@ enable | boolean | true打开，false关闭
 
 默认视频网络状态关闭
 
-#### 31. 获取当前视频网络状态是否打开
+### 31. 获取当前视频网络状态是否打开
 
 **定义**
 
@@ -668,7 +668,7 @@ boolean networkStatusEnabled()
 
 视频网络状态检测打开与否
 
-#### 32.是否打开回音消除
+### 32.是否打开回音消除
 
 **定义**
 
@@ -680,7 +680,7 @@ void setForceAecEnable( boolean enable)
 
 需在加入对讲组之前设置
 
-#### 32. 设置token验证
+### 33. 设置token验证
 
 **定义**
 
@@ -699,7 +699,7 @@ userToken | String | token字符串:客户端向自己服务器申请
 设置token验证必须放在joinGroup之前
 
 
-#### 33. 不接收某路视频
+### 34. 不接收某路视频
 
 **定义**
 
@@ -715,7 +715,7 @@ mute | boolean | true禁止，false接收
 publishId | String | RTC服务生成的通道Id 
 
 
-#### 34. 不接收某路音频
+### 35. 不接收某路音频
 
 **定义**
 
@@ -730,7 +730,7 @@ void muteRemoteAudioStream(String publishId,  boolean mute)
 mute | boolean | true禁止，false接收
 publishId | String | 流ID
 
-#### 35. 设置远程（其他人）音视频状态
+### 36. 设置远程（其他人）音视频状态
 
 **定义**
 
@@ -746,7 +746,7 @@ peerId | String | 用户的ID
 audioEnable | boolean | true 打开 false 关闭
 videoEnable | boolean | true 打开 false 关闭
 
-#### 36. 打开关闭摄像头闪光灯
+### 37. 打开关闭摄像头闪光灯
 
 **定义**
 
@@ -760,7 +760,7 @@ void openCameraTorchMode( boolean open)
 ---|:---:|---
 open | boolean | 是否开启闪光灯
 
-#### 37. 是否打开音频检测
+### 38. 是否打开音频检测
 
 **定义**
 
@@ -775,7 +775,7 @@ void setAudioActiveCheck( boolean audioOnly, final boolean audioDetect)
 audioOnly | boolean |  true:仅音频模式; false: 音视频模式
 audioDetect | boolean |  true:打开; false: 关闭
 
-#### 38. 退出对讲组
+### 39. 退出对讲组
 
 **定义**
 
@@ -783,7 +783,7 @@ audioDetect | boolean |  true:打开; false: 关闭
 void leaveTalkGroup()
 ```
 
-#### 39. 销毁初始化对象
+### 40. 销毁初始化对象
 
 **定义**
 
@@ -794,7 +794,7 @@ void clear()
 
 ### ARMaxEvent 回调类
 
-#### 1. 加入对讲组成功
+### 1. 加入对讲组成功
 
 **定义**
 
@@ -808,7 +808,7 @@ void onRTCJoinTalkGroupOK(String groupId)
 ---|:---:|---
 groupId | String | 群组Id  
 
-#### 2. 加入对讲组失败
+### 2. 加入对讲组失败
 
 **定义**
 
@@ -824,7 +824,7 @@ groupId | String | 群组Id
 code | int | 错误码
 reason | String | 错误原因
 
-#### 3. 离开对讲组
+### 3. 离开对讲组
 
 **定义**
 
@@ -842,7 +842,7 @@ code | int | 错误码
 
 0：正常退出；100：网络错误，与服务器断开连接；207：强制退出
 
-#### 4. 申请对讲成功
+### 4. 申请对讲成功
 
 **定义**
 
@@ -850,7 +850,7 @@ code | int | 错误码
 void onRTCApplyTalkOk()
 ```
 
-#### 5. 语音通道建立成功
+### 5. 语音通道建立成功
 
 **定义**
 
@@ -861,7 +861,7 @@ void onRTCTalkCouldSpeak()
 
 申请对讲成功后，语音通道建立成功回调，可以开始讲话
 
-#### 6. 其他人正在对讲组中讲话
+### 6. 其他人正在对讲组中讲话
 
 **定义**
 
@@ -877,7 +877,7 @@ userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
 
-#### 7. 当用户处于对讲状态时，控制台强制发起P2P通话
+### 7. 当用户处于对讲状态时，控制台强制发起P2P通话
 
 **定义**
 
@@ -892,7 +892,7 @@ void onRTCTalkP2POn(String userId, String userData);
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 8. 与控制台的P2P讲话结束
+### 8. 与控制台的P2P讲话结束
 
 **定义**
 
@@ -906,7 +906,7 @@ void onRTCTalkP2POff(String userData)
 ---|:---:|---
 userData | String | 用户的自定义数据
 
-#### 9.结束对讲回调
+### 9.结束对讲回调
 
 **定义**
 
@@ -922,7 +922,7 @@ code | int | 错误码
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 10.视频监看请求
+### 10.视频监看请求
 
 **定义**
 
@@ -941,7 +941,7 @@ userData | String | 用户的自定义数据
 
 有用户向本机用户发起视频监看请求
 
-#### 11.视频监看关闭
+### 11.视频监看关闭
 
 **定义**
 
@@ -956,7 +956,7 @@ userData | String | 用户的自定义数据
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 12.视频监看请求结果
+### 12.视频监看请求结果
 
 **定义**
 
@@ -972,7 +972,7 @@ code | int | 错误码
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 13.收到视频上报请求
+### 13.收到视频上报请求
 
 **定义**
 
@@ -987,7 +987,7 @@ userData | String | 用户的自定义数据
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 14.视频上报关闭
+### 14.视频上报关闭
 
 **定义**
 
@@ -1001,7 +1001,7 @@ userData | String | 用户的自定义数据
 ---|:---:|---
 userId | String | 用户的userid
 
-#### 15.主叫方发起通话成功
+### 15.主叫方发起通话成功
 
 **定义**
 
@@ -1015,7 +1015,7 @@ void onRTCMakeCallOK(String callId)
 ---|:---:|---
 callId | String | 呼叫成功时服务器生成的CallId
 
-#### 16.主叫方收到被叫方同意通话
+### 16.主叫方收到被叫方同意通话
 
 **定义**
 
@@ -1030,7 +1030,7 @@ void onRTCAcceptCall(String userId, String userData)
 userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
-#### 17.主叫方收到被叫方拒绝通话
+### 17.主叫方收到被叫方拒绝通话
 
 **定义**
 
@@ -1046,7 +1046,7 @@ userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
 
-#### 18.被叫方挂断或者被邀请方离开通话
+### 18.被叫方挂断或者被邀请方离开通话
 
 **定义**
 
@@ -1060,7 +1060,7 @@ void onRTCLeaveCall(String userId)
 ---|:---:|---
 userId | String | 用户的userid
 
-#### 19.通话释放
+### 19.通话释放
 
 **定义**
 
@@ -1079,7 +1079,7 @@ userId | String | 用户的userid
 主叫方收到通话结束的回调（被叫方和被邀请方已全部退出或者主叫方挂断所有参与者）
 
 
-#### 20.被叫方收到通话请求
+### 20.被叫方收到通话请求
 
 **定义**
 
@@ -1097,7 +1097,7 @@ userId | String | 用户的userid
 userData | String | 用户的自定义数据
 
 
-#### 21.被叫方收到主叫方挂断通话
+### 21.被叫方收到主叫方挂断通话
 
 **定义**
 
@@ -1114,7 +1114,7 @@ userId | String | 用户的userid
 code | int | 状态码
 
 
-#### 22.视频呼叫接通视频窗口打开
+### 22.视频呼叫接通视频窗口打开
 
 **定义**
 
@@ -1135,7 +1135,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 其他通话参与者进入视频通话的回调，开发者需调用设置其他与会者视频窗口（setRemoteVideoRender）方法。
 
-#### 23. 视频窗口关闭
+### 23. 视频窗口关闭
 
 **定义**
 
@@ -1156,7 +1156,7 @@ userId | String | 开发者自己平台的用户Id
 其他对讲者离开的回调，开发者需移除该抢麦者视频窗口，仅视频呼叫时有用
 
 
-#### 24. 音频模式下呼叫打开音频通道回调
+### 24. 音频模式下呼叫打开音频通道回调
 
 **定义**
 
@@ -1176,7 +1176,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 **音频模式**下接通 呼叫后回调
 
-#### 25. 音频模式下呼叫关闭音频通道回调
+### 25. 音频模式下呼叫关闭音频通道回调
 
 **定义**
 
@@ -1196,7 +1196,7 @@ userId | String | 开发者自己平台的用户Id
 **音频模式**关闭呼叫回调
 
 
-#### 26. 其他人对音视频的操作通知
+### 26. 其他人对音视频的操作通知
 
 **定义**
 
@@ -1216,7 +1216,7 @@ video | boolean | 视频状态 true 打开 false 关闭
 
 与会者关闭/开启了音视频
 
-#### 27. 其他人对自己音视频的操作通知
+### 27. 其他人对自己音视频的操作通知
 
 **定义**
 
@@ -1235,7 +1235,7 @@ video | boolean | 视频状态 true 打开 false 关闭
 
 别人对自己音视频的操作
 
-#### 28. 音频监测（其他人声音大小回调）
+### 28. 音频监测（其他人声音大小回调）
 
 **定义**
 
@@ -1252,7 +1252,7 @@ userId | String | 开发者自己平台的用户Id
 level | int | 音量大小
 time | int | time时间内不会再回调该方法(毫秒)
 
-#### 29. 音频监测（本地声音大小回调）
+### 29. 音频监测（本地声音大小回调）
 
 **定义**
 
@@ -1267,7 +1267,7 @@ void onRTLocalAudioActive(int level, int time);
 level | int | 音量大小
 time | int | time时间内不会再回调该方法(毫秒)
 
-#### 30. 本地网络状态
+### 30. 本地网络状态
 
 **定义**
 
@@ -1283,7 +1283,7 @@ nNetSpeed | int |网络上行
 nPacketLost | int | 丢包率(1~100)
 netQuality | ARNetQuality | 网络质量
 
-#### 31. 远程（其他人）网络状态
+### 31. 远程（其他人）网络状态
 
 **定义**
 
@@ -1300,7 +1300,7 @@ nNetSpeed | int |网络上行
 nPacketLost | int | 丢包率(1~100)
 netQuality | ARNetQuality | 网络质量
 
-#### 32. 当前对讲组在线人数
+### 32. 当前对讲组在线人数
 
 **定义**
 
@@ -1315,7 +1315,7 @@ void onRTCMemberNum(int num)
 num |int | 人数
 
 
-#### 33. 录像地址回调信息
+### 33. 录像地址回调信息
 
 **定义**
 
@@ -1335,7 +1335,59 @@ filePath |String | 录音文件保存路径
 
 设置录音路径后录音保存路径的回调接口
 
-## 四、更新日志
+### 四、更新日志
 
+##### V 3.0.0 （2019-05-15）
 
-## 五、错误码对照表
+- SDK版本升级3.0，API接口变更，更加简洁规范
+- 更改SDK配置项，配置更简单
+- 断网重连优化
+- 分辨率选项增加，帧率可配置
+- 添加用户服务级token安全认证，服务更安全
+
+### 五、错误码
+
+名称 | 值            | 备注
+---|------------------------------|----
+ARMax_OK | 0 | 正常
+ARMax_UNKNOW | 1 | 未知错误
+ARMax_EXCEPTION | 2 | SDK调用异常
+ARMax_EXP_UNINIT | 3 | SDK未初始化
+ARMax_EXP_PARAMS_INVALIDE | 4 | 参数非法
+ARMax_EXP_NO_NETWORK | 5 | 没有网络链接
+ARMax_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
+ARMax_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
+ARMax_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
+ARMax_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
+ARMax_NET_ERR | 100 | 网络错误 
+ARMax_NET_DISSCONNECT | 101 | 网络断开
+ARMax_LIVE_ERR | 102 | 直播出错
+ARMax_EXP_ERR | 103 | 异常错误
+ARMax_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
+ARMax_BAD_REQ | 201 | 服务不支持的错误请求
+ARMax_AUTH_FAIL | 202  | 认证失败
+ARMax_NO_USER | 203 | 此开发者信息不存在
+ARMax_SVR_ERR | 204 | 服务器内部错误
+ARMax_SQL_ERR | 205 | 服务器内部数据库错误
+ARMax_ARREARS | 206 | 账号欠费
+ARMax_LOCKED | 207 | 账号被锁定
+ARMax_SERVER_NOT_OPEN | 208 | 服务未开通
+ARMax_ALLOC_NO_RES | 209 | 没有服务器资源
+ARMax_SERVER_NOT_SURPPORT | 210 | 不支持的服务
+ARMax_FORCE_EXIT | 211 | 强制离开
+ARMax_APPLY_SVR_ERR | 800 | 申请麦但是服务器异常 (没有MCU服务器,暂停申请)
+ARMax_APPLY_BUSY | 801 | 当前你正在忙
+ARMax_APPLY_NO_PRIO | 802 | 当前麦被占用 (有人正在说话切你的权限不够)
+ARMax_APPLY_INITING | 803 | 正在初始化中 (自身的通道没有发布成功,不能申请)
+ARMax_APPLY_ING | 804 | 等待上麦
+ARMax_ROBBED | 810 | 麦被抢掉了
+ARMax_BREAKED | 811 | 麦被释放了
+ARMax_RELEASED_BY_P2P | 812 | 麦被释放了，因为要对讲
+ARMax_P2P_OFFLINE | 820 | 强插时，对方可能不在线了或异常离线
+ARMax_P2P_BUSY | 821 | 强插时，对方正忙
+ARMax_P2P_NOT_TALK | 822 |  强插时，对方不在麦上
+ARMax_V_MON_OFFLINE | 830 | 视频监看时，对方不在线，或下线了
+ARMax_V_MON_GRABED | 831 | 视频监看被抢占了
+ARMax_CALL_OFFLINE | 840 | 对方不在线或掉线了
+ARMax_CALL_NO_PRIO | 841 | 发起呼叫时自己有其他业务再进行(资源被占用)
+ARMax_CALL_NOT_FOUND | 842 | 会话不存在

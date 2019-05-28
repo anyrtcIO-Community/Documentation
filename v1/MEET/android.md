@@ -1,8 +1,8 @@
 ## 一、概述
 
-#### 简介
+### 简介
 
-#### Demo体验
+### Demo体验
 
 请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
 
@@ -12,7 +12,7 @@
 
 - [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
 
-#### 源码GitHub
+### 源码GitHub
 
 源码仅供开发者参考，适用于SDK调试，便于快速集成。
 
@@ -24,28 +24,28 @@
 - 
 ## 二、集成指南
 
-#### 适用范围
+### 适用范围
 
 本集成文档适用于Android ARMeet SDK 3.0.0版本。
 
-#### 准备环境
+### 准备环境
 
 - Android Studio 2.1或以上版本
 - Android 版本不低于 4.0.3 且支持音视频的 Android 设备（不支持模拟器）
 - Android 设备已经连接到有效网络
 
-#### 导入SDK
+### 导入SDK
 
 **Gradle方式导入）**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/meet/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/meet/_latestVersion)
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.0.0'
+  compile 'org.ar:meet_kit:3.0.1'
 }
 
 ```
 
-#### 权限说明
+### 权限说明
 
 使用ARMeet SDK需以下权限
 
@@ -56,7 +56,7 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-#### 混淆配置
+### 混淆配置
 为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
 
 ```
@@ -72,7 +72,7 @@ dependencies {
 
 ### ARMeetEngine 类
 
-#### 1. 初始化并配置开发者信息
+### 1. 初始化并配置开发者信息
 
 **定义**
 
@@ -91,7 +91,7 @@ token | String  | token
 
 该方法为配置开发者信息，上述参数均可在https://www.anyrtc.io/ 应用管理中获得；建议在Application调用。
 
-#### 2. 配置私有云
+### 2. 配置私有云
 
 **定义**
 
@@ -109,7 +109,7 @@ port | int | 私有云服务端口
 
 配置私有云信息，当使用私有云时才需要进行配置，默认无需配置。
 
-#### 3. 获取SDK版本号
+### 3. 获取SDK版本号
 
 **定义**
 
@@ -120,7 +120,7 @@ String getSdkVersion()
 
 SDK版本号
 
-#### 4. 关闭硬解码(安卓特有)
+### 4. 关闭硬解码(安卓特有)
 
 **定义**
 
@@ -128,7 +128,7 @@ SDK版本号
 void disableHWDecode()
 ```
 
-#### 5. 关闭硬编码(安卓特有)
+### 5. 关闭硬编码(安卓特有)
 
 **定义**
 
@@ -136,7 +136,7 @@ void disableHWDecode()
 void disableHWEncode()
 ```
 
-#### 6. 设置日志显示级别
+### 6. 设置日志显示级别
 
 **定义**
 
@@ -152,14 +152,14 @@ logLevel | ARLogLevel | 日志显示级别
 
 ### ARRtcpOption配置类
 
-#### 1. 获取配置类
+### 1. 获取配置类
 
 **定义**
 
 ```
 ARMeetOption arMeetOption = ARMeetEngine.Inst().getARMeetOption();
 ```
-#### 2. 设置可配置参数
+### 2. 设置可配置参数
 
 **定义**
 ```
@@ -186,7 +186,7 @@ isHost|boolean|是否是主持人 默认false (主持人模式下生效)
 
 ### ARMeetKit 类
 
-#### 1. 实例化ARMeetKit对象
+### 1. 实例化ARMeetKit对象
 
 **定义**
 
@@ -201,7 +201,7 @@ ARMeetKit meetKit = new ARMeetKit(ARMeetEvent arMeetEvent);
 arMeetEvent | ARMeetEvent | 会议回调实现类
 
 
-#### 2. 设置本地视频采集窗口
+### 2. 设置本地视频采集窗口
 
 **定义**
 
@@ -221,7 +221,7 @@ render | long | 底层视频渲染对象
 0/1/2：没有相机权限/打开相机成功/打开相机失败
 
 
-#### 3. 加入会议
+### 3. 加入会议
 
 **定义**
 
@@ -244,7 +244,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 true 加入成功 false 加入失败
 
 
-#### 4. 设置显示其他人的视频窗口
+### 4. 设置显示其他人的视频窗口
 
 **定义**
 
@@ -263,7 +263,7 @@ render | long |  底层视频渲染对象
 
 该方法用于与会者入会成功后，视频即将显示的回调中（onRTCOpenRemoteVideoRender）使用
 
-#### 5. 发送消息
+### 5. 发送消息
 
 **定义**
 
@@ -284,7 +284,7 @@ content | String | 消息内容(最大1024字节)不能为空，否则发送失�
 
 true 发送成功 false 发送失败
 
-#### 6. 设置驾驶模式
+### 6. 设置驾驶模式
 
 **定义**
 
@@ -299,7 +299,7 @@ void setDriverMode(boolean enable)
 enable | boolean | bEnable 打开或关闭驾驶模式 true 打开 false 关闭。
 
 
-#### 7. 离开会议
+### 7. 离开会议
 
 **定义**
 
@@ -307,7 +307,7 @@ enable | boolean | bEnable 打开或关闭驾驶模式 true 打开 false 关闭�
 void leave()
 ```
 
-#### 8. 释放会议对象
+### 8. 释放会议对象
 
 **定义**
 
@@ -320,7 +320,7 @@ void clean()
 包含离开会议
 
 
-#### 9. 设置回音消除
+### 9. 设置回音消除
 
 **定义**
 
@@ -340,7 +340,7 @@ enable | boolean | 是否打开回音消除 true打开 false 关闭 默认关闭
 必须在joinRTCByToken()之前调用
 
 
-#### 10. 设置本地音频是否传输
+### 10. 设置本地音频是否传输
 
 **定义**
 
@@ -358,7 +358,7 @@ enable | boolean| 打开或关闭本地音频传输
 
 true为传输音频，false为不传输音频，默认传输
 
-#### 11. 设置本地视频是否传输
+### 11. 设置本地视频是否传输
 
 **定义**
 
@@ -376,7 +376,7 @@ enable | boolean| 打开或关闭本地视频传输
 
 true为传输视频，false为不传输视频，默认视频传输
 
-#### 12. 获取本地音频传输是否打开
+### 12. 获取本地音频传输是否打开
 
 **定义**
 
@@ -388,7 +388,7 @@ true为传输视频，false为不传输视频，默认视频传输
 
 音频传输与否
 
-#### 13. 获取本地视频传输是否打开
+### 13. 获取本地视频传输是否打开
 
 **定义**
 
@@ -400,7 +400,7 @@ boolean getLocalVideoEnabled()
 
 视频传输与否
 
-#### 14. 切换前后摄像头
+### 14. 切换前后摄像头
 
 **定义**
 
@@ -408,7 +408,7 @@ boolean getLocalVideoEnabled()
 void switchCamera()
 ```
 
-#### 15. 设置本地前置摄像头镜像是否打开
+### 15. 设置本地前置摄像头镜像是否打开
 
 **定义**
 
@@ -422,7 +422,7 @@ void setFrontCameraMirrorEnable(boolean bEnable)
 ---|:---:|---
 enable | boolean | true为打开，alse为关闭 
 
-#### 16. 前置摄像头是否镜像
+### 16. 前置摄像头是否镜像
 
 **定义**
 
@@ -434,7 +434,7 @@ enable | boolean | true为打开，alse为关闭
 
 是否镜像，默认关闭。
 
-#### 17. 不接收某人视频
+### 17. 不接收某人视频
 
 **定义**
 
@@ -450,7 +450,7 @@ mute | boolean | true禁止，false接收
 publishId | String | RTC服务生成的通道Id 
 
 
-#### 28. 不接收某人音频
+### 18. 不接收某人音频
 
 **定义**
 
@@ -465,7 +465,7 @@ void muteRemoteAudioStream(String publishId,  boolean mute)
 mute | boolean | true禁止，false接收
 publishId | String | RTC服务生成的通道Id 
 
-#### 19. 设置视频网络状态是否打开
+### 19. 设置视频网络状态是否打开
 
 **定义**
 
@@ -483,7 +483,7 @@ enable | boolean | true打开，false关闭
 
 默认视频网络状态关闭
 
-#### 20. 获取当前视频网络状态是否打开
+### 20. 获取当前视频网络状态是否打开
 
 **定义**
 
@@ -495,7 +495,7 @@ boolean networkStatusEnabled()
 
 视频网络状态检测打开与否
 
-#### 21. 设置音频检测
+### 21. 设置音频检测
 
 **定义**
 
@@ -513,7 +513,7 @@ open | boolean | 是否开启音频检测
 
 默认音频检测打开
 
-#### 22. 获取音频检测是否打开
+### 22. 获取音频检测是否打开
 
 **定义**
 
@@ -524,7 +524,7 @@ boolean isOpenAudioCheck()
 
 音频检测打开与否
 
-#### 23. 设置视频竖屏
+### 23. 设置视频竖屏
 
 **定义**
 
@@ -532,7 +532,7 @@ boolean isOpenAudioCheck()
 void setScreenToPortrait()
 ```
 
-#### 24. 设置视频横屏
+### 24. 设置视频横屏
 
 **定义**
 
@@ -540,7 +540,7 @@ void setScreenToPortrait()
 void setScreenToLandscape()
 ```
 
-#### 25. 打开共享通道
+### 25. 打开共享通道
 
 **定义**
 
@@ -559,7 +559,7 @@ type | int | 共享类型，自己平台设定，比如1为白板，2为文档
 结果会走onRTCShareEnable()回调
 
 
-#### 26. 设置共享信息
+### 26. 设置共享信息
 
 **定义**
 
@@ -577,7 +577,7 @@ shareInfo | String | 自定义的共享相关信息(限制512字节)
 
 其他人将收到OnRtcUserShareOpen()回调
 
-#### 27. 关闭共享通道
+### 27. 关闭共享通道
 
 **定义**
 
@@ -595,7 +595,7 @@ type | int | 共享类型，canShare方法设定的
 
 其他人将收到onRTCShareClose()回调
 
-#### 28. 广播一路视频
+### 28. 广播一路视频
 
 **定义**
 
@@ -614,7 +614,7 @@ enable | boolean |是否广播 setUserToken
 
 **仅用于主持人模式**，主持人设置true（广播）后，其他人将收到此路视频显示的回调（onRTCOpenVideoRender），false 其他人将收到此路视频关闭的回调（onRTCCloseVideoRender）
 
-#### 29. 设置单聊
+### 29. 设置单聊
 
 **定义**
 
@@ -633,7 +633,7 @@ enable | boolean |是否单聊  true单聊 false结束单聊
 
 **仅用于主持人模式**，主持人设置后，其他人将听不到主持人的声音，只有单聊的用户能听到
 
-#### 30. 设置zoom模式
+### 30. 设置zoom模式
 
 **定义**
 
@@ -652,7 +652,7 @@ mode | ARMeetZoomMode |zoom模式
 
 **仅用于Zoom模式**，设置zoom模式
 
-#### 31. 设置当前页数
+### 31. 设置当前页数
 
 **定义**
 
@@ -671,7 +671,7 @@ page | int |当前页数
 
 **仅用于Zoom模式**，设置zoom模式下当前页数
 
-#### 32. 设置当前页数及显示个数
+### 32. 设置当前页数及显示个数
 
 **定义**
 
@@ -696,7 +696,7 @@ nIdx | int |当前页数
 
 ### ARMeetEvent 回调接口类
 
-#### 1. 加入会议成功回调
+### 1. 加入会议成功回调
 
 **定义**
 
@@ -714,7 +714,7 @@ meetId | String | 会议号 (在joinRTC方法里的第一个参数)
 
 加入会议成功
 
-#### 2. 加入会议失败功回调
+### 2. 加入会议失败功回调
 
 **定义**
 
@@ -734,7 +734,7 @@ reason | String | 错误原因
 
 加入会议失败
 
-#### 3. 离开会议
+### 3. 离开会议
 
 **定义**
 
@@ -752,7 +752,7 @@ code | int | 状态码
 
 离开会议状态回调
 
-#### 4. 其他与会者加入视频即将显示回调
+### 4. 其他与会者加入视频即将显示回调
 
 **定义**
 
@@ -773,7 +773,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 其他与会者进入会议的回调，开发者需调用设置其他与会者视频窗口（setRemoteVideoRender）方法。
 
-#### 5. 其他与会者离开
+### 5. 其他与会者离开
 
 **定义**
 
@@ -794,7 +794,7 @@ userId | String | 开发者自己平台的用户Id
 其他与会者离开的回调，开发者需移除该与会者视频窗口
 
 
-#### 6. 屏幕共享视频即将显示回调
+### 6. 屏幕共享视频即将显示回调
 
 **定义**
 
@@ -815,7 +815,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 屏幕共享视频即将显示回调，开发者需调用设置视频窗口（setRemoteVideoRender）显示屏幕共享流。
 
-#### 7. 屏幕共享关闭
+### 7. 屏幕共享关闭
 
 **定义**
 
@@ -835,7 +835,7 @@ userId | String | 开发者自己平台的用户Id
 
 屏幕共享关闭回调，开发者需移除屏幕共享视频窗口
 
-#### 8. 音频模式下其他与会者加入
+### 8. 音频模式下其他与会者加入
 
 **定义**
 
@@ -855,7 +855,7 @@ userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
 **音频模式**下其他与会者进入会议的回调。
 
-#### 9. 音频模式下其他与会者离开
+### 9. 音频模式下其他与会者离开
 
 **定义**
 
@@ -874,7 +874,7 @@ userId | String | 开发者自己平台的用户Id
 
 **音频模式**下其他与会者离开
 
-#### 10. 与会者对音视频的操作通知
+### 10. 与会者对音视频的操作通知
 
 **定义**
 
@@ -894,7 +894,7 @@ video | boolean | 视频状态 true 打开 false 关闭
 
 与会者关闭/开启了音视频
 
-#### 11. 与会者对自己音视频的操作通知
+### 11. 与会者对自己音视频的操作通知
 
 **定义**
 
@@ -913,7 +913,7 @@ video | boolean | 视频状态 true 打开 false 关闭
 
 别人对自己音视频的操作
 
-#### 12. 音频监测（其他与会者声音大小回调）
+### 12. 音频监测（其他与会者声音大小回调）
 
 **定义**
 
@@ -930,7 +930,7 @@ userId | String | 开发者自己平台的用户Id
 level | int | 音量大小
 time | int | time时间内不会再回调该方法(毫秒)
 
-#### 13. 音频监测（本地声音大小回调）
+### 13. 音频监测（本地声音大小回调）
 
 **定义**
 
@@ -945,7 +945,7 @@ void onRTLocalAudioActive(int level, int time);
 level | int | 音量大小
 time | int | time时间内不会再回调该方法(毫秒)
 
-#### 14. 本地网络状态
+### 14. 本地网络状态
 
 **定义**
 
@@ -961,7 +961,7 @@ nNetSpeed | int |网络上行
 nPacketLost | int | 丢包率(1~100)
 netQuality | ARNetQuality | 网络质量
 
-#### 13. 远程（其他人）网络状态
+### 15. 远程（其他人）网络状态
 
 **定义**
 
@@ -978,7 +978,7 @@ nNetSpeed | int |网络上行
 nPacketLost | int | 丢包率(1~100)
 netQuality | ARNetQuality | 网络质量
 
-#### 14. 网络丢失
+### 16. 网络丢失
 
 **定义**
 
@@ -991,7 +991,7 @@ void onRTCConnectionLost()
 会议SDK拥有断网重连机制，断网15秒内恢复可正常开会，15秒没有恢复网络会走该回调，重新恢复网络会自动连接。
 
 
-#### 15. 收到消息
+### 17. 收到消息
 
 **定义**
 
@@ -1014,7 +1014,7 @@ message | String | 消息内容
 
 
 
-#### 16. 打开共享通道结果
+### 18. 打开共享通道结果
 
 **定义**
 
@@ -1033,7 +1033,7 @@ success |boolean | true成功 fale失败
 打开分享功能结果回调
 
 
-#### 17. 收到其他人设置的共享信息
+### 19. 收到其他人设置的共享信息
 
 **定义**
 
@@ -1051,7 +1051,7 @@ userId | String | 发起共享者的id
 userData | String | 发起共享者的userData
 
 
-#### 18. 分享通道关闭
+### 20. 分享通道关闭
 
 **定义**
 
@@ -1060,7 +1060,7 @@ void onRTCShareClose();
 ```
 
 
-#### 19. 主持人上线
+### 21. 主持人上线
 
 **定义**
 
@@ -1080,7 +1080,7 @@ userData | String |用户自定义的userData
 
 仅在**主持人模式**下回调
 
-#### 20. 主持人下线
+### 22. 主持人下线
 
 **定义**
 
@@ -1099,7 +1099,7 @@ peerId |String |  RTC服务生成的标识Id (用于标识与会者，每次加�
 仅在**主持人模式**下回调
 
 
-#### 21. 用户进入会议室
+### 23. 用户进入会议室
 
 **定义**
 
@@ -1116,7 +1116,7 @@ publishId | String | RTC服务生成的视频通道Id
 userId | String | 开发者自己平台的用户Id
 userData | String | 开发者自己平台的相关信息（昵称，头像等）
 
-#### 22. 用户离开会议室
+### 24. 用户离开会议室
 
 **定义**
 
@@ -1132,7 +1132,7 @@ peerId | String | RTC服务生成的标识Id (用于标识与会者，每次加�
 publishId | String | RTC服务生成的视频通道Id
 userId | String | 开发者自己平台的用户Id
 
-#### 23. 主持人打开单聊
+### 25. 主持人打开单聊
 
 **定义**
 
@@ -1152,7 +1152,7 @@ userData | String | 开发者自己平台的userData
 
 仅在**主持人模式**下回调
 
-#### 24. 主持人关闭单聊
+### 26. 主持人关闭单聊
 
 **定义**
 
@@ -1170,7 +1170,7 @@ peerId | String | RTC服务生成的标识Id ，用于标识与会者
 
 仅在**主持人模式**下回调
 
-#### 25. ZOOM模式下翻页信息
+### 27. ZOOM模式下翻页信息
 
 **定义**
 
@@ -1196,7 +1196,13 @@ num | int |一页显示视频个数
 
 ## 四、更新日志
 
+**Version 3.0.0 （2019-05-15）**
 
+* SDK版本升级3.0，API接口变更
+
+**Version 2.0.0 （2017-09-30）**
+
+* SDK版本升级2.0，梳理、完善SDK
 
 ## 五、错误码对照表
 
