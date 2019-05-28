@@ -37,7 +37,7 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.2.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.4.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -168,12 +168,12 @@ call.setLocalVideoCapturer(constraints);
 
 返回`Promise`对象。
 
-#### 切换设备
+#### 切换媒体输入设备
 
 ##### 示例
 
 ```
-meet.switchDevice(constraints);
+meet.switchMediaInputDevice(constraints);
 ```
 ##### 参数
 
@@ -211,7 +211,7 @@ meet.switchDevice(constraints);
 
 ##### 说明
 
-切换设备获取新的媒体流，将新的mediaRender展示到页面。
+切换设备输入设备（麦克风或摄像头），预览获取新的媒体流之后移除旧的预览窗口。
 
 #### 设置坐席身份
 
@@ -593,6 +593,10 @@ call.on("user-message", (peerUserId, msgContent) => {
 接收到用户发送的实时消息。 
 
 ## 四、更新日志
+
+**Version 3.0.4 （2019-05-28）**
+
+- SDK将方法`switchDevice`更名`switchMediaInputDevice`，同时同步更新文档
 
 **Version 3.0.2 （2019-05-27）**
 
