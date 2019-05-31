@@ -150,7 +150,7 @@ void setLogLevel(ARLogLevel logLevel)
 logLevel | ARLogLevel | 日志显示级别
 ---
 
-### ARRtcpOption配置类
+### ARMeetOption配置类
 
 ### 1. 获取配置类
 
