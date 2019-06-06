@@ -979,6 +979,12 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 
 ## 四、更新日志
 
+**Version 3.0.6 （2019-05-31）**
+
+- 添加`takeVideoRenderSnapshot`、`downloadVideoRenderSnapshot`和`attachSinkId`方法
+
+- 修复主持人模式异常
+
 **Version 3.0.5 （2019-05-27）**
 
 - 更新文档，文档添加`getDevices`和`switchDevice`的介绍

@@ -19,7 +19,7 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 - [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-iOS)
 - [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Android)
 - [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
-- [小程序 Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Miniapp)
+- [小程序 Demo 源码下载](https://github.com/anyRTC/anyRTC-Miniprogram)
 
 ## 一、集成指南
 
@@ -37,9 +37,14 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 登录[公众号平台](https://mp.weixin.qq.com)，打开开发-开发设置-服务器域名-修改，配置服务域名白名单。
 ![设置小程序服务类别](/assets/images/config_domain.png)
 
-### 兼容情况
+#### npm构建
+打开开发者工具，打开设置-项目设置-勾选'使用npm模块'，npm安装`moniprogram-ar-meet`、`moniprogram-ar-push`、`moniprogram-ar-play`之后，点击工具-构建npm。
 
+#### 兼容情况
 微信小程序基础库需要大于`1.7.0`，低版本需做兼容处理。
+
+#### 真机调试
+开发者工具模拟器除特殊版本之外，不支持实时音视频功能，请使用真机调试。
 
 ### 导入SDK
 
