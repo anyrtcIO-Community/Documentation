@@ -150,7 +150,7 @@ void setLogLevel(ARLogLevel logLevel)
 logLevel | ARLogLevel | 日志显示级别
 ---
 
-### ARRtcpOption配置类
+### ARMeetOption配置类
 
 ### 1. 获取配置类
 
@@ -600,14 +600,14 @@ type | int | 共享类型，canShare方法设定的
 **定义**
 
 ```
-void setBroadCast(String publishId, boolean enable)
+void setBroadCast(String peerId, boolean enable)
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-publishId | String |RTC服务生成的通道ID
+peerId | String |RTC服务生成的标识身份的ID
 enable | boolean |是否广播 setUserToken
 
 **说明**  
@@ -619,14 +619,14 @@ enable | boolean |是否广播 setUserToken
 **定义**
 
 ```
-void setTalkOnly(String publishId,  boolean enable) 
+void setTalkOnly(String peerId,  boolean enable) 
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-publishId | String |需要单聊的用户的publishId
+peerId | String |需要单聊的用户的peerId
 enable | boolean |是否单聊  true单聊 false结束单聊 
 
 **说明**  
