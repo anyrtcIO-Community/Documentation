@@ -37,7 +37,7 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.9.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.12.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -633,6 +633,11 @@ call.on("user-message", (peerUserId, msgContent) => {
 接收到用户发送的实时消息。 
 
 ## 四、更新日志
+
+**Version 3.0.12 （2019-06-12）**
+
+- 解决移动网络不互通的BUG
+- 优化
 
 **Version 3.0.9 （2019-06-06）**
 
