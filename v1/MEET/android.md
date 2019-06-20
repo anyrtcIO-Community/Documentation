@@ -36,15 +36,23 @@
 
 ### 导入SDK
 
-**Gradle方式导入）**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/meet/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/meet/_latestVersion)
+**Gradle方式导）**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/meet/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/meet/_latestVersion)
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.0.1'
+  compile 'org.ar:meet_kit:3.0.3'
 }
 
 ```
-
+或者 Maven
+```
+<dependency>
+  <groupId>org.ar</groupId>
+  <artifactId>meet_kit</artifactId>
+  <version>3.0.3</version>
+  <type>pom</type>
+</dependency>
+```
 ### 权限说明
 
 使用ARMeet SDK需以下权限
@@ -226,7 +234,7 @@ render | long | 底层视频渲染对象
 **定义**
 
 ```
-boolean joinRTCByToken(String token,String anyRTCId, String userId, String userData) 
+boolean joinRTCByToken(String token,String meetId, String userId, String userData) 
 ```
 
 **参数**
@@ -234,7 +242,7 @@ boolean joinRTCByToken(String token,String anyRTCId, String userId, String userD
 参数名 | 类型 | 描述
 ---|:---:|---
 token|String|令牌:客户端向自己服务申请获得，参考企业级安全指南
-anyRTCId | String | 会议号 (在开发者业务系统中保持唯一的Id)
+meetId | String | 会议号 (在开发者业务系统中保持唯一的Id)
 userId | String | 开发者自己平台的用户Id
 userData | String | 开发者自己平台的相关信息（昵称，头像等），可选
 
@@ -708,7 +716,7 @@ void onRTCJoinMeetOK(String meetId);
 
 参数名 | 类型 | 描述
 ---|:---:|---
-meetId | String | 会议号 (在joinRTC方法里的第一个参数)
+meetId | String | 会议号 (在joinRTCByToken方法里的第2个参数)
 
 **说明**  
 
@@ -726,7 +734,7 @@ void onRTCJoinMeetFailed(String meetId, int code, String reason)
 
 参数名 | 类型 | 描述
 ---|:---:|---
-anyrtcId | String | 会议号 (在joinRTC方法里的第一个参数)
+anyrtcId | String | 会议号 (在joinRTCByToken方法里的第2个参数)
 code | int | 错误码 
 reason | String | 错误原因
 
