@@ -6,7 +6,7 @@
 
 请根据需求选择渠道安装，安装完ARCall呼叫 Demo后，可体验点对点音视频呼叫，监看等功能。
 
-- [iOS Demo下载](https://itunes.apple.com/cn/app/anyrtc点对点/id1316858730?mt=8)
+- [iOS Demo下载](https://www.pgyer.com/anyrtc_p2p_ios)
 
 - [Android Demo下载](https://www.pgyer.com/3blO)
 

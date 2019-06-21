@@ -14,7 +14,7 @@
 
 - [Android Demo下载](https://www.pgyer.com/eU0U)
 
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
+- [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
 
 ### 源码GitHub
 
