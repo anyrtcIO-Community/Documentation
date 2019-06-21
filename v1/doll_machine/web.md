@@ -7,15 +7,15 @@
 
 请根据需求选择渠道安装，安装完RTWawaji Demo后，可体验在线娃娃机功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_wawaji_ios)
+- [iOS Demo下载](https://www.pgyer.com/fYGm)
 
-- [Android Demo下载](https://www.pgyer.com/anyRTC_Wawaji)
+- [Android Demo下载](https://www.pgyer.com/3blO)
 
 - [Web Demo 体验](http://wawaji.anyrtc.cc/)
 
 ### 源码GitHub
 
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-iOS)
+- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-WaWa-Client-iOS)
 
 - [Android 服务端Demo 源码下载](https://github.com/AnyRTC/anyRTC-WaWa-Server-Android)
 
