@@ -39,7 +39,7 @@
 
 ```
 dependencies {
-   compile 'org.ar:arcall_kit:3.0.4'
+   compile 'org.ar:arcall_kit:3.0.7'
 }
 ```
 
@@ -48,7 +48,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>arcall_kit</artifactId>
-  <version>3.0.4</version>
+  <version>3.0.7</version>
   <type>pom</type>
 </dependency>
 ```
