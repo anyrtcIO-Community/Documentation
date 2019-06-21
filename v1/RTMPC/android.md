@@ -43,7 +43,7 @@
 
 ```
 dependencies {
-   compile 'org.ar:rtmpc_hybrid:3.0.3'
+   compile 'org.ar:rtmpc_hybrid:3.0.4'
 }
 ```
 
@@ -52,7 +52,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtmpc_hybrid</artifactId>
-  <version>3.0.3</version>
+  <version>3.0.4</version>
   <type>pom</type>
 </dependency>
 ```

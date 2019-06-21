@@ -58,7 +58,7 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.4.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.7.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -982,6 +982,16 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 主持人关闭了`1V1`单聊。
 
 ## 四、更新日志
+
+**Version 3.0.7 （2019-06-10）**
+
+- 修复已知BUG
+
+**Version 3.0.6 （2019-05-31）**
+
+- 添加`takeVideoRenderSnapshot`、`downloadVideoRenderSnapshot`和`attachSinkId`方法
+
+- 修复主持人模式异常
 
 **Version 3.0.5 （2019-05-27）**
 

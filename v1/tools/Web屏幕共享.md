@@ -51,7 +51,7 @@ import getScreenStream from 'ar-share-screen';
 **示例**
 
 ```
-getScreenStream.then(e => {
+getScreenStream().then(e => {
     if (e === 'no-ready') {
         alert(
         '1. 请检查是否安装"anyRTC-ScreenShare"屏幕共享插件,如果没有请点击https://chrome.google.com/webstore/detail/anyrtc-screenshare/daiabbkkhgegdmhfpocaakcgbajnkgbp?hl=zh-CN下载\n' +

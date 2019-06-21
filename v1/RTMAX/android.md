@@ -41,7 +41,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtmax_kit:3.0.2'
+  compile 'org.ar:rtmax_kit:3.0.4'
 }
 ```
 

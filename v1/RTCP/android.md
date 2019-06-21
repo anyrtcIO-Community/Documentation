@@ -45,7 +45,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtcp_kit:3.0.1'
+  compile 'org.ar:rtcp_kit:3.0.3'
 }
 ```
 
@@ -54,7 +54,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtcp_kit</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.3</version>
   <type>pom</type>
 </dependency>
 ```

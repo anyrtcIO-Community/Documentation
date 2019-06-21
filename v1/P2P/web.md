@@ -37,7 +37,7 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.2.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.12.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -124,7 +124,7 @@ call.getSDKVersion();
 ##### 示例
 
 ```
-meet.getDevices(deviceType);
+call.getDevices(deviceType);
 ```
 
 ##### 参数
@@ -168,12 +168,12 @@ call.setLocalVideoCapturer(constraints);
 
 返回`Promise`对象。
 
-#### 切换设备
+#### 切换媒体输入设备
 
 ##### 示例
 
 ```
-meet.switchDevice(constraints);
+call.switchMediaInputDevice(constraints);
 ```
 ##### 参数
 
@@ -211,7 +211,7 @@ meet.switchDevice(constraints);
 
 ##### 说明
 
-切换设备获取新的媒体流，将新的mediaRender展示到页面。
+切换设备输入设备（麦克风或摄像头），预览获取新的媒体流之后移除旧的预览窗口。
 
 #### 设置坐席身份
 
@@ -273,7 +273,7 @@ call.makeCall(peerUserId, callMode, userData, callExtend);
 
 | 参数名     |  类型  | 描述                                                         |
 | ---------- | :----: | ------------------------------------------------------------ |
-| peerUserId | string | 自定义用户ID                                                 |
+| peerUserId | string | 自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`     |
 | callMode   | number | 呼叫模式: `0`  视频呼叫`、2`音频呼叫、 `20`音频呼叫客服 、 `21`视频呼叫客服 |
 | userData   | string | 自定义用户数据                                               |
 | callExtend | object | 自定义拓展数据（选填）                                       |
@@ -524,12 +524,54 @@ call.on("end-call", (peerUserId, errCode) => {
 
 对方挂断通话`endCall` 或者对方下线`turnOff`。
 
+#### 坐席上线之后实时状态
+
+**定义**
+
+```
+call.on("clerk-cti-status", (queueNum, AllClerk, WorkingClerk) => {
+
+});
+```
+
+**参数**
+
+| 参数名     |  类型  | 描述                          |
+| ---------- | :----: | ----------------------------- |
+| queueNum   | number | 当前排队有多少人            |
+| AllClerk   | number | 所有坐席人数 |
+| WorkingClerk    | number | 正在工作的坐席人数 |
+
+**说明**
+
+坐席上线之后，坐席实时状态回调，仅坐席收到该回调。
+
+#### 用户上线之后实时状态
+
+**定义**
+
+```
+call.on("user-cti-status", (queueNum) => {
+
+});
+```
+
+**参数**
+
+| 参数名     |  类型  | 描述                          |
+| ---------- | :----: | ----------------------------- |
+| queueNum   | number | 前面还有多少人在排队            |
+
+**说明**
+
+用户发起`makeCall`之后，排队实时状态回调，直到坐席接收或拒绝通话。
+
 #### 打开远程视频窗口
 
 **定义**
 
 ```
-call.on("stream-subscribed", (peerUserId, renderId, peerUserId, peerUserData, render) => {
+call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
 
 });
 ```
@@ -540,7 +582,6 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserId, peerUserData, re
 | ------------ | :------------: | -------------------- |
 | peerUserId   |     string     | 对方的自定义userId   |
 | renderId     |     string     | 视频窗口标识ID       |
-| peerUserId   |     string     | 对方的自定义userId   |
 | peerUserData |     string     | 对方的自定义userData |
 | render       | HTMLDIVElement | 媒体窗口             |
 
@@ -553,7 +594,7 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserId, peerUserData, re
 **定义**
 
 ```
-call.on("stream-unsubscribed", (peerUserId, renderId, peerUserId, peerUserData) => {
+call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
 
 });
 ```
@@ -564,7 +605,6 @@ call.on("stream-unsubscribed", (peerUserId, renderId, peerUserId, peerUserData) 
 | ------------ | :----: | -------------------- |
 | peerUserId   | string | 对方的自定义userId   |
 | renderId     | string | 视频窗口标识ID       |
-| peerUserId   | string | 对方的自定义userId   |
 | peerUserData | string | 对方的自定义userData |
 
 **说明**
@@ -593,6 +633,24 @@ call.on("user-message", (peerUserId, msgContent) => {
 接收到用户发送的实时消息。 
 
 ## 四、更新日志
+
+**Version 3.0.12 （2019-06-12）**
+
+- 解决移动网络不互通的BUG
+- 优化
+
+**Version 3.0.9 （2019-06-06）**
+
+- 修复客户挂断通话之后坐席窗口黑屏的bug
+- 修复P2P VIP通道web被叫通话接不通的bug
+
+**Version 3.0.7 （2019-06-05）**
+
+- 优化排队机制
+
+**Version 3.0.4 （2019-05-28）**
+
+- SDK将方法`switchDevice`更名`switchMediaInputDevice`，同时同步更新文档
 
 **Version 3.0.2 （2019-05-27）**
 

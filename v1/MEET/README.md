@@ -24,3 +24,5 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 - [Android Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-Android)
 
 - [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
+
+- [微信小程序 源码下载](https://github.com/anyRTC/anyRTC-Miniprogram)
