@@ -1,6 +1,54 @@
-### 1.ARBoardSDK 简介
-ARBoardSDK 即白板SDK,提供了包括画笔、背景设置、标准图像、框选等基本功能，同时还支持文档展示和多段互动。
+## 一、概述
 
+### 简介
+ARBoardSDK 即白板SDK,提供了包括画笔、背景设置、标准图像、框选等基本功能，同时还支持文档展示和多段互动。
+### Demo 体验
+
+请根据需求选择渠道安装，安装完画板Demo后，可体验多人在线画板功能。
+
+- [iOS Demo下载](https://www.pgyer.com/t1Dys)
+
+- [Android Demo下载](https://www.pgyer.com/yhUN)
+
+- [Web Demo 体验](https://demos.anyrtc.io/ar-whiteboard)
+
+### 源码 GitHub
+
+源码仅供开发者参考，适用于SDK调试，便于快速集成。
+
+- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-iOS)
+
+- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Android)
+
+- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Web)
+- 
+## 二、集成指南
+
+### 适用范围
+
+本集成文档适用于 Android ARBoard SDK 3.0.0+版本。
+
+
+### 导入SDK
+
+**Gradle方式导入**[ ![Download](https://api.bintray.com/packages/dyncanyrtc/ar_dev/board/images/download.svg) ](https://bintray.com/dyncanyrtc/ar_dev/board/_latestVersion)
+
+```
+dependencies {
+    compile 'org.ar:board:3.0.2'
+}
+
+```
+或者 Maven
+```
+<dependency>
+  <groupId>org.ar</groupId>
+  <artifactId>board</artifactId>
+  <version>3.0.2</version>
+  <type>pom</type>
+</dependency>
+
+```
 
 **主要类文件概览** 
 
@@ -13,23 +61,20 @@ ARBoardConfig   | 白板配置类，包含设置画笔，颜色，粗细等相�
 **2.1集成**
 
 添加Jcenter仓库 Gradle依赖：
-```
-dependencies {
-    compile 'org.ar:board:3.0.0'
-}
 
-```
 
 **2.2配置开发者** 
 
 方法 | 说明
 ---|---
-initEngineWithARInfo() | 配置开发者信息
+initEngine() | 配置开发者信息
 
-参数名 | 说明
----|---
-String strAppId | AppId
-String strToken | Token
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+appId | String | 应用ID
+token | String | 应用Token
 
 > 注:使用ARBoardSDK必须先配置开发者信息，可从www.anyrtc.cc管理中心获取。
 
