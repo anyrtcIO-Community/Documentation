@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="myvideo" style="height: 200px;"></div>
+  <hr>
+  <div id="remote" style="height: 200px;"></div>
+
+  <script src="./ArMeetKit.3.0.6.js"></script>
+  <script>
+    var APP_ID = "anyrtcXJfqnOdWy8Di";
+    var APP_TOKEN = "007ac828e3ca883f6bab728018eec068";
+
+    var meet = null;
+
+    if (confirm('hoster')) {
+      meet = new ArMeetKit({
+        meetMode: 1,
+        userRole: 1,
+        logLevel: 'info',
+      });
+    }
+    else {
+      meet = new ArMeetKit({
+        meetMode: 1,
+        userRole: 0,
+        logLevel: 'info',
+      });
+    }
+
+    meet.configServer('operation.anyrtc.cc');
+    meet.initAppInfo(APP_ID, APP_TOKEN);
+
+    meet.setLocalVideoCapturer()
+      .then(e => {
+        document.getElementById('myvideo').appendChild(e.mediaRender);
+        meet.joinRTC('123321');
+      }).catch(err => {
+        console.log(err);
+      })
+
+      meet.on('join-success', () => {
+        console.log('success');
+      });
+
+      meet.on('join-failed', () => {
+        console.log('failed');
+      });
+
+      meet.on('stream-subscribed', (peerId, pubId, userId, userData, mediaRender) => {
+        mediaRender.id = pubId;
+        document.getElementById('remote').appendChild(mediaRender);
+      });
+
+      meet.on('stream-unsubscribed', (peerId, pubId, userId, userData) => {
+        document.getElementById(pubId).remove();
+      });
+
+  </script>
+  
+</body>
+</html>

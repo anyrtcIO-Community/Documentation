@@ -37,7 +37,7 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.12.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.15.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -488,7 +488,7 @@ call.on("accept-call", (peerUserId) => {
 **定义**
 
 ```
-call.on("reject-call", (peerUserId) => {
+call.on("reject-call", (peerUserId, errCode) => {
 
 });
 ```
@@ -498,6 +498,7 @@ call.on("reject-call", (peerUserId) => {
 | 参数名     |  类型  | 描述                 |
 | ---------- | :----: | -------------------- |
 | peerUserId | string | 呼叫者的自定义userId |
+| errCode | number | 拒绝呼叫的错误码 |
 
 **说明**
 
@@ -634,6 +635,10 @@ call.on("user-message", (peerUserId, msgContent) => {
 
 ## 四、更新日志
 
+**Version 3.0.15 （2019-06-12）**
+
+- 优化兼容性问题，解决Android浏览器不能现实图像的问题
+
 **Version 3.0.12 （2019-06-12）**
 
 - 解决移动网络不互通的BUG
@@ -664,7 +669,7 @@ call.on("user-message", (peerUserId, msgContent) => {
 
 ## 五、错误码对照表
 
-以下为介绍 iOS RTMeetEngine SDK 的错误码。
+以下为介绍 web RTMeetEngine SDK 的错误码。
 
 | 名称                 | 值   | 备注                                           |
 | -------------------- | ---- | ---------------------------------------------- |
