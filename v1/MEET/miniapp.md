@@ -32,15 +32,15 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 
 #### 设置小程序服务类别
 登录[公众号平台](https://mp.weixin.qq.com)，打开设置-基本设置-服务类目-详情-添加服务类目，目前小程序实时音视频支持这些[服务类目](https://developers.weixin.qq.com/miniprogram/dev/component/live-pusher.html)，请选择其中一种。
-![设置小程序服务类别](/assets/images/config_service.png)
+![设置小程序服务类别](/assets/images/web/config_service.png)
 
 #### 开启实时音视频权限
 登录[公众号平台](https://mp.weixin.qq.com)，打开开发-接口设置，开启实时播放音视频流并开启实时录制音视频流。
-![设置小程序服务类别](/assets/images/config_api_promise.png)
+![设置小程序服务类别](/assets/images/web/config_api_promise.png)
 
 #### 配置服务域名
 登录[公众号平台](https://mp.weixin.qq.com)，打开开发-开发设置-服务器域名-修改，配置服务域名白名单。
-![设置小程序服务类别](/assets/images/config_domain.png)
+![设置小程序服务类别](/assets/images/web/config_domain.png)
 
 #### npm构建
 打开开发者工具，打开设置-项目设置-勾选'使用npm模块'，npm安装`moniprogram-ar-meet`、`moniprogram-ar-push`、`moniprogram-ar-play`之后，点击工具-构建npm。
