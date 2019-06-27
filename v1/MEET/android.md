@@ -10,7 +10,7 @@
 
 - [Android Demo下载](https://www.pgyer.com/eU0U)
 
-- [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
+- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
 
 ### 源码GitHub
 
@@ -40,7 +40,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.0.3'
+  compile 'org.ar:meet_kit:3.0.4' (最新版见上面图标版本号)
 }
 
 ```
@@ -49,7 +49,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>meet_kit</artifactId>
-  <version>3.0.3</version>
+  <version>3.0.4</version>
   <type>pom</type>
 </dependency>
 ```
@@ -1214,7 +1214,6 @@ num | int |一页显示视频个数
 
 ## 五、错误码对照表
 
-以下为介绍RTCPEngine SDK 的错误码。
 
 名称 | 值            | 备注
 ---|------------------------------|----

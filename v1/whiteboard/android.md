@@ -198,13 +198,13 @@ leave() | 离开白板，断开连接
 
 接口 | 说明
 ---|---
-initBoardScuess | 白板初始化成功
+initBoardSuccess() | 白板初始化成功
 onBoardError()| 白板发生错误，错误码
-onBoardServerDisconnect | 白板断开连接
+onBoardServerDisconnect() | 白板断开连接
 onBoardPageChange()|当翻页以或者添加一页，删除一页时会给用户回调页码信息以及当前画板的图片URL
 onBoardDrawsChangeTimestamp(long timestamp)|其他人对于画板操作的时间戳
-onBoardMessage|收到消息
-onBoardDestroy|画板销毁：调了destoryBoard()方法
+onBoardMessage()|收到消息
+onBoardDestroy()|画板销毁：调了destoryBoard()方法
 
 **错误码**
 
