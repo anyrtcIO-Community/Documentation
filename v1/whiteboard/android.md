@@ -6,7 +6,7 @@ ARBoardSDK 即白板SDK,提供了包括画笔、背景设置、标准图像、�
 
 请根据需求选择渠道安装，安装完画板Demo后，可体验多人在线画板功能。
 
-- [iOS Demo下载](https://www.pgyer.com/t1Dys)
+- [iOS Demo下载](https://www.pgyer.com/t1Dy)
 
 - [Android Demo下载](https://www.pgyer.com/yhUN)
 
