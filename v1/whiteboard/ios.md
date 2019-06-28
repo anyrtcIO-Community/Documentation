@@ -56,11 +56,11 @@ pod 'ARBoardEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-WhiteBoard-iOS)，找到ARBoardEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将ARBoardEngine.framework添加到你的工程目录中
-![ios_board_01](/assets/images/ios_board_01.png)
+![ios_board_01](/assets/images/ios/ios_board_01.png)
 
 * 打开General->Embedded Binaries中添加ARBoardEngine.framework
 
-![ios_board_02](/assets/images/ios_board_02.png)
+![ios_board_02](/assets/images/ios/ios_board_02.png)
 
 ### 权限说明
 

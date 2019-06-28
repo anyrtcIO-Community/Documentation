@@ -1,6 +1,6 @@
 # 概述
 
-### AnyRTC平台概述
+### anyRTC平台概述
 
 快速将音视频通信嵌入到您的
 WEB和应用程序
@@ -17,7 +17,7 @@ RTCPEngine SDK | 实时直播 | 适用于在线娃娃机、智能硬件、在线
 RTCP2PEngine SDK | 语音通话 | 适用于网络电话、活动、教育等多种呼叫场景 | 支持视频、语音、优先视频等多种呼叫模式
 RTMaxEngine SDK | 指挥调度 | 适用于安防监控、智能家居 | 高清流畅的音视频、超低延时、指挥有力、资源保障等全面协调的的视频通讯指挥平台，实现现场应急与后方应急指挥中心的实时视频通讯、同步传输、精准调度、各级高效协同。
 
-### 创建AnyRTC账号
+### 创建anyRTC账号
 
 * 前往[anyRTC官网](https://www.anyrtc.io)注册成为开发者；
 
@@ -35,6 +35,6 @@ RTMaxEngine SDK | 指挥调度 | 适用于安防监控、智能家居 | 高清�
 
 - Github：https://github.com/anyRTC
 
-- AnyRTC论坛：https://bbs.anyrtc.io
+- anyRTC论坛：https://bbs.anyrtc.io
 
-- AnyRTC公众号：anyRTC
+- anyRTC公众号：anyRTC

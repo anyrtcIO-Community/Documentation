@@ -59,11 +59,11 @@ pod 'RTMeetEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMeetEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMeetEngine.framework添加到你的工程目录中
-![ios_meet_01](/assets/images/ios_meet_01.png)
+![ios_meet_01](/assets/images/ios/ios_meet_01.png)
 
 * 打开General->Embedded Binaries中添加RTMeetEngine.framework
 
-![ios_meet_02](/assets/images/ios_meet_02.png)
+![ios_meet_02](/assets/images/ios/ios_meet_02.png)
 
 ### 权限说明
 
@@ -95,7 +95,7 @@ pod 'RTMeetEngine', '3.0.0'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_meet_03](/assets/images/ios_meet_03.png)
+![ios_meet_03](/assets/images/ios/ios_meet_03.png)
 
 ## 三、API接口文档
 

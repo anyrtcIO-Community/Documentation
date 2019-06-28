@@ -58,11 +58,11 @@ pod 'RTCPEngine', '3.0.1'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTCPEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTCPEngine.framework添加到你的工程目录中
-![ios_rtcp_01](/assets/images/ios_rtcp_01.png)
+![ios_rtcp_01](/assets/images/ios/ios_rtcp_01.png)
 
 * 打开General->Embedded Binaries中添加RTCPEngine.framework
 
-![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
+![ios_rtcp_02](/assets/images/ios/ios_rtcp_02.png)
 
 ### 权限说明
 
@@ -94,7 +94,7 @@ pod 'RTCPEngine', '3.0.1'
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
+![ios_rtcp_03](/assets/images/ios/ios_rtcp_03.png)
 
 ## 三、API接口文档
 

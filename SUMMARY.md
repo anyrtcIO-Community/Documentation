@@ -1,6 +1,6 @@
 # Summary
 
-* [AnyRTC平台](README.md)
+* [anyRTC平台](README.md)
 * [应用场景](v1/app/README.md)
     * [实时直播](v1/RTCP/README.md)
         * [Android](v1/RTCP/android.md)
