@@ -40,7 +40,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.0.4' (最新版见上面图标版本号)
+  compile 'org.ar:meet_kit:3.0.5' (最新版见上面图标版本号)
 }
 
 ```
@@ -1214,33 +1214,35 @@ num | int |一页显示视频个数
 
 ## 五、错误码对照表
 
-
 名称 | 值            | 备注
 ---|------------------------------|----
-AnyRTC_OK | 0 | 正常
-AnyRTC_UNKNOW | 1 | 未知错误
-AnyRTC_EXCEPTION | 2 | SDK调用异常
-AnyRTC_EXP_UNINIT | 3 | SDK未初始化
-AnyRTC_EXP_PARAMS_INVALIDE | 4 | 参数非法
-AnyRTC_EXP_NO_NETWORK | 5 | 没有网络链接
-AnyRTC_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-AnyRTC_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-AnyRTC_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-AnyRTC_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
-AnyRTC_NET_ERR | 100 | 网络错误 
-AnyRTC_NET_DISSCONNECT | 101 | 网络断开
-AnyRTC_LIVE_ERR | 102 | 直播出错
-AnyRTC_EXP_ERR | 103 | 异常错误
-AnyRTC_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
-AnyRTC_BAD_REQ | 201 | 服务不支持的错误请求
-AnyRTC_AUTH_FAIL | 202  | 认证失败
-AnyRTC_NO_USER | 203 | 此开发者信息不存在
-AnyRTC_SVR_ERR | 204 | 服务器内部错误
-AnyRTC_SQL_ERR | 205 | 服务器内部数据库错误
-AnyRTC_ARREARS | 206 | 账号欠费
-AnyRTC_LOCKED | 207 | 账号被锁定
-AnyRTC_SERVER_NOT_OPEN | 208 | 服务未开通
-AnyRTC_ALLOC_NO_RES | 209 | 没有服务器资源
-AnyRTC_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-AnyRTC_FORCE_EXIT | 211 | 强制离开
+ARMeet_OK | 0 | 正常
+ARMeet_UNKNOW | 1 | 未知错误
+ARMeet_EXCEPTION | 2 | SDK调用异常
+ARMeet_EXP_UNINIT | 3 | SDK未初始化
+ARMeet_EXP_PARAMS_INVALIDE | 4 | 参数非法
+ARMeet_EXP_NO_NETWORK | 5 | 没有网络链接
+ARMeet_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
+ARMeet_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
+ARMeet_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
+ARMeet_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
+ARMeet_NET_ERR | 100 | 网络错误 
+ARMeet_NET_DISSCONNECT | 101 | 网络断开
+ARMeet_LIVE_ERR | 102 | 直播出错
+ARMeet_EXP_ERR | 103 | 异常错误
+ARMeet_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
+ARMeet_BAD_REQ | 201 | 服务不支持的错误请求
+ARMeet_AUTH_FAIL | 202  | 认证失败
+ARMeet_NO_USER | 203 | 此开发者信息不存在
+ARMeet_SVR_ERR | 204 | 服务器内部错误
+ARMeet_SQL_ERR | 205 | 服务器内部数据库错误
+ARMeet_ARREARS | 206 | 账号欠费
+ARMeet_LOCKED | 207 | 账号被锁定
+ARMeet_SERVER_NOT_OPEN | 208 | 服务未开通
+ARMeet_ALLOC_NO_RES | 209 | 没有服务器资源
+ARMeet_SERVER_NO_SURPPOAR | 210 | 不支持的服务
+ARMeet_FORCE_EXIT | 211 | 强制离开
+ARMeet_NOT_STAAR | 700 | 房间未开始
+ARMeet_IS_FULL | 701 | 房间人员已满
+ARMeet_NOT_COMPARE | 702 | 房间类型不匹配
 
