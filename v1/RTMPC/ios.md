@@ -1,43 +1,18 @@
-# iOS
+## 一、快速开始
 
-## 一、概述
+### 集成指南
 
-### 简介
+#### 适用范围
 
-互动连麦基于RTMP 基础上添加RTC实时互动的功能；推流断线重连，拉流秒开，最大支持4人同时互动连麦，观众人数不限，适用于游戏直播、美女秀场等场景
+本集成文档适用于iOS RTMPCHybirdEngine SDK 2.0.0 ~ 3.0.1版本
 
-### Demo体验
-
-请根据需求选择渠道安装，安装完直播互动连麦Demo后，可体验在线直播多人连麦功能。
-
-- [iOS Demo下载](https://www.pgyer.com/X9HH)
-
-- [Android Demo下载](https://www.pgyer.com/app/qrcode/Zuap)
-
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-RTMPC-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTMPC-Android)
-
-
-## 二、集成指南
-
-### 适用范围
-
-本集成文档适用于iOS RTMPCHybirdEngine SDK 2.0.0 ~ 3.0.0版本
-
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+
 - iOS 8.0+ 真机（iPhone 或 iPad）
 - 请确保你的项目已设置有效的开发者签名
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -63,39 +38,274 @@ pod 'RTMPCHybirdEngine', '3.0.1'
 
 ![ios_rtmpc_02](/assets/images/ios/ios_rtmpc_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTMPCHybirdEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
 * 添加设备使用「网络」的权限
 ```
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<key>NSAppTransportSecurity</key>
+<dict>
+<key>NSAllowsArbitraryLoads</key>
+<true/>
+</dict>
 ```
 
 * 添加设备使用「相机」的权限
 ```
-	<key>NSCameraUsageDescription</key>
-	<string>XXX请求访问相机用于...</string>
+<key>NSCameraUsageDescription</key>
+<string>XXX请求访问相机用于...</string>
 ```
 
 * 添加设备使用「麦克风」的权限
 
 ```
-	<key>NSMicrophoneUsageDescription</key>
-	<string>XXX请求访问麦克风用于...</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
 ![ios_rtmpc_03](/assets/images/ios/ios_rtmpc_03.png)
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTMPCHybirdEngine/ARRtmpSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARRtmpEngine initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARRtmpEngine configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 主播端
+
+##### 2.1 实例化主播对象
+
+调用initWithDelegate:option:方法用于实例化主播对象，，需实现ARHosterRtmpDelegate中的回调方法。第二个参数option为配置信息，包括直播模式、相机类型、帧率、码率等。同时需要实现ARHosterRtcDelegate的回调。
+
+直播模式：
+
+* 音视频直播（ARLivingMediaModeVideo）
+
+* 音频直播（ARLivingMediaModeAudio）
+
+**示例代码：**
+
+```
+//配置信息
+ARHosterOption *option = [ARHosterOption defaultOption];
+//直播模式
+option.livingMediaMode = ARLivingMediaModeVideo;
+//相机类型
+option.cameraType = ARRtmpCameraTypeBeauty;
+//实例化主播对象
+self.hosterKit = [[ARRtmpHosterKit alloc] initWithDelegate:self option:option];
+//rtc回调
+self.hosterKit.rtc_delegate = self;
+```
+
+##### 2.2 设置本地视频采集窗口
+
+调用setLocalVideoCapturer:方法设置本地视频采集窗口。
+
+**示例代码：**
+
+```
+[self.hosterKit setLocalVideoCapturer:self.view];
+
+```
+
+##### 2.3 开始推流
+
+调用startPushRtmpStream:方法开始推流。
+
+**示例代码：**
+
+```
+[self.hosterKit startPushRtmpStream:self.liveInfo.push_url];
+```
+
+##### 2.4 创建RTC直播间
+
+调用createRTCLineByToken:liveId:userId:userData:liveInfo:方法创建RTC直播间。第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+
+
+**示例代码：**
+
+```
+
+//用户信息
+ArUserInfo *userInfo = ArUserManager.getUserInfo;
+NSDictionary *userData = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1],@"isHost",userInfo.userid,@"userId",userInfo.nickname,@"nickName",userInfo.avatar,@"headUrl", nil];
+//直播信息
+NSDictionary *liveData = [NSDictionary dictionaryWithObjectsAndKeys:self.liveInfo.pull_url,@"rtmpUrl",self.liveInfo.hls_url,@"hlsUrl",self.liveInfo.anyrtcId,@"anyrtcId",self.liveInfo.anyrtcId,@"liveTopic",[NSNumber numberWithInt:0],@"isLiveLandscape",[NSNumber numberWithInt:0],@"isAudioLive",userInfo.nickname,@"hosterName",nil];
+
+[self.hosterKit createRTCLineByToken:nil liveId:self.liveInfo.anyrtcId userId:userInfo.userid userData:[ArCommon fromDicToJSONStr:userData] liveInfo:[ArCommon fromDicToJSONStr:liveData]]
+
+```
+
+##### 2.5 连麦请求
+
+主播收到游客连麦请求回调（onRTCApplyToLine:），主播可以选择同意（acceptRTCLine）或拒绝（rejectRTCLine）。
+
+**示例代码：**
+
+```
+//主播收到游客连麦请求
+- (void)onRTCApplyToLine:(NSString *)peerId userId:(NSString *)userId userData:(NSString *)userData {
+//同意连麦
+[self.hosterKit acceptRTCLine:peerId];
+//拒绝连麦
+//[self.hosterKit rejectRTCLine:peerId];
+}
+
+```
+
+##### 2.6 设置连麦者视频窗口
+
+主播收到游客视频连麦接通回调时（onRTCOpenRemoteVideoRender:），可调用setRemoteVideoRender:pubId:方法用于设置连麦者视频窗口。
+
+**示例代码：**
+
+```
+//游客视频连麦接通
+- (void)onRTCOpenRemoteVideoRender:(NSString *)peerId pubId:(NSString *)pubId userId:(NSString *)userId userData:(NSString *)userData {
+UIView *videoView = [UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 160);
+[self.view addSubview:videoView];
+[self.hosterKit setRemoteVideoRender:videoView pubId:pubId];
+}
+```
+
+##### 2.7 销毁主播对象
+
+当主播离开房间时，可调用clear方法销毁主播对象。
+
+**示例代码：**
+
+```
+[self.hosterKit clear];
+```
+
+#### 3. 游客端
+
+##### 3.1 实例化游客对象
+
+调用initWithDelegate:option:方法实例化游客对象，需实现ARGuestRtmpDelegate中的回调方法。第二个参数option为游客配置信息，包括连麦模式、播放器显示模式、视频方向等等。同时需要实现ARGuestRtcDelegate的回调。
+
+**示例代码：**
+
+```
+//配置信息
+ARGuestOption *option = [ARGuestOption defaultOption];
+//音视频连麦（默认）
+option.linkMediaModel = ARLinkMediaModeVideo;
+//实例化游客对象
+self.guestKit = [[ARRtmpGuestKit alloc] initWithDelegate:self option:option];
+//rtc回调
+self.guestKit.rtc_delegate = self;
+
+```
+
+##### 3.2 开始RTMP播放
+
+调用startRtmpPlay:render:方法用于拉流。
+
+**示例代码：**
+
+```
+[self.guestKit startRtmpPlay:self.mainModel.rtmpUrl render:self.localView];
+```
+
+##### 3.3 加入RTC直播间
+
+调用joinRTCLineByToken:liveId:userID:userData:方法加入RTC直播，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+
+**示例代码：**
+
+```
+//加入RTC
+ArUserInfo *userInfo = ArUserManager.getUserInfo;
+NSDictionary *userData = [NSDictionary dictionaryWithObjectsAndKeys:userInfo.nickname,@"nickName",@"",@"headUrl" ,nil];
+[self.guestKit joinRTCLineByToken:nil liveId:self.mainModel.anyrtcId userID:userInfo.userid userData:[ArCommon fromDicToJSONStr:userData]];
+```
+
+##### 3.4 申请连麦
+
+调用applyRTCLine方法申请连麦。
+
+**示例代码：**
+
+```
+[self.guestKit applyRTCLine];
+```
+
+##### 3.5 设置本地视频采集
+
+当游客申请连麦结果回调（onRTCApplyLineResult）为ARRtmp_OK时，调用setLocalVideoCapturer:方法用于设置本地视频采集。
+
+**示例代码：**
+
+```
+//游客申请连麦结果回调
+- (void)onRTCApplyLineResult:(ARRtmpCode)code {
+if (code == ARRtmp_OK) {
+UIView *videoView = [UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 160);
+[self.view addSubview:videoView];
+[self.guestKit setLocalVideoCapturer:videoView];
+}
+}
+```
+
+##### 3.6 设置其他连麦者视频窗口
+
+游客请求连麦成功后，如果当前有其他人正在连麦，会收到其他游客视频连麦接通的回调（onRTCOpenRemoteVideoRender:），可调用setRemoteVideoRender:pubId:方法用于设置连麦者视频窗口。
+
+**示例代码：**
+
+```
+//其他游客视频连麦接通
+- (void)onRTCOpenRemoteVideoRender:(NSString *)peerId pubId:(NSString *)pubId userId:(NSString *)userId userData:(NSString *)userData {
+UIView *videoView = [UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 160);
+[self.view addSubview:videoView];
+[self.guestKit setRemoteVideoRender:videoView pubId:pubId];
+}
+
+```
+
+##### 3.7 销毁游客对象
+
+当游客离开房间时，可调用clear方法销毁游客对象。
+
+**示例代码：**
+
+```
+[self.guestKit clear];
+```
+
+## 二、API接口文档
 
 ### ARRtmpEngine 接口类
 
@@ -1765,7 +1975,7 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 
 打开共享的人关闭了共享。 
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.1 （2019-05-23）**
 
@@ -1784,47 +1994,3 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 **Version 2.0.0 （2017-09-30）**
 
 * SDK版本升级2.0，梳理、完善SDK
-
-## 五、错误码对照表
-
-以下为介绍 iOS RTMPCHybirdEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARRtmp_OK | 0 | 正常
-ARRtmp_UNKNOW | 1 | 未知错误
-ARRtmp_EXCEPTION | 2 | SDK调用异常
-ARRtmp_EXP_UNINIT | 3 | SDK未初始化
-ARRtmp_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARRtmp_EXP_NO_NETWORK | 5 | 没有网络链接
-ARRtmp_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARRtmp_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARRtmp_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARRtmp_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
-ARRtmp_NET_ERR | 100 | 网络错误 
-ARRtmp_NET_DISSCONNECT | 101 | 网络断开
-ARRtmp_LIVE_ERR | 102 | 直播出错
-ARRtmp_EXP_ERR | 103 | 异常错误
-ARRtmp_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
-ARRtmp_BAD_REQ | 201 | 服务不支持的错误请求
-ARRtmp_AUTH_FAIL | 202  | 认证失败
-ARRtmp_NO_USER | 203 | 此开发者信息不存在
-ARRtmp_SVR_ERR | 204 | 服务器内部错误
-ARRtmp_SQL_ERR | 205 | 服务器内部数据库错误
-ARRtmp_ARREARS | 206 | 账号欠费
-ARRtmp_LOCKED | 207 | 账号被锁定
-ARRtmp_SERVER_NOT_OPEN | 208 | 服务未开通
-ARRtmp_ALLOC_NO_RES | 209 | 没有服务器资源
-ARRtmp_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-ARRtmp_FORCE_EXIT | 211 | 强制离开
-ARRtmp_NOT_START | 600 | 直播未开始
-ARRtmp_HOSTER_REJECT | 601 | 主播拒绝连麦
-ARRtmp_LINE_FULL | 602 | 连麦已满
-ARRtmp_CLOSE_ERR | 603 | 游客关闭错误，onRtmpPlayerClosed
-ARRtmp_HAS_OPENED | 604 | 直播已经开始，不能重复开启
-ARRtmp_IS_STOP | 605 | 直播已结束
-
-  
-
-
-

@@ -1,42 +1,18 @@
-# iOS
+## 一、快速开始
 
-### 简介
+### 集成指南
 
-anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 提供了包括画笔、背景设置、标准图像、框选等基本功能，同时还支持文档展示和多段互动。
+#### 适用范围
 
-### Demo体验
+本集成文档适用于iOS ARBoardEngine SDK 2.0.0 ~ 3.0.2版本
 
-请根据需求选择渠道安装，安装完白板Demo后，可体验在线会议功能。
-
-- [iOS Demo下载](https://www.pgyer.com/t1Dy)
-
-- [Android Demo下载](https://www.pgyer.com/yhUN)
-
-- [Web Demo 体验](https://demos.anyrtc.io/ar-whiteboard)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Web)
-
-## 二、集成指南
-
-### 适用范围
-
-本集成文档适用于iOS ARBoardEngine SDK 2.0.0 ~ 3.0.0版本
-
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+
 - iOS 8.0+ 真机（iPhone 或 iPad）
 - 请确保你的项目已设置有效的开发者签名
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -45,10 +21,10 @@ anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 
 ```
 pod 'ARBoardEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.2 版本为例）：
 
 ```
-pod 'ARBoardEngine', '3.0.0'
+pod 'ARBoardEngine', '3.0.2'
 ```
 
 **手动导入**
@@ -62,7 +38,7 @@ pod 'ARBoardEngine', '3.0.0'
 
 ![ios_board_02](/assets/images/ios/ios_board_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用ARBoardEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
@@ -75,7 +51,98 @@ pod 'ARBoardEngine', '3.0.0'
 </dict>
 ```
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <ARBoardEngine/ARBoardEngine.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARBoardConfig initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARBoardConfig configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 创建白板
+
+##### 2.1 实例化白板对象
+
+调用initWithRoomID:withFileId:withUserId:withUrlArray:方法实例化白板对象，需实现ARBoardViewDelegate回调方法。
+
+
+**示例代码：**
+
+```
+- (void)initializeBoard{
+NSMutableArray *imageArr = [NSMutableArray arrayWithCapacity:27];
+for (NSInteger i = 1; i <= 27; i++) {
+[imageArr addObject:[NSString stringWithFormat:@"http://oss.teameeting.cn/docs/140248771/20180929173501062526/document_20180929173501536430_%ld.jpg",(long)i]];
+}
+
+//初始化画板
+_boardView = [[ARBoardView alloc] initWithRoomID:self.roomId withFileId:@"88888888" withUserId:[[ArCommon getUUID]substringToIndex:6] withUrlArray:imageArr];
+_boardView.backgroundColor = [UIColor lightGrayColor];
+CGRect drawFrame = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(16, 9), self.view.frame);
+_boardView.frame = drawFrame;
+_boardView.delegate = self;
+[_boardView setBrushModel:_brushMode];
+[self.view insertSubview:_boardView atIndex:0];
+}
+```
+
+##### 2.1 白板操作
+
+* 设置画笔类型(setBrushModel:)
+
+* 设置画笔颜色(setBrushColor:)
+
+* 设置画笔粗细(setBrushWidth:)
+
+* 撤销一笔(undo)
+
+* 更改背景(updateCurrentBgImageWithURL:)
+
+* 当前画板截图(getCurrentSnapShotImage)
+
+* 添加一页(addBoard:withFont:)
+
+* 删除当前画板(deleteCurrentBoard)
+
+* 向前翻页(prePageWithSync:)
+
+* 向后翻页(nextPageWithSync:)
+
+* 跳到某一页(switchPage:withSync:)
+
+* 群发消息(sendMessage:)
+
+* 设置背景颜色(setBoardBgColor:)
+
+* 清空所有内容(destoryBoard)
+
+* 清空涂鸦(clearAllDraws)
+
+* 清空当前页涂鸦内容(clearCurrentDraw)
+
+## 二、API接口文档
 
 ### ARBoardConfig 接口类
 
@@ -449,7 +516,7 @@ timestamp | uint32_t | 时间
 
 收到该回调，退出白板。
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.0 （2019-05-15）**
 
@@ -458,18 +525,3 @@ timestamp | uint32_t | 时间
 **Version 2.0.0 （2017-09-30）**
 
 * SDK版本升级2.0，梳理、完善SDK
-
-## 五、错误码对照表
-
-以下为介绍 iOS ARBoardEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARBoardCodeParameterError | 3000 | 初始化错误
-ARBoardCodeNoNet | 3001 | 初始化无网络
-ARBoardCodeUserIdIsNull | 3002 | 用户ID为空
-ARBoardCodeSessionPastDue | 201 | session过期
-ARBoardCodeDeveloperInfoError | 202 | 开发者信息错误
-ARBoardCodeDeveloperArrearage | 206 | 欠费
-ARBoardCodeDeveloperNotOpen | 207 | 用户未开通该功能
-ARBoardCodeDatabaseError | 301 | 数据库异常

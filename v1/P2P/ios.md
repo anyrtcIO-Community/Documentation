@@ -1,42 +1,18 @@
-# iOS
+## 一、快速开始
 
-## 一、概述
+### 集成指南
 
-### 简介
-
-AnyRTC提供对语音通话场景的支持，RTCallEngine SDK，支持视频、语音、优先视频等多种呼叫模式，适用于网络电话、活动、教育等多种呼叫场景。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完P2P Demo后，可体验点对点呼叫功能。
-
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_p2p_ios)
-
-- [Android Demo下载](https://www.pgyer.com/3blO)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-Android)
-
-
-## 二、集成指南
-
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于iOS RTCallEngine SDK 3.0.0版本。
 
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+。
 - iOS 8.0+ 真机（iPhone 或 iPad）。
 - 请确保你的项目已设置有效的开发者签名。
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -62,7 +38,7 @@ pod 'RTCallEngine', '3.0.0'
 
 ![ios_p2p_02](/assets/images/ios/ios_p2p_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTCallEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
@@ -88,13 +64,209 @@ pod 'RTCallEngine', '3.0.0'
 <string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
 ![ios_p2p_03](/assets/images/ios/ios_p2p_03.png)
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTCallEngine/ARCallSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARCallEngine initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARCallEngine configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 加入房间
+
+##### 2.1 实例化用户对象
+
+调用initWithDelegate:方法实例化用户对象，需实现ARCallKitDelegate中的回调方法。
+
+
+**示例代码：**
+
+```
+- (void)itializationCallKit {
+self.callKit = [[ARCallKit alloc] initWithDelegate:self]; 
+}
+```
+##### 2.2 用户上线
+
+调用turnOnByToken:userId:方法用于上线，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+
+**示例代码：**
+
+```
+[self.callKit turnOnByToken:@"" userId:@""];
+```
+
+#### 3. 呼叫场景
+
+P2P呼叫可分为呼叫用户、群组、客服，详见3.1、3.2、3.3。
+
+##### 3.1 呼叫用户
+
+调用makeCallUser:option:方法用于呼叫用户，第二个参数option为用户配置信息，配置信息包含呼叫模式和用户个人信息。
+
+呼叫模式分为：
+* 音视频呼叫（AR_Call_Video）
+
+* 视频优先呼叫（AR_Call_VideoPro）
+
+* 音频呼叫（AR_Call_Audio）
+
+**示例代码：**
+
+```
+ARUserOption *option = ARUserOption.defaultOption;
+//呼叫模式
+option.callMode = AR_Call_Video;
+[self.callKit makeCallUser:@"" option:option];
+```
+
+##### 3.2 呼叫群组
+
+调用makeCallGroup:option:方法用于呼叫群组，第二个参数option为群组配置信息，包含主叫用户信息、呼叫用户数组和扩展信息。
+
+**示例代码：**
+
+```
+//配置信息
+NSDictionary *userData = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"nickName",memberArr,@"memberList",nil];
+ARGroupOption *option = ARGroupOption.defaultOption;
+option.userData = [ArCallCommon fromDicToJSONStr:userData];
+option.userArray = memberArr;
+//呼叫群组
+[self.callKit makeCallGroup:meetId option:option];
+
+```
+
+##### 3.3 呼叫客服场景（客户端）
+
+调用makeCallQueue:option:方法用于呼叫客服，第二个参数option为呼叫配置信息，包括呼叫类型、用户信息、
+等级、区域、交易类型。
+
+**示例代码：**
+
+```
+//配置信息
+ARQueueOption *option = ARQueueOption.defaultOption;
+//交易类型
+option.business = @"";
+//地区
+option.area = @"shanghai";
+//等级，数值越大等级越低
+option.level = 1;
+//呼叫客服
+[self.callKit makeCallQueue:@"" option:option];
+```
+
+#### 4. 呼叫相关
+
+##### 4.1 设置本地显示窗口
+
+调用setLocalVideoCapturer:option:方法设置本地显示窗口，第二个参数option为音视频配置项，包含视频帧率、码率、相机类型等。
+
+**示例代码：**
+
+```
+//配置信息
+ARCallOption *option = ARCallOption.defaultOption;
+ARVideoConfig *config = [[ARVideoConfig alloc] init];
+//视频质量
+config.videoProfile = ARVideoProfile480x640;
+option.videoConfig = config;
+
+ArVideoView *localView = [[ArVideoView alloc] init];
+localView.isFull = YES;
+localView.delegate = self;
+[self.view insertSubview:localView atIndex:0];
+[localView mas_makeConstraints:^(MASConstraintMaker *make) {
+make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+}];
+[self.callKit setLocalVideoCapturer:localView option:option];
+```
+
+##### 4.2 设置其他视频显示窗口
+
+调用setRemoteVideoRender:renderId:方法设置其他人视频显示窗口，用于收到对方视频即将显示（onRTCOpenRemoteVideoRender）的回调时调用。
+
+**示例代码：**
+
+```
+//收到对方视频即将显示的回调
+- (void)onRTCOpenRemoteVideoRender:(NSString *)userId renderId:(NSString*)renderId userData:(NSString*)userData {
+UIView *videoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 160)];
+[self.view addSubview:videoView];
+[self.callKit setRemoteVideoRender:videoView renderId:renderId];
+}
+
+```
+
+##### 4.3 同意呼叫
+
+调用acceptCall:方法用于收到呼叫请求回调时（onRTCMakeCall:）同意呼叫。
+
+**示例代码：**
+
+```
+//收到呼叫的回调
+- (void)onRTCMakeCall:(NSString *)meetId userId:(NSString *)userId userData:(NSString *)userData callModel:(ARCallMode)callMode extend:(NSString*)extend {
+//同意
+[self.callKit acceptCall:userId];
+//拒绝
+//[self.callKit rejectCall:userId];
+}
+
+```
+
+##### 4.4 挂断通话
+
+调用endCall:方法用于挂断呼叫。
+
+**示例代码：**
+
+```
+[self.callKit endCall:userId];
+
+```
+
+##### 4.5 清空会话
+
+调用close方法用于清空当前会话，可在离开房间时调用。
+
+**示例代码：**
+
+```
+[self.callKit close];
+
+```
+
+## 二、API接口文档
 
 ### ARCallEngine 接口类
 
@@ -890,7 +1062,7 @@ queueNum | int | 队列数
 allClerk | int | 总客服数
 woringNum | int | 正在忙的客服
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.0 （2019-05-15）**
 
@@ -899,53 +1071,3 @@ woringNum | int | 正在忙的客服
 **Version 2.0.0 （2017-09-30）**
 
 * SDK版本升级2.0，梳理、完善SDK
-
-## 五、错误码对照表
-
-以下为介绍 iOS RTCallEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARCall_OK | 0 | 正常
-ARCall_UNKNOW | 1 | 未知错误
-ARCall_EXCEPTION | 2 | SDK调用异常
-ARCall_EXP_UNINIT | 3 | SDK未初始化
-ARCall_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARCall_EXP_NO_NETWORK | 5 | 没有网络链接
-ARCall_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARCall_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARCall_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARCall_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
-ARCall_NET_ERR | 100 | 网络错误
-ARCall_NET_DISSCONNECT | 101 | 网络断开
-ARCall_LIVE_ERR | 102 | 直播出错
-ARCall_EXP_ERR | 103 | 异常错误
-ARCall_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
-ARCall_BAD_REQ | 201 | 服务不支持的错误请求
-ARCall_AUTH_FAIL | 202 | 认证失败
-ARCall_NO_USER | 203 | 此开发者信息不存在
-ARCall_SVR_ERR | 204 | 服务器内部错误
-ARCall_SQL_ERR | 205 | 服务器内部数据库错误
-ARCall_ARREARS | 206 | 账号欠费
-ARCall_LOCKED | 207 | 账号被锁定
-ARCall_SERVER_NOT_OPEN | 208 | 服务未开通
-ARCall_ALLOC_NO_RES | 209 | 没有服务器资源
-ARCall_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-ARCall_FORCE_EXIT | 211 | 强制离开
-ARCall_AUTH_TIMEOUT | 212 | 验证超时
-ARCall_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
-ARCall_WEB_DOMIAN_ERROR | 214 | Web应用的域名验证失败
-ARCall_IOS_BUNDLE_ID_ERROR | 215 | iOS应用的BundleId验证失败
-ARCall_ANDROID_PKG_NAME_ERROR | 216 | Android应用的包名验证失败
-ARCall_PEER_BUSY | 800 | 对方正忙
-ARCall_OFFLINE | 801 | 对方不在线
-ARCall_NOT_SELF | 802 | 不能呼叫自己
-ARCall_EXP_OFFLINE | 803 | 通话中对方意外掉线
-ARCall_EXP_EXIT | 804 | 对方异常导致(如：重复登录帐号将此前的帐号踢出)
-ARCall_TIMEOUT | 805 | 呼叫超时(45秒)
-ARCall_NOT_SURPPORT | 806 | 不支持
-
-  
-
-
-
