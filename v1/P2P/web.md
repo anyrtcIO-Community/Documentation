@@ -39,9 +39,72 @@ import ArCall from 'ar-call';
 ```
 <script src="yourAssetsPath/ArCallKit.版本.js"></script>
 ```
-
 ### 开发指南
+#### 1. 初始化SDK
+集成SDK后，还需对SDK在页面进行初始化操作。
+##### 1.1 导入头文件
+```
+import ArCall from 'ar-call';
+```
+##### 1.2 实例化对象
+```
+let call = new ArCall(options);
+```
 
+##### 1.3 配置开发者信息
+配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
+```
+//配置开发者信息
+call.initAppInfo(APP_ID, APP_TOKEN);
+
+//配置私有云(默认无需配置)
+//call.configServer(SERVE_URL);
+```
+#### 2. 加入房间
+##### 2.1 用户上线
+方法用于上线，第一参数是用户ID，第二个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+```
+call.turnOn(userId, token);
+```
+#### 3. 呼叫
+##### 3.1 设置本地显示窗口
+设置本地显示窗口，参数constraints为音视频配置项，包含视频帧率、码率、相机类型等。
+```
+call.setLocalVideoCapturer(constraints);
+```
+##### 3.2 呼叫用户
+调用makeCall方法用于呼叫用户<br/>
+第一个参数peerUserId自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`<br/>
+第二个参数callMode为呼叫模式<br/>
+第三个参数userData则是用户自定义数据<br/>
+第四个参数callExtend为自定义拓展数据（选填）<br/>
+呼叫模式：
+`0`视频呼叫、`2`音频呼叫、`20`音频呼叫客服、`21`视频呼叫客服
+ ```
+call.makeCall(peerUserId, callMode, userData, callExtend);
+```
+##### 3.3 设置其他视频显示窗口
+对方（或己方）同意视频通话请求后，会收到此回调，收到后需要将render添加展示到页面上。
+```
+call.on("stream-subscribed", (peerUserId, pubId, rtcUserData, mediaRender)
+```
+##### 3.4 通话操作
+peerUserId为自定义用户ID。
+```
+//同意呼叫
+call.acceptCall(peerUserId);
+//拒绝接听
+call.rejectCall(peerUserId);
+//结束通话
+call.endCall(peerUserId);
+```
+##### 3.5用户下线
+退出。
+```
+call.turnOff();
+```
+## 二、API接口文档
+### ArCall 接口
 #### 初始化实例
 
 ##### 示例
@@ -401,7 +464,6 @@ call.sendUserMessage(peerUserId, msgContent);
 
 发送实时消息。 
 
-## 二、API接口文档
 
 ### ARCall 回调接口
 
@@ -662,18 +724,3 @@ call.on("user-message", (peerUserId, msgContent) => {
 **Version 3.0.0 （2019-01-18）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
-
-## 五、错误码对照表
-
-以下为介绍 web RTMeetEngine SDK 的错误码。
-
-| 名称                 | 值   | 备注                                           |
-| -------------------- | ---- | ---------------------------------------------- |
-| RTCCall_OK           | 0    | 正常                                           |
-| RTCCall_PEER_BUSY    | 800  | 对方正忙                                       |
-| RTCCall_OFFLINE      | 801  | 对方不在线                                     |
-| RTCCall_NOT_SELF     | 802  | 不能呼叫自己                                   |
-| RTCCall_EXP_OFFLINE  | 803  | 通话中对方意外掉线                             |
-| RTCCall_EXP_EXIT     | 804  | 对方异常导致(如：重复登录帐号将此前的帐号踢出) |
-| RTCCall_TIMEOUT      | 805  | 呼叫超时(45秒)                                 |
-| RTCCall_NOT_SURPPORT | 806  | 不支持                                         |
