@@ -1,34 +1,15 @@
-## 一、概述
+## 一、快速开始
 
-### 简介
-
-anyRTC提供对实时直播场景的支持，RTCPEngine SDK 能够实现一对一、一对多的纯音频和视频实时直播，相比RTMPC延时更低、极简API接口。适用于在线娃娃机、智能硬件、在线医疗、视频招聘、相亲交友等多种场景。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
-
-- [iOS Demo下载](https://www.pgyer.com/kRHw)
-
-- [Android Demo下载](https://www.pgyer.com/so6a)
-
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Web)	
-
-## 二、集成指南		
+### 集成指南
 
 #### 适用范围		
 
 本集成文档适用于Web ARRtcpKit SDK 3.0.0及以上版本。
+
+#### 兼容情况
+
+- Chrome、Firefox、safari 11(以上)等，具体使用[webRTC检测工具](https://docs.anyrtc.io/v1/tools/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC%E6%A3%80%E6%B5%8B.html)
+- H5支持chrome内核。
 
 #### 准备环境
 
@@ -63,10 +44,63 @@ import ArRtcpKit from 'ar-rtcp';
 <script src="yourAssetsPath/ArRtcpKit.版本号.js"></script>
 ```
 
-## 三、API接口文档
+### 开发指南
+#### 1. 初始化SDK
+集成SDK后，还需对SDK在页面进行初始化操作。
+##### 1.1 导入头文件
+```
+import ArRtcpKit from 'ar-rtcp';
+```
+##### 1.2 实例化对象
+```
+let rtcp = new ArRtcpKit (options);
+```
 
-### ARRtcpKit API介绍
+##### 1.3 配置开发者信息
+配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
+```
+//配置开发者信息
+rtcp.initAppInfo(APP_ID, APP_TOKEN);
 
+//配置私有云(默认无需配置)
+//rtcp.configServer(SERVE_URL);
+```
+##### 2.设置本地显示窗口
+设置本地显示窗口，参数constraints为音视频配置项，包含视频帧率、码率、相机类型等。
+```
+rtcp.setLocalVideoCapturer(constraints);
+
+```
+##### 3.视频流操作
+`mediaType`媒体类型：0 视音频，1音频<br />
+`stream`辅流视频<br />
+`rtcpID`系统分配的频道ID<br />
+`mediaRender`视频对象<br />
+```
+//发布视频流
+rtcp.publish(mediaType);
+//取消发布
+rtcp.unPublishEx();
+//发布屏幕辅流(屏幕共享)
+rtcp.publishEx(stream)
+//取消发布屏幕辅流(屏幕共享)
+rtcp.unPublishEx();
+//订阅
+rtcp.unSubscribe(rtcpID)
+//取消订阅
+rtcp.unSubscribe();
+//收到远程视频
+rtcp.on("stream-subscribed", rtcpID, mediaRender);
+//收到辅流视频
+rtcp.on("exstream-subscribed", rtcpID, mediaRender);
+```
+##### 4.退出
+离开房间。
+```
+rtcp.close();
+```
+## 二、API接口文档
+### ArRtcpKit 接口
 #### 1. 实例化对象
 
 ```
@@ -173,15 +207,14 @@ ARRtcpKit SDK版本号。
 ##### 说明
 
 获取当前SDK版本。
-
-### ARMeetKit 接口类
+### ArRtcpKit 接口类
 
 #### 1. 获取媒体设备
 
 ##### 示例
 
 ```
-meet.getDevices(deviceType);
+rtcp.getDevices(deviceType);
 ```
 
 ##### 参数
@@ -251,7 +284,7 @@ rtcp.setLocalVideoCapturer(constraints);
 ##### 示例
 
 ```
-meet.switchDevice(constraints);
+rtcp.switchDevice(constraints);
 ```
 ##### 参数
 
@@ -656,7 +689,7 @@ rtcp.on("server-disconnect", function(){});
 
 服务器断开连接。
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.4 （2019-05-27）**
 
@@ -667,37 +700,3 @@ rtcp.on("server-disconnect", function(){});
 **Version 3.0.0 （2019-01-24）**
 
 - SDK版本升级3.0，API接口变更，更加简洁规范
-
-## 五、错误码对照表		
-
-以下为介绍 RTCPEngine SDK 的错误码。
-
-| 名称                            | 值   | 备注                               |
-| ------------------------------- | ---- | ---------------------------------- |
-| ARRtcp_OK                       | 0    | 正常                               |
-| ARRtcp_UNKNOW                   | 1    | 未知错误                           |
-| ARRtcp_EXCEPTION                | 2    | SDK调用异常                        |
-| ARRtcp_EXP_UNINIT               | 3    | SDK未初始化                        |
-| ARRtcp_EXP_PARAMS_INVALIDE      | 4    | 参数非法                           |
-| ARRtcp_EXP_NO_NETWORK           | 5    | 没有网络链接                       |
-| ARRtcp_EXP_NOT_FOUND_CAMERA     | 6    | 没有找到摄像头设备                 |
-| ARRtcp_EXP_NO_CAMERA_PERMISSION | 7    | 没有打开摄像头权限                 |
-| ARRtcp_EXP_NO_AUDIO_PERMISSION  | 8    | 没有音频录音权限                   |
-| ARRtcp_EXP_NOT_SUPPOAR_WEBARC   | 9    | 浏览器不支持原生的webrtc           |
-| ARRtcp_NET_ERR                  | 100  | 网络错误                           |
-| ARRtcp_NET_DISSCONNECT          | 101  | 网络断开                           |
-| ARRtcp_LIVE_ERR                 | 102  | 直播出错                           |
-| ARRtcp_EXP_ERR                  | 103  | 异常错误                           |
-| ARRtcp_EXP_UNAUTHORIZED         | 104  | 服务未授权(仅可能出现在私有云项目) |
-| ARRtcp_BAD_REQ                  | 201  | 服务不支持的错误请求               |
-| ARRtcp_AUTH_FAIL                | 202  | 认证失败                           |
-| ARRtcp_NO_USER                  | 203  | 此开发者信息不存在                 |
-| ARRtcp_SVR_ERR                  | 204  | 服务器内部错误                     |
-| ARRtcp_SQL_ERR                  | 205  | 服务器内部数据库错误               |
-| ARRtcp_ARREARS                  | 206  | 账号欠费                           |
-| ARRtcp_LOCKED                   | 207  | 账号被锁定                         |
-| ARRtcp_SERVER_NOT_OPEN          | 208  | 服务未开通                         |
-| ARRtcp_ALLOC_NO_RES             | 209  | 没有服务器资源                     |
-| ARRtcp_SERVER_NO_SURPPOAR       | 210  | 不支持的服务                       |
-| ARRtcp_FORCE_EXIT               | 211  | 强制离开                           |
-| ARRtcp_NOT_START                | 800  | 会议未开始                         |

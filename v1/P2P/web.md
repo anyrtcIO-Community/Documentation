@@ -1,23 +1,19 @@
-## 一、概述
+## 一、快速开始
 
-### 简介
+### 集成指南
 
-ARCall SDK支持点对点视频呼叫、音频呼叫。适用于在客服咨询、视频面签、视频开户、视频报警等多种业务场景。
-
-## 二、集成指南
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于Web 呼叫 ARCall SDK 3.0.0版本。
 
-### 兼容情况
+#### 兼容情况
 
 - Chrome、Firefox、safari 11(以上)等，具体使用[webRTC检测工具](https://docs.anyrtc.io/v1/tools/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC%E6%A3%80%E6%B5%8B.html)
 - H5支持chrome内核。
 
-### 导入SDK
+#### 导入SDK
 
-**npm 市场**
+##### npm 市场
 
 - 通过 npm市场 下载：
 
@@ -44,19 +40,17 @@ import ArCall from 'ar-call';
 <script src="yourAssetsPath/ArCallKit.版本.js"></script>
 ```
 
-## 三、API接口文档
-
-### ARCall API介绍
+### 开发指南
 
 #### 初始化实例
 
-**示例**
+##### 示例
 
 ```
 let call = new ArCall(Options: Object);
 ```
 
-**参数**
+##### 参数
 
 | 参数名  |  类型  | 描述     |
 | ------- | :----: | -------- |
@@ -72,50 +66,50 @@ let call = new ArCall(Options: Object);
 
 #### 配置开发者信息
 
-**定义**
+##### 示例
 
 ```
 call.initAppInfo(appId: string, apptoken: string);
 ```
 
-**参数**
+##### 参数
 
 | 参数名   |  类型  | 描述      |
 | -------- | :----: | --------- |
 | appId    | string | 应用ID    |
 | apptoken | string | 应用token |
 
-**说明**
+##### 说明
 
-该方法为配置开发者信息。
+方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
 
-#### 配置服务地址
+##### 配置服务地址
 
-**定义**
+##### 示例
 
 ```
 call.configServer(url);
 ```
 
-**参数**
+##### 参数
 
 | 参数名 |  类型  | 描述                            |
 | ------ | :----: | ------------------------------- |
 | url    | string | 服务地址，例如: `www.baidu.com` |
 
-**说明**
+##### 说明
 
 配置服务器地址，私有云需要配置，否则无需配置（如果网站是`HTPPS` 环境不支持IP）。
 
 #### 获取SDK版本号
 
-**定义**
+##### 示例
 
 ```
 call.getSDKVersion();
 ```
 
-**返回值**
+##### 返回值
 
 获取ARCall SDK版本号
 
@@ -133,7 +127,7 @@ call.getDevices(deviceType);
 | ----------- | :----: | -------------------------------- |
 | deviceType  | string | 媒体设备类型`videoinput`、`audioinput`、`audiooutput`，分别是摄像头、麦克风、扬声器 |
 
-**Return**
+##### 返回值
 
 `Promise`对象
 
@@ -145,13 +139,13 @@ call.getDevices(deviceType);
 
 #### 采集本地视频窗口
 
-**定义**
+##### 示例
 
 ```
 call.setLocalVideoCapturer(constraints);
 ```
 
-**参数**
+##### 参数
 
 | 参数名      |  类型  | 描述                   |
 | ----------- | :----: | ---------------------- |
@@ -164,7 +158,7 @@ call.setLocalVideoCapturer(constraints);
 | video  | object | `enable`是否打开摄像头<br />`deviceId`指定设备，`deviceId` 通过`getDevices` 接口获取 |
 | audio  | object | `enable`是否打开摄像头<br />`deviceId`指定设备，`deviceId` 通过`getDevices` 接口获取 |
 
-**说明**
+##### 说明
 
 返回`Promise`对象。
 
@@ -198,7 +192,7 @@ call.switchMediaInputDevice(constraints);
 | enable   | Boolean | `true`为采集麦克风， `false`;                |
 | devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
 
-**Return**
+##### 返回值
 
 `Promise`对象
 
@@ -215,13 +209,13 @@ call.switchMediaInputDevice(constraints);
 
 #### 设置坐席身份
 
-**定义**
+##### 示例
 
 ```
 call.setAsClerk(strArea, strCallId, strBusiness, nLevel);
 ```
 
-**参数**
+##### 参数
 
 | 参数名      |  类型  | 描述               |
 | ----------- | :----: | ------------------ |
@@ -230,32 +224,32 @@ call.setAsClerk(strArea, strCallId, strBusiness, nLevel);
 | strBusiness | string | 自定义业务类型     |
 | nLevel      | number | 自定义坐席服务级别 |
 
-**说明**
+##### 说明
 
 设置坐席身份，需要在`turnOn`调用之前设置。
 
 #### 用户上线（登录）
 
-**定义**
+##### 示例
 
 ```
 call.turnOn(userId， userToken);
 ```
 
-**参数**
+##### 参数
 
 | 参数名    |  类型  | 描述                                   |
 | --------- | :----: | -------------------------------------- |
 | userId    | string | 自定义用户ID                           |
 | userToken | string | 第三方认证所需要携带的userToken（非必填） |
 
-**说明**
+##### 说明
 
 用户上线，如果后台开启了[服务级安全设置]([https://docs.anyrtc.io/v1/security/%E6%9C%8D%E5%8A%A1%E7%BA%A7%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE%E6%8C%87%E5%8D%97.html](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html))，将会对userToken进行认证。
 
 #### 用户下线（退出）
 
-**定义**
+##### 示例
 
 ```
 call.turnOff();
@@ -263,13 +257,13 @@ call.turnOff();
 
 #### 发起呼叫请求
 
-**定义**
+##### 示例
 
 ```
 call.makeCall(peerUserId, callMode, userData, callExtend);
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                                                         |
 | ---------- | :----: | ------------------------------------------------------------ |
@@ -278,73 +272,73 @@ call.makeCall(peerUserId, callMode, userData, callExtend);
 | userData   | string | 自定义用户数据                                               |
 | callExtend | object | 自定义拓展数据（选填）                                       |
 
-**说明**
+##### 说明
 
 发起呼叫，被叫端会收到`make-call`回调。
 
 #### 同意呼叫请求
 
-**定义**
+##### 示例
 
 ```
 call.acceptCall(peerUserId);
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述         |
 | ---------- | :----: | ------------ |
 | peerUserId | string | 自定义用户ID |
 
-**说明**
+##### 说明
 
 同意呼叫请求，呼叫通道建立；
 
 #### 拒绝呼叫请求
 
-**定义**
+##### 示例
 
 ```
 call.rejectCall(peerUserId);
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述         |
 | ---------- | :----: | ------------ |
 | peerUserId | string | 自定义用户ID |
 
-**说明**
+##### 说明
 
 拒绝呼叫请求；
 
 #### 结束/取消呼叫请求
 
-**定义**
+##### 示例
 
 ```
 call.endCall(peerUserId);
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述         |
 | ---------- | :----: | ------------ |
 | peerUserId | string | 自定义用户ID |
 
-**说明**
+##### 说明
 
 结束或取消呼叫请求；
 
 #### 设置本地音频是否传输
 
-**定义**
+##### 示例
 
 ```
 call.setLocalAudioEnable(enable);
 ```
 
-**参数**
+##### 参数
 
 | 参数名 |  类型   | 描述                                        |
 | ------ | :-----: | ------------------------------------------- |
@@ -352,13 +346,13 @@ call.setLocalAudioEnable(enable);
 
 #### 设置本地视频是否传输
 
-**定义**
+##### 示例
 
 ```
 call.setLocalVideoEnable(enable);
 ```
 
-**参数**
+##### 参数
 
 | 参数名 | 类型 | 描述                                        |
 | ------ | :--: | ------------------------------------------- |
@@ -366,52 +360,54 @@ call.setLocalVideoEnable(enable);
 
 #### 获取本地音频传输是否打开
 
-**定义**
+##### 示例
 
 ```
 call.getLocalAudioEnable();
 ```
 
-**返回**
+##### 返回
 
 音频是否传输。 
 
 #### 获取本地视频传输是否打开
 
-**定义**
+##### 示例
 
 ```
 call.getLocalVideoEnable();
 ```
 
-**返回**
+##### 返回
 
 视频是否传输。 
 
 #### 发送实时消息
 
-**定义**
+##### 示例
 
 ```
 call.sendUserMessage(peerUserId, msgContent);
 ```
 
-**参数**
+##### 参数
 
 | 参数名 | 类型 | 描述                                        |
 | ------ | :--: | ------------------------------------------- |
 | peerUserId | string | 自定义用户ID |
 | msgContent | string | 自定义消息内容，json字符串 |
 
-**说明**
+##### 说明
 
 发送实时消息。 
+
+## 二、API接口文档
 
 ### ARCall 回调接口
 
 #### 用户上线成功
 
-**定义**
+##### 示例
 
 ```
 call.on("online-success", () => {
@@ -419,13 +415,13 @@ call.on("online-success", () => {
 });
 ```
 
-**说明**
+##### 说明
 
 用户上线成功
 
 #### 用户上线失败
 
-**定义**
+##### 示例
 
 ```
 call.on("online-failed", (errCode) => {
@@ -433,7 +429,7 @@ call.on("online-failed", (errCode) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名  |  类型  | 描述           |
 | ------- | :----: | -------------- |
@@ -441,7 +437,7 @@ call.on("online-failed", (errCode) => {
 
 #### 被呼叫
 
-**定义**
+##### 示例
 
 ```
 call.on("make-call", (roomId, peerUserId, callMode, peerUserData，callExtend) => {
@@ -449,7 +445,7 @@ call.on("make-call", (roomId, peerUserId, callMode, peerUserData，callExtend) =
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名       |  类型  | 描述                                 |
 | ------------ | :----: | ------------------------------------ |
@@ -459,13 +455,13 @@ call.on("make-call", (roomId, peerUserId, callMode, peerUserData，callExtend) =
 | peerUserData | string | 呼叫者的userData                     |
 | callExtend   | string | `makeCall`携带的自定义拓展数据       |
 
-**说明**
+##### 说明
 
 当收到远端呼叫时，将会收到此回调，如果同意通话采集本地视频窗口(`setLocalVideoCapturer`)之后再调用`acceptCall` ，否则`rejectCall` 。
 
 #### 被叫同意通话请求
 
-**定义**
+##### 示例
 
 ```
 call.on("accept-call", (peerUserId) => {
@@ -473,19 +469,19 @@ call.on("accept-call", (peerUserId) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                 |
 | ---------- | :----: | -------------------- |
 | peerUserId | string | 呼叫者的自定义userId |
 
-**说明**
+##### 说明
 
 发起呼叫请求`makeCall` ，对方收到`make-call` 回调，并同意`acceptCall`，会收到此回调。
 
 #### 被叫拒绝通话请求
 
-**定义**
+##### 示例
 
 ```
 call.on("reject-call", (peerUserId, errCode) => {
@@ -493,20 +489,20 @@ call.on("reject-call", (peerUserId, errCode) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                 |
 | ---------- | :----: | -------------------- |
 | peerUserId | string | 呼叫者的自定义userId |
 | errCode | number | 拒绝呼叫的错误码 |
 
-**说明**
+##### 说明
 
 发起呼叫请求`makeCall` ，对方收到`make-call` 回调，并拒绝`rejectCall`，会收到此回调。
 
 #### 通话结束
 
-**定义**
+##### 示例
 
 ```
 call.on("end-call", (peerUserId, errCode) => {
@@ -514,20 +510,20 @@ call.on("end-call", (peerUserId, errCode) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                          |
 | ---------- | :----: | ----------------------------- |
 | peerUserId | string | 对方的自定义userId            |
 | errCode    | string | 挂断的错误码。`0`为正常挂断。 |
 
-**说明**
+##### 说明
 
 对方挂断通话`endCall` 或者对方下线`turnOff`。
 
 #### 坐席上线之后实时状态
 
-**定义**
+##### 示例
 
 ```
 call.on("clerk-cti-status", (queueNum, AllClerk, WorkingClerk) => {
@@ -535,7 +531,7 @@ call.on("clerk-cti-status", (queueNum, AllClerk, WorkingClerk) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                          |
 | ---------- | :----: | ----------------------------- |
@@ -543,13 +539,13 @@ call.on("clerk-cti-status", (queueNum, AllClerk, WorkingClerk) => {
 | AllClerk   | number | 所有坐席人数 |
 | WorkingClerk    | number | 正在工作的坐席人数 |
 
-**说明**
+##### 说明
 
 坐席上线之后，坐席实时状态回调，仅坐席收到该回调。
 
 #### 用户上线之后实时状态
 
-**定义**
+##### 示例
 
 ```
 call.on("user-cti-status", (queueNum) => {
@@ -557,19 +553,19 @@ call.on("user-cti-status", (queueNum) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名     |  类型  | 描述                          |
 | ---------- | :----: | ----------------------------- |
 | queueNum   | number | 前面还有多少人在排队            |
 
-**说明**
+##### 说明
 
 用户发起`makeCall`之后，排队实时状态回调，直到坐席接收或拒绝通话。
 
 #### 打开远程视频窗口
 
-**定义**
+##### 示例
 
 ```
 call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
@@ -577,7 +573,7 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名       |      类型      | 描述                 |
 | ------------ | :------------: | -------------------- |
@@ -586,13 +582,13 @@ call.on("stream-subscribed", (peerUserId, renderId, peerUserData, render) => {
 | peerUserData |     string     | 对方的自定义userData |
 | render       | HTMLDIVElement | 媒体窗口             |
 
-**说明**
+##### 说明
 
 对方（或己方）同意视频通话请求后，会收到此回调，收到回调需要将render添加展示到页面上。
 
 #### 移除远程视频窗口
 
-**定义**
+##### 示例
 
 ```
 call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
@@ -600,7 +596,7 @@ call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名       |  类型  | 描述                 |
 | ------------ | :----: | -------------------- |
@@ -608,13 +604,13 @@ call.on("stream-unsubscribed", (peerUserId, renderId, peerUserData) => {
 | renderId     | string | 视频窗口标识ID       |
 | peerUserData | string | 对方的自定义userData |
 
-**说明**
+##### 说明
 
 对方（或己方）同意视频通话请求后挂断通话，会收到此回调，收到回调需要将render从页面上移除。
 
 #### 收到实时消息
 
-**定义**
+##### 示例
 
 ```
 call.on("user-message", (peerUserId, msgContent) => {
@@ -622,18 +618,18 @@ call.on("user-message", (peerUserId, msgContent) => {
 });
 ```
 
-**参数**
+##### 参数
 
 | 参数名 | 类型 | 描述                                        |
 | ------ | :--: | ------------------------------------------- |
 | peerUserId | string | 自定义用户ID |
 | msgContent | string | 自定义消息内容，json字符串 |
 
-**说明**
+##### 说明
 
 接收到用户发送的实时消息。 
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.15 （2019-06-12）**
 
