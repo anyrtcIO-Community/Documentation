@@ -79,7 +79,7 @@ pod 'RTMaxEngine', '3.0.0'
 ##### 1.1 导入头文件
 
 ```
-#import <ARBoardEngine/ARBoardEngine.h>
+#import <RTMaxEngine/RTMaxEngineSDK.h>
 ```
 
 ##### 1.2 配置开发者信息
