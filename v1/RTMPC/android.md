@@ -58,7 +58,275 @@ dependencies {
 ```
 
 
-#### 权限说明
+
+---
+## 三、开发指南
+
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARRtmpcEngine.Inst().initEngine(getApplicationContext(),  "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+
+### 主播端
+
+#### 1.2 获取Hoster配置类并设置相关配置
+
+**示例代码：**
+
+``` 
+ //获取配置类
+ARRtmpcHosterOption hosterOption = ARRtmpcEngine.Inst().getHosterOption();
+ //设置视频分辨率
+hosterOption.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
+//更多参考API文档
+```
+#### 1.3 实例化Hoster对象
+
+**示例代码：**
+
+``` 
+ARRtmpcHosterKit mHosterKit = new ARRtmpcHosterKit(ARRtmpcHosterEvent hosterEvent);
+```
+> 需传入回调接口实现类
+
+#### 1.4 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARRtmpcEngine.Inst().Egl(),this,false);
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 1.5 打开本地摄像头采集
+
+**示例代码：**
+
+```
+mHosterKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限
+
+#### 1.6 开始推流
+
+**示例代码：**
+
+```
+mHosterKit.startPushRtmpStream("pushUrl");
+
+```
+> rtmp连接结果，状态均会回调，具体查看API文档
+
+#### 1.7 创建RTC连接
+
+**示例代码：**
+
+```
+ mHosterKit.createRTCLine();
+```
+> 创建RTC连接必须放在startPushRtmpStream()后面，创建成功或者失败都会回调onRTCCreateLineResult()
+
+#### 1.8 收到申请/取消连麦请求/接受/拒绝/连麦请求
+
+**示例代码：**
+
+```
+//接受连麦
+mHosterKit.acceptRTCLine();
+//拒绝连麦
+mHosterKit.rejectRTCLine();
+```
+> **收到连麦申请会回调onRTCApplyToLine()，在该回调中可调用同意或拒绝连麦方法。游客取消连麦申请会回调onRTCCancelLine()**。
+
+#### 1.9 挂断连麦
+
+**示例代码：**
+
+```
+//挂断与游客的连麦
+mHosterKit.hangupRTCLine();
+```
+> 主播调用该方法后，游客端会回调onRTCHangupLine()，主播端会回调onRTCCloseRemoteVideoRender()
+
+
+#### 2.0 申请连麦游客的视频即将显示
+
+**示例代码：**
+
+```
+//显示对方视频
+final VideoRenderer render = mVideoView.openRemoteVideoRender(publishId);
+if (null != render) {
+    mHosterKit.setRemoteVideoRender(publishId, render.GetRenderPointer());
+}
+
+```
+> 同意连麦后，连麦通道建立，将会回调onRTCOpenRemoteVideoRender()方法，在该回调中应显示连麦者视频图像，参照上述代码，具体可参考demo
+
+#### 2.1 申请连麦游客的视频即将关闭
+
+**示例代码：**
+
+```
+//移除对方视频
+mHosterKit.setRTCRemoteVideoRender(strPublishId, 0);
+mVideoView.removeRemoteRender(strLivePeerId);
+
+```
+> 连麦者挂断或主播自己调用hangupRTCLine()方法挂断后，都会回调onRTCCloseRemoteVideoRender()方法，在该回调中应移除连麦者视频图像，参照上述代码，具体可参考demo
+
+
+#### 2.2 停止推流销毁主播段
+
+**示例代码：**
+
+```
+mHosterKit.stopRtmpStream();//停止推流
+mVideoView.removeLocalVideoRender();//移除本地视频
+mHosterKit.clean();//释放主播对象
+
+```
+> 具体可参考demo
+
+### 游客端 
+
+#### 2.3 获取Guest配置类并设置相关配置
+
+**示例代码：**
+
+``` 
+ //获取配置类
+ARRtmpcGuestOption guestOption = ARRtmpcEngine.Inst().getGuestOption();
+ //设置视频分辨率
+guestOption.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
+//更多参考API文档
+```
+#### 2.4 实例化Guest对象
+
+**示例代码：**
+
+``` 
+ARRtmpcGuestKit mGuestKit = new ARRtmpcGuestKit(ARRtmpcGuestEvent guestEvent);
+```
+> 需传入回调接口实现类
+
+#### 2.5 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARRtmpcEngine.Inst().Egl(),this,false);
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 2.6 打开本地摄像头采集
+
+**示例代码：**
+
+```
+mGuestKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限。
+**这一步在游客端的使用，应在连麦申请成功之后再打开本地摄像头**
+
+#### 2.7 开始拉流
+
+**示例代码：**
+
+```
+mGuestKit.startRtmpPlay("pullUrl");
+
+```
+> rtmp连接结果，状态均会回调，具体查看API文档
+
+#### 2.8 加入RTC连接
+
+**示例代码：**
+
+```
+ mGuestKit.joinRTCLine();
+```
+> 加入RTC连接必须放在startRtmpPlay后面，加入成功或者失败都会回调onRTCJoinLineResult()
+
+
+#### 2.9 申请/取消申请/挂断连麦
+
+**示例代码：**
+
+```
+//申请连麦
+mGuestKit.applyRTCLine();
+//取消申请或挂断连麦
+mGuestKit.hangupRTCLine();
+```
+> **申请连麦成功会回调onRTCApplyLineResult(),code==0的时候意味着连麦成功**
+此时会回调onRTCOpenRemoteVideoRender(),在此方法中应显示对方视频。
+游客端调用hangupRTCLine()挂断或者主播挂断都会走onRTCOpenRemoteVideoRender()回调，此时应移除对方视频
+见3.0 3.1
+
+#### 3.0 其他人视频即将显示
+
+**示例代码：**
+
+```
+//显示对方视频
+final VideoRenderer render = mVideoView.openRemoteVideoRender(publishId);
+if (null != render) {
+    mGuestKit.setRemoteVideoRender(publishId, render.GetRenderPointer());
+}
+```
+> 同意连麦后，连麦通道建立，将会回调onRTCOpenRemoteVideoRender()方法，在该回调中应显示主播或其他人视频图像，参照上述代码，具体可参考demo。**注意：只有在连麦接通后才会走该回调**
+
+#### 3.1 其他人视频即将关闭
+
+**示例代码：**
+
+```
+//移除对方视频
+mGuestKit.setRTCRemoteVideoRender(strPublishId, 0);
+mVideoView.removeRemoteRender(strLivePeerId);
+```
+> 其他连麦者挂断或主播自己调用hangupRTCLine()方法挂断后，都会回调onRTCCloseRemoteVideoRender()方法，在该回调中应移除连麦者或主播视频图像，参照上述代码，具体可参考demo。**注意：只有在连麦接通后才会走该回调**
+
+#### 3.2 释放Guest对象
+
+**示例代码：**
+
+```
+
+//如果在连麦应移除本地像 挂断连麦
+mGuestKit.hangupRTCLine()
+mVideoView.removeLocalVideoRender();
+
+mGuestKit.clean();
+```
+> 如果在连麦中应先移除本地像，挂断连麦，再释放
+
+
+#### 3.2 权限说明
 
 使用ARRtmpc SDK需以下权限
 
@@ -69,8 +337,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-#### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+#### 3.4 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -81,7 +349,8 @@ dependencies {
 -keep class org.webrtc.**{*;}
 ```
 
-## 三、API接口文档
+---
+## 四、API接口文档
 
 ### ARRtmpcEngine 类
 

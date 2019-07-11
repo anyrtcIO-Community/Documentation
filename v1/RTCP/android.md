@@ -26,9 +26,6 @@
 
 ## 二、集成指南
 
-### 适用范围
-
-本集成文档适用于Android RTCP SDK 3.0.0 版本。
 
 ### 准备环境
 
@@ -54,13 +51,155 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtcp_kit</artifactId>
-  <version>3.0.3</version>
+  <version>3.0.5</version>
   <type>pom</type>
 </dependency>
 ```
 
 
-### 权限说明
+
+## 三、开发指南
+
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARRtcpEngine.Inst().initEngine(getApplicationContext(),  "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+#### 1.2 设置发布视频流配置信息
+
+**示例代码：**
+
+```
+//获取配置类
+ARRtcpOption anyRTCRTCPOption = ARRtcpEngine.Inst().getARRtcpOption();
+//设置前后置摄像头 视频横竖屏 视频分辨率 帧率等
+anyRTCRTCPOption.setOptionParams(true, ARVideoCommon.ARVideoOrientation.Portrait,ARVideoCommon.ARVideoProfile.ARVideoProfile480x640, ARVideoCommon.ARVideoFrameRate.ARVideoFrameRateFps15);
+
+```
+
+#### 1.3 实例化实时直播对象并设置回调
+
+**示例代码：**
+
+``` 
+ARRtcpKit mRtcpKit = new ARRtcpKit(String userId, String userData);
+
+mRtcpKit.setRtcpEvent(ARRtcpEvent rtcpEvent)
+
+```
+
+#### 1.4 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARRtcpEngine.Inst().Egl(),this,false);
+
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 1.5 打开本地摄像头采集
+
+**示例代码：**
+
+```
+rtcpKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限
+
+#### 1.6 发布媒体流
+
+**示例代码：**
+
+```
+//发布视频流
+rtcpKit.publishByToken("", ARVideoCommon.ARMediaType.Video);
+
+```
+> 该方法第二个参数为媒体流类型，这以发布视频流为例，发布视频流需先打开本地摄像头采集。发布成功会回调onPublishOK()，发布失败会回调onPublishFailed() 
+
+#### 1.7 订阅媒体流
+
+**示例代码：**
+
+```
+//订阅流
+  rtcpKit.subscribe("rtcpId","token");
+
+```
+> 订阅成功会回调onSubscribeOK()，订阅失败会回调onSubscribeFailed()，SDK支持订阅多路流 
+
+#### 1.8 显示订阅媒体流
+
+**示例代码：**
+
+```
+//显示流
+long renderPointer = videoView.subscribeRemoteVideo(rtcpId).GetRenderPointer();
+rtcpKit.setRemoteVideoRender(rtcpId, renderPointer);
+
+```
+> 如果发布的是视频流，订阅成功会回调onSubscribeOK()， 随即回调onRTCOpenRemoteVideoRender() ,在该回调方法中调用上面示例代码，显示对方发布的流，具体参照demo。
+
+> 如果发布的是音频流，订阅成功会回调onSubscribeOK()，
+随即回调onRTCOpenRemoteAudioTrack()
+
+#### 1.9 取消发布流
+
+**示例代码：**
+```
+//取消发布
+rtcpKit.unPublish();
+//停止采集
+rtcpKit.stopCapture();
+//移除本地视频预览图像
+videoView.removeLocalVideoRender();
+```
+> 取消发布媒体流后，订阅方会收到onRTCCloseRemoteVideoRender()回调，在该回调中，应移除对方视频，具体参照demo
+
+
+#### 2.0 取消订阅
+
+**示例代码：**
+```
+//取消订阅
+rtcpKit.unSubscribe();
+```
+> 在离开之前，应将订阅的流全部取消订阅
+
+
+#### 2.1 释放RTCP对象
+
+**示例代码：**
+```
+//取消订阅
+rtcpKit.clean();
+```
+> 应在直播页面结束时调用，单例写法时，在程序退出时调用即可。
+
+
+#### 2.2 权限说明
 
 使用RTCP SDK需以下权限
 
@@ -71,8 +210,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+#### 2.3 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -83,8 +222,7 @@ dependencies {
 -keep class org.webrtc.**{*;}
 ```
 
-
-## 三、API接口文档
+## 四、API接口文档
 
 ### ARRtcpEngine 类
 

@@ -53,7 +53,132 @@ dependencies {
   <type>pom</type>
 </dependency>
 ```
-### 权限说明
+
+---
+## 三、开发指南
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARMeetEngine.Inst().initEngine(getApplicationContext(),  "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+#### 1.2 获取会议配置类并设置相关配置
+
+**示例代码：**
+
+``` 
+ //获取配置类
+ARMeetOption option = ARMeetEngine.Inst().getARMeetOption();
+//设置默认为前置摄像头
+option.setDefaultFrontCamera(true);
+//设置视频分辨率
+option.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
+//设置会议类型
+option.setMeetType(ARMeetType.Normal);
+//设置会议媒体类型
+option.setMediaType(ARVideoCommon.ARMediaType.Video);
+
+```
+#### 1.3 实例化会议对象
+
+**示例代码：**
+
+``` 
+ARMeetKit mMeetKit = new ARMeetKit(ARMeetEvent arMeetEvent);
+```
+
+#### 1.4 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARMeetEngine.Inst().Egl(),this,false);
+
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 1.5 打开本地摄像头采集
+
+**示例代码：**
+
+```
+mMeetKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限
+
+#### 1.6 加入会议室
+
+**示例代码：**
+
+```
+//加入会议室
+rtcpKit.joinRTCByToken("token", "meetId","userId","userdata");
+
+```
+> 加入会议室成功会回调onRTCJoinMeetOK()，发布失败会回调onRTCJoinMeetFailed() 
+
+#### 1.7 其他人加入会议室显示对方视频
+
+**示例代码：**
+
+```
+//显示对方视频
+final VideoRenderer render = mVideoView.openRemoteVideoRender(publishId);
+if (null != render) {
+    mMeetKit.setRemoteVideoRender(publishId, render.GetRenderPointer());
+}
+
+```
+> 其他人加入会议室会回调onRTCOpenRemoteVideoRender()方法，在该回调中应显示对方视频，参照上述代码，具体可查看demo
+
+#### 1.8 其他人离开会议室移除对方视频
+
+**示例代码：**
+
+```
+//移除对方视频
+if (mMeetKit!=null&&mVideoView!=null) {
+mVideoView.removeRemoteRender(publishId);
+mMeetKit.setRemoteVideoRender(publishId, 0);
+}
+
+```
+> 其他人离开会议室会回调onRTCCloseRemoteVideoRender()方法，在该回调中应移除对方视频，参照上述代码，具体可查看demo
+
+
+#### 1.9 离开会议室并销毁Meet对象
+
+**示例代码：**
+
+```
+if (mMeetKit != null) {
+    mMeetKit.clean();
+}
+
+```
+> 离开会议室，并释放会议对象，其他人将收到onRTCCloseRemoteVideoRender()回调
+
+#### 2.0 权限说明
 
 使用ARMeet SDK需以下权限
 
@@ -64,8 +189,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+#### 2.1 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -75,8 +200,9 @@ dependencies {
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
----
-## 三、API接口文档
+
+
+## 四、API接口文档
 
 ### ARMeetEngine 类
 
