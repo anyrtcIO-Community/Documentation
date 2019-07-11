@@ -116,12 +116,12 @@ self.callKit = [[ARCallKit alloc] initWithDelegate:self];
 ```
 ##### 2.2 用户上线
 
-调用turnOnByToken:userId:方法用于上线，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+调用turnOnByToken:userId:userData:方法用于上线，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
 
 **示例代码：**
 
 ```
-[self.callKit turnOnByToken:@"" userId:@""];
+[self.callKit turnOnByToken:@"" userId:@"" userData:@""];
 ```
 
 #### 3. 呼叫场景
@@ -130,7 +130,7 @@ P2P呼叫可分为呼叫用户、群组、客服，详见3.1、3.2、3.3。
 
 ##### 3.1 呼叫用户
 
-调用makeCallUser:option:方法用于呼叫用户，第二个参数option为用户配置信息，配置信息包含呼叫模式和用户个人信息。
+调用makeCallUser:option:方法用于呼叫用户，第二个参数option为用户配置信息，配置信息包含呼叫模式。
 
 呼叫模式分为：
 * 音视频呼叫（AR_Call_Video）
@@ -369,7 +369,7 @@ option | ARClertOption | 客服配置
 **定义**
 
 ```
-- (void)turnOnByToken:(NSString* _Nullable)token userId:(NSString *)userId;
+- (void)turnOnByToken:(NSString* _Nullable)token userId:(NSString *)userId userData:(NSString*)userData;
 ```
 **参数**
 
@@ -377,6 +377,7 @@ option | ARClertOption | 客服配置
 ---|:---:|---
 token | NSString | 令牌:客户端向自己服务申请获得，参考企业级安全指南
 userId | NSString | 用户Id，确保平台唯一，不能为空
+userData | NSString | 用户信息自定义信息
 
 #### 4. 下线
 
@@ -778,19 +779,35 @@ code | ARCallCode | 状态码
 **定义**
 
 ```
-- (void)onRTCMakeCall:(NSString *)meetId userId:(NSString *)userId userData:(NSString *)userData callModel:(ARCallMode)callMode extend:(NSString*)extend;
+- (void)onRTCMakeCall:(NSString *)userId userData:(NSString *)userData callModel:(ARCallMode)callMode extend:(NSString*)extend;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-meetId | NSString |  会议Id,当AR_Call_Meet_Invite类型的时候，该参数为空
 userId | NSString | 呼叫方的Id
 userData | NSString | 呼叫方的自定义信息
 callMode | ARCallMode | 呼叫类型
 extend | NSString | 扩展信息，用户自定义,呼叫群组的时候带的
 
-#### 4. 收到对方同意的回调
+#### 4. 加入房间成功
+
+**定义**
+
+```
+- (void)onRTCJoinRoomOk:(NSString *)roomId;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+roomId | NSString | 房间号
+
+**说明**
+
+只有打开VIP或呼叫类型是AR_Call_Meet_Invite的时候才有回调，roomId参数仅供录像时使用。
+
+#### 5. 收到对方同意的回调
 
 **定义**
 
@@ -803,7 +820,7 @@ extend | NSString | 扩展信息，用户自定义,呼叫群组的时候带的
 ---|:---:|---
 userId | NSString | 呼叫方的Id
 
-#### 5. 收到对方拒绝的回调
+#### 6. 收到对方拒绝的回调
 
 **定义**
 
@@ -817,7 +834,7 @@ userId | NSString | 呼叫方的Id
 userId | NSString | 被呼叫方的Id
 code | ARCallCode | 状态码
 
-#### 6. 收到对方挂断的回调
+#### 7. 收到对方挂断的回调
 
 **定义**
 
@@ -831,7 +848,7 @@ code | ARCallCode | 状态码
 userId | NSString | 用户id
 code | ARCallCode | 状态码
 
-#### 7. 收到对方视频视频即将显示的回调
+#### 8. 收到对方视频视频即将显示的回调
 
 **定义**
 
@@ -851,7 +868,7 @@ userData | NSString | 用户信息
 
 收到该回调，调用setRemoteVideoRender显示对方视频窗口。
 
-#### 8. 收到对方视频离开的回调
+#### 9. 收到对方视频离开的回调
 
 **定义**
 
@@ -865,7 +882,7 @@ userData | NSString | 用户信息
 userId | NSString | 呼叫的用户Id
 renderId | NSString | 渲染Id
 
-#### 9. 收到对方音频即将播放的回调
+#### 10. 收到对方音频即将播放的回调
 
 **定义**
 
@@ -879,7 +896,7 @@ renderId | NSString | 渲染Id
 userId | NSString | 用户Id
 userData | NSString | 用户信息
 
-#### 10. 收到对方音频离开的回调
+#### 11. 收到对方音频离开的回调
 
 **定义**
 
@@ -892,7 +909,7 @@ userData | NSString | 用户信息
 ---|:---:|---
 userId | NSString | 用户Id
 
-#### 11. 是否支持SIP呼叫
+#### 12. 是否支持SIP呼叫
 
 **定义**
 
@@ -907,7 +924,7 @@ pstn | BOOL | YES:可转接手机，用户调用switchToPstn即可去呼叫手�
 extensionextension | BOOL | YES:转接分机，用户调用switchToExtension即可去呼叫分机
 null | BOOL | 暂时可不用
 
-#### 12. 切换到音频模式
+#### 13. 切换到音频模式
 
 **定义**
 
@@ -918,7 +935,7 @@ null | BOOL | 暂时可不用
 
 收到该回调，做视频视图的清理工作。
 
-#### 13. 收到消息回调
+#### 14. 收到消息回调
 
 **定义**
 
@@ -932,7 +949,7 @@ null | BOOL | 暂时可不用
 userId | NSString | 发送消息的用户Id
 content | NSString | 消息内容
 
-#### 14. 其他与会者对音视频的操作
+#### 15. 其他与会者对音视频的操作
 
 **定义**
 
@@ -947,7 +964,7 @@ userId | NSString | 用户Id
 audio | BOOL | YES为打开音频，NO为关闭音频
 video | BOOL | YES为打开视频，NO为关闭视频
 
-#### 15. 别人对自己音视频的操作
+#### 16. 别人对自己音视频的操作
 
 **定义**
 
@@ -961,7 +978,7 @@ video | BOOL | YES为打开视频，NO为关闭视频
 audio | BOOL | YES为打开音频，NO为关闭音频
 video | BOOL | YES为打开视频，NO为关闭视频
 
-#### 16. 本地视频第一帧
+#### 17. 本地视频第一帧
 
 **定义**
 
@@ -974,7 +991,7 @@ video | BOOL | YES为打开视频，NO为关闭视频
 ---|:---:|---
 size | CGSize | 视频窗口大小
 
-#### 17. 远程视频第一帧
+#### 18. 远程视频第一帧
 
 **定义**
 
@@ -988,7 +1005,7 @@ size | CGSize | 视频窗口大小
 size | CGSize | 视频窗口大小
 renderId | NSString | 渲染Id (用于标识与会者发布的流)
 
-#### 18. 本地窗口大小的回调
+#### 19. 本地窗口大小的回调
 
 **定义**
 
@@ -1001,7 +1018,7 @@ renderId | NSString | 渲染Id (用于标识与会者发布的流)
 ---|:---:|---
 size | CGSize | 视频窗口大小
 
-#### 19. 远程窗口大小的回调
+#### 20. 远程窗口大小的回调
 
 **定义**
 
@@ -1015,7 +1032,7 @@ size | CGSize | 视频窗口大小
 size | CGSize | 视频窗口大小
 renderId | NSString | 渲染Id (用于标识与会者发布的流)
 
-#### 20. 会议模式页码变化
+#### 21. 会议模式页码变化
 
 **定义**
 
@@ -1034,7 +1051,7 @@ allRenderNum | int | 当前服务上有多少个渲染，根据此数量来判�
 index | int | 开始位置
 showNum | int | 显示多少个
 
-#### 21. 呼叫队列用户的排队信息
+#### 22. 呼叫队列用户的排队信息
 
 **定义**
 
@@ -1047,7 +1064,7 @@ showNum | int | 显示多少个
 ---|:---:|---
 queueNum | int | 前面排队人员
 
-#### 22. 服务队列的相关队列信息
+#### 23. 服务队列的相关队列信息
 
 **定义**
 
