@@ -26,9 +26,6 @@
 
 ## 二、集成指南
 
-### 适用范围
-
-本集成文档适用于Android RTCP SDK 3.0.0 版本。
 
 ### 准备环境
 
@@ -45,7 +42,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtcp_kit:3.0.3'
+  compile 'org.ar:rtcp_kit:3.0.5'(最新版见上面图标版本号)
 }
 ```
 
@@ -54,13 +51,155 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtcp_kit</artifactId>
-  <version>3.0.3</version>
+  <version>3.0.5</version>
   <type>pom</type>
 </dependency>
 ```
 
 
-### 权限说明
+
+## 三、开发指南
+
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARRtcpEngine.Inst().initEngine(getApplicationContext(),  "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+#### 1.2 设置发布视频流配置信息
+
+**示例代码：**
+
+```
+//获取配置类
+ARRtcpOption anyRTCRTCPOption = ARRtcpEngine.Inst().getARRtcpOption();
+//设置前后置摄像头 视频横竖屏 视频分辨率 帧率等
+anyRTCRTCPOption.setOptionParams(true, ARVideoCommon.ARVideoOrientation.Portrait,ARVideoCommon.ARVideoProfile.ARVideoProfile480x640, ARVideoCommon.ARVideoFrameRate.ARVideoFrameRateFps15);
+
+```
+
+#### 1.3 实例化实时直播对象并设置回调
+
+**示例代码：**
+
+``` 
+ARRtcpKit mRtcpKit = new ARRtcpKit(String userId, String userData);
+
+mRtcpKit.setRtcpEvent(ARRtcpEvent rtcpEvent)
+
+```
+
+#### 1.4 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARRtcpEngine.Inst().Egl(),this,false);
+
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 1.5 打开本地摄像头采集
+
+**示例代码：**
+
+```
+rtcpKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限
+
+#### 1.6 发布媒体流
+
+**示例代码：**
+
+```
+//发布视频流
+rtcpKit.publishByToken("", ARVideoCommon.ARMediaType.Video);
+
+```
+> 该方法第二个参数为媒体流类型，这以发布视频流为例，发布视频流需先打开本地摄像头采集。发布成功会回调onPublishOK()，发布失败会回调onPublishFailed() 
+
+#### 1.7 订阅媒体流
+
+**示例代码：**
+
+```
+//订阅流
+  rtcpKit.subscribe("rtcpId","token");
+
+```
+> 订阅成功会回调onSubscribeOK()，订阅失败会回调onSubscribeFailed()，SDK支持订阅多路流 
+
+#### 1.8 显示订阅媒体流
+
+**示例代码：**
+
+```
+//显示流
+long renderPointer = videoView.subscribeRemoteVideo(rtcpId).GetRenderPointer();
+rtcpKit.setRemoteVideoRender(rtcpId, renderPointer);
+
+```
+> 如果发布的是视频流，订阅成功会回调onSubscribeOK()， 随即回调onRTCOpenRemoteVideoRender() ,在该回调方法中调用上面示例代码，显示对方发布的流，具体参照demo。
+
+> 如果发布的是音频流，订阅成功会回调onSubscribeOK()，
+随即回调onRTCOpenRemoteAudioTrack()
+
+#### 1.9 取消发布流
+
+**示例代码：**
+```
+//取消发布
+rtcpKit.unPublish();
+//停止采集
+rtcpKit.stopCapture();
+//移除本地视频预览图像
+videoView.removeLocalVideoRender();
+```
+> 取消发布媒体流后，订阅方会收到onRTCCloseRemoteVideoRender()回调，在该回调中，应移除对方视频，具体参照demo
+
+
+#### 2.0 取消订阅
+
+**示例代码：**
+```
+//取消订阅
+rtcpKit.unSubscribe();
+```
+> 在离开之前，应将订阅的流全部取消订阅
+
+
+#### 2.1 释放RTCP对象
+
+**示例代码：**
+```
+//取消订阅
+rtcpKit.clean();
+```
+> 应在直播页面结束时调用，单例写法时，在程序退出时调用即可。
+
+
+#### 2.2 权限说明
 
 使用RTCP SDK需以下权限
 
@@ -71,8 +210,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+#### 2.3 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -83,8 +222,7 @@ dependencies {
 -keep class org.webrtc.**{*;}
 ```
 
-
-## 三、API接口文档
+## 四、API接口文档
 
 ### ARRtcpEngine 类
 
@@ -880,32 +1018,33 @@ netQuality | ARNetQuality | 网络质量
 
 名称 | 值            | 备注
 ---|------------------------------|----
-AnyRTC_OK | 0 | 正常
-AnyRTC_UNKNOW | 1 | 未知错误
-AnyRTC_EXCEPTION | 2 | SDK调用异常
-AnyRTC_EXP_UNINIT | 3 | SDK未初始化
-AnyRTC_EXP_PARAMS_INVALIDE | 4 | 参数非法
-AnyRTC_EXP_NO_NETWORK | 5 | 没有网络链接
-AnyRTC_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-AnyRTC_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-AnyRTC_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-AnyRTC_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
-AnyRTC_NET_ERR | 100 | 网络错误 
-AnyRTC_NET_DISSCONNECT | 101 | 网络断开
-AnyRTC_LIVE_ERR | 102 | 直播出错
-AnyRTC_EXP_ERR | 103 | 异常错误
-AnyRTC_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
-AnyRTC_BAD_REQ | 201 | 服务不支持的错误请求
-AnyRTC_AUTH_FAIL | 202  | 认证失败
-AnyRTC_NO_USER | 203 | 此开发者信息不存在
-AnyRTC_SVR_ERR | 204 | 服务器内部错误
-AnyRTC_SQL_ERR | 205 | 服务器内部数据库错误
-AnyRTC_ARREARS | 206 | 账号欠费
-AnyRTC_LOCKED | 207 | 账号被锁定
-AnyRTC_SERVER_NOT_OPEN | 208 | 服务未开通
-AnyRTC_ALLOC_NO_RES | 209 | 没有服务器资源
-AnyRTC_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-AnyRTC_FORCE_EXIT | 211 | 强制离开
+ARRtcp_OK | 0 | 正常
+ARRtcp_UNKNOW | 1 | 未知错误
+ARRtcp_EXCEPTION | 2 | SDK调用异常
+ARRtcp_EXP_UNINIT | 3 | SDK未初始化
+ARRtcp_EXP_PARAMS_INVALIDE | 4 | 参数非法
+ARRtcp_EXP_NO_NETWORK | 5 | 没有网络链接
+ARRtcp_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
+ARRtcp_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
+ARRtcp_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
+ARRtcp_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
+ARRtcp_NET_ERR | 100 | 网络错误 
+ARRtcp_NET_DISSCONNECT | 101 | 网络断开
+ARRtcp_LIVE_ERR | 102 | 直播出错
+ARRtcp_EXP_ERR | 103 | 异常错误
+ARRtcp_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
+ARRtcp_BAD_REQ | 201 | 服务不支持的错误请求
+ARRtcp_AUTH_FAIL | 202  | 认证失败
+ARRtcp_NO_USER | 203 | 此开发者信息不存在
+ARRtcp_SVR_ERR | 204 | 服务器内部错误
+ARRtcp_SQL_ERR | 205 | 服务器内部数据库错误
+ARRtcp_ARREARS | 206 | 账号欠费
+ARRtcp_LOCKED | 207 | 账号被锁定
+ARRtcp_SERVER_NOT_OPEN | 208 | 服务未开通
+ARRtcp_ALLOC_NO_RES | 209 | 没有服务器资源
+ARRtcp_SERVER_NO_SURPPOAR | 210 | 不支持的服务
+ARRtcp_FORCE_EXIT | 211 | 强制离开
+ARRtcp_NOT_START | 800 | 会议未开始
   
   
 

@@ -41,11 +41,233 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtmax_kit:3.0.4'
+  compile 'org.ar:rtmax_kit:3.0.5'
 }
 ```
 
-### 权限说明
+
+---
+
+## 三、开发指南
+
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARMaxEngine.Inst().initEngine(getApplicationContext(), boolean useJaveRecord， "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+#### 1.2 获取ARMax配置类并设置相关配置
+
+**示例代码：**
+
+``` 
+//获取ARMax配置类
+ARMaxOption arMaxOption =ARMaxEngine.Inst().getArMaxOption();
+arMaxOption.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
+//更多配置查看API文档
+
+```
+#### 1.3 实例化ARMax对象并设置回调
+
+**示例代码：**
+
+``` 
+ARMaxKit mRTMaxKit = new ARMaxKit(ARMaxEvent maxEvent);
+```
+#### 1.4 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARRtcpEngine.Inst().Egl(),this,false,mRTMaxKit);
+
+arVideoView.setVideoViewLayout(false, Gravity.CENTER,LinearLayout.HORIZONTAL);
+
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+#### 1.5 加入对讲组
+
+**示例代码：**
+
+``` 
+mRTMaxKit.joinTalkGroup( String groupId,  String userId,  String userData);
+
+```
+> 加入对讲组成功会回调onRTCJoinTalkGroupOK()方法，失败回调onRTCJoinTalkGroupFailed()
+
+#### 1.6 申请对讲
+
+**示例代码：**
+
+``` 
+mRTMaxKit.applyTalk(int nPriority)
+
+```
+> nPriority是申请抢麦用户的级别，数值越大，权限越小。返回值等于0的时候表示调用成功。成功后会回调onRTCApplyTalkOk()，接着回调onRTCTalkCouldSpeak()，表示语音通道已建立，可以开始说话了。
+
+#### 1.7 取消对讲
+
+**示例代码：**
+
+``` 
+mRTMaxKit.cancelTalk()
+
+```
+> 调用取消对讲后将会回调 OnRtcTalkClosed()方法
+
+
+#### 1.6 发起/停止监看
+
+**示例代码：**
+
+``` 
+//发起监看
+mRTMaxKit.monitorVideo()
+//停止监看
+mRTMaxKit.closeVideoMonitor()
+
+```
+> 发起监看后对方将收到onRTCVideoMonitorRequest()回调，在该回调中可以同意或者拒绝监看，参见 1.7。 停止监看后对方将收到onRTCVideoMonitorClose()回调。
+
+#### 1.7 同意/拒绝监看
+
+**示例代码：**
+
+``` 
+//同意监看
+mRTMaxKit.acceptVideoMonitor()
+//拒绝监看
+mRTMaxKit.rejectVideoMonitor()
+
+```
+> 同意或者拒绝对方都将收到onRTCVideoMonitorResult()回调。通常，在同意监看后应该开启本地摄像头，对方停止监看后应当关闭本地摄像头。参见 1.8
+
+#### 1.8 打开/关闭本地摄像头
+
+**示例代码：**
+
+``` 
+打开本地摄像头
+mRTMaxKit.setLocalVideoCapturer(arVideoView.openLocalVideoRender().GetRenderPointer());
+关闭摄像头 移除本地像
+arVideoView.removeLocalVideoRender();
+mRTMaxKit.closeLocalVideoCapture();
+
+```
+
+#### 1.9 打开/关闭视频上报
+
+**示例代码：**
+
+``` 
+打开视频上报
+mRTMaxKit.reportVideo()
+关闭视频上报
+mRTMaxKit.closeReportVideo();
+//关闭上报时应将本地摄像头关闭
+arVideoView.removeLocalVideoRender();
+mRTMaxKit.closeLocalVideoCapture();
+```
+
+> - 打开视频上报后应及时打开本地摄像头，对方将收到onRTCVideoReportRequest()回调，在onRTCVideoReportRequest()回调中，**可以调用发起监看方法同意上报视频mRTMaxKit.monitorVideo()**，同意后将会回调 onRTCOpenRemoteVideoRender()方法，此时应在此方法中设置显示对方视频。参见 2.0。
+> - 关闭视频上报后对方将收到OnRtcCloseVideoRender()回调，在此方法中应移除上报视频图像 参见 2.1 **关闭上报时应将本地摄像头关闭**
+
+
+#### 2.0 对方视频即将显示
+
+**示例代码：**
+
+```
+//显示对方视频
+ mRTMaxKit.setRTCRemoteVideoRender(publishId, arVideoView.openRemoteVideoRender(publishId).GetRenderPointer());
+
+```
+> 双方视频通道建立后将会回调onRTCOpenRemoteVideoRender方法，在该回调中应显示对方视频，参照上述代码，具体可查看demo
+
+#### 2.1  对方视频即将关闭
+
+**示例代码：**
+
+```
+//移除对方视频
+if (null != mRTMaxKit) {
+//移除
+mRTMaxKit.setRTCRemoteVideoRender(publishId, 0);
+arVideoView.removeRemoteRender(publishId);
+}
+
+```
+> 双方视频通道关闭会回调onRTCCloseRemoteVideoRender()方法，在该回调中应移除对方视频，参照上述代码，具体可查看demo
+
+#### 2.2 呼叫其他人
+
+**示例代码：**
+
+```
+//主动呼叫
+mRTMaxKit.makeCall(String userId,  int type/*0:视频 1:音频*/,  String userData);
+
+```
+> 返回值为0时呼叫成功，被呼叫人会收到onRTCMakeCall()回调
+
+
+#### 2.3 取消呼叫他人/挂断
+
+**示例代码：**
+
+```
+//取消呼叫
+mRTMaxKit.endCall(userId);
+//主动呼叫他人 挂断
+mRTMaxKit.endCall(userId);
+//被呼叫 挂断
+mRTMaxKit.leaveCall();
+
+```
+> 主叫端挂断，对方将收到onRTCEndCall()，被叫端挂断，对方将收到onRTCLeaveCall()
+，在这俩回调中应做将本地摄像头关闭等操作，同时还将收到onRTCCloseRemoteVideoRender(),此时还应移除对方视频， 具体查看demo
+
+#### 2.4 拒绝他人呼叫
+
+**示例代码：**
+
+```
+mRTMaxKit.rejectCall(userId);
+}
+
+```
+> 对方将收到onRTCRejectCall()回调
+
+
+#### 2.5 接受他人呼叫
+
+**示例代码：**
+
+```
+mRTMaxKit.acceptCall(userId);
+
+```
+> 接受呼叫后，双方呼叫通道开启，将回调onRTCOpenRemoteVideoRender()方法，在该回调中设置显示对方视频，参考 2.0,接受后对方还将回调onRTCAcceptCall()，此时还应将本地摄像头打开，具体参照demo
+
+#### 2.6 权限说明
 
 使用ARRtmax SDK需以下权限
 
@@ -56,8 +278,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+#### 2.7 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -68,7 +290,10 @@ dependencies {
 -keep class org.webrtc.**{*;}
 ```
 
-## 三、API接口文档
+
+---
+
+## 四、API接口文档
 
 ### ARMaxEngine 类
 
@@ -84,6 +309,7 @@ void initEngine(Context context, boolean useJaveRecord，String appId, String to
 参数名 | 类型 | 描述
 ---|:---:|---
 context | Context | 上下文对象
+useJaveRecord | boolean | 是否使用Java层采集声音
 appId | String | appId
 token | String  | token
 

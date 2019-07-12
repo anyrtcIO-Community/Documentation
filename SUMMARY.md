@@ -1,6 +1,6 @@
 # Summary
 
-* [AnyRTC平台](README.md)
+* [anyRTC平台](README.md)
 * [应用场景](v1/app/README.md)
     * [实时直播](v1/RTCP/README.md)
         * [Android](v1/RTCP/android.md)
@@ -38,7 +38,6 @@
     * [服务对接文档](v1/service/README.md)
         * [实时直播转码服务指南](v1/service/实时直播转码服务指南.md)
         * [录像服务指南](v1/service/录像服务指南.md)
-        * [获取录像列表](v1/service/获取录像列表.md)
         * [状态服务指南](v1/service/状态服务指南.md)
         * [P2P服务指南](v1/service/P2P服务指南.md)
     * [安全文档](v1/security/README.md)

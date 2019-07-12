@@ -1,44 +1,19 @@
-# iOS
 
-## 一、概述
+## 一、快速开始
 
-### 简介
+### 集成指南
 
-实时直播SDK能够实现一对一、一对多的纯音频和视频实时直播，相比RTMPC延时更低、极简API接口。适用于在线娃娃机、智能硬件、在线医疗、视频招聘、相亲交友等多种场景。
+#### 适用范围
 
-### Demo体验
+本集成文档适用于iOS RTCPEngine SDK 2.0.0 ~ 3.0.1版本。
 
-请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
-
-- [iOS Demo下载](https://www.pgyer.com/kRHw)
-
-- [Android Demo下载](https://www.pgyer.com/so6a)
-
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Web)
-
-## 二、集成指南
-
-### 适用范围
-
-本集成文档适用于iOS RTCPEngine SDK 2.0.0 ~ 3.0.0版本。
-
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+。
 - iOS 8.0+ 真机（iPhone 或 iPad）。
 - 请确保你的项目已设置有效的开发者签名。
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -47,7 +22,7 @@
 ```
 pod 'RTCPEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.1 版本为例）：
 
 ```
 pod 'RTCPEngine', '3.0.1'
@@ -58,45 +33,180 @@ pod 'RTCPEngine', '3.0.1'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTCPEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTCPEngine.framework添加到你的工程目录中
-![ios_rtcp_01](/assets/images/ios_rtcp_01.png)
+![ios_rtcp_01](/assets/images/ios/ios_rtcp_01.png)
 
 * 打开General->Embedded Binaries中添加RTCPEngine.framework
 
-![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
+![ios_rtcp_02](/assets/images/ios/ios_rtcp_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTCPEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
 * 添加设备使用「网络」的权限
 ```
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<key>NSAppTransportSecurity</key>
+<dict>
+<key>NSAllowsArbitraryLoads</key>
+<true/>
+</dict>
 ```
 
 * 添加设备使用「相机」的权限
 ```
-	<key>NSCameraUsageDescription</key>
-	<string>XXX请求访问相机用于...</string>
+<key>NSCameraUsageDescription</key>
+<string>XXX请求访问相机用于...</string>
 ```
 
 * 添加设备使用「麦克风」的权限
 
 ```
-	<key>NSMicrophoneUsageDescription</key>
-	<string>XXX请求访问麦克风用于...</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
+![ios_rtcp_03](/assets/images/ios/ios_rtcp_03.png)
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTCPEngine/ARRtcpSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARRtcpEngine initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARRtcpEngine configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 实例化实时直播对象
+
+调用initWithDelegate:userId:userData:方法实例化实时直播对象，需实现ARRtcpKitDelegate中的回调方法。
+
+
+**示例代码：**
+
+```
+- (void)itializationRTCPKit {
+//实例化实时直播对象
+self.rtcpKit = [[ARRtcpKit alloc] initWithDelegate:self userId:[NSString stringWithFormat:@"%d",arc4random() % 100000] userData:@""];   
+}
+```
+
+#### 3. 发布流
+
+##### 3.1 配置信息
+
+调用ARRtcpOption类中的方法可对视频质量、帧率、码率、方向等进行配置。
+
+**示例代码：**
+
+```
+//配置信息
+ARRtcpOption *option = [ARRtcpOption defaultOption];
+ARVideoConfig *config = [[ARVideoConfig alloc] init];
+config.videoProfile = ARVideoProfile360x640;
+config.cameraOrientation = ARCameraAuto;
+option.videoConfig = config;
+```
+
+##### 3.2 发布媒体
+
+调用publishByToken:mediaType:方法发布媒体，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)，第二个参数type为发布类型，音视频（ARMediaVideoType）、音频（ARMediaAudioType）。
+
+**示例代码：**
+
+```
+[self.rtcpKit publishByToken:nil mediaType:0];
+```
+
+##### 3.3 设置本地视频采集窗口
+
+调用setLocalVideoCapturer方法设置本地视频采集窗口，第一个参数为本地视频显示窗口，第二个参数为配置信息。
+
+**示例代码：**
+
+```
+[self.rtcpKit setLocalVideoCapturer:self.view option:option];
+```
+
+##### 3.4 取消发布媒体
+
+调用unPublish方法取消发布媒体，再次发布需调用setLocalVideoCapturer方法。
+
+**示例代码：**
+
+```
+[self.rtcpKit unPublish];
+```
+
+#### 4. 订阅流
+
+##### 4.1 订阅视频
+
+调用subscribeByToken:pubId:方法订阅媒体，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)，第二个参数pubId为通道id。
+
+**示例代码：**
+
+```
+[self.rtcpKit subscribeByToken:nil pubId:self.pubId];
+```
+
+##### 4.2 设置显示其他人的视频窗口
+
+订阅后视频即将显示的回调中可调用setRemoteVideoRender:pubId:方法用于显示订阅的视频窗口。
+
+**示例代码：**
+
+```
+- (void)onRTCOpenRemoteVideoRender:(NSString *)pubId {
+[self.rtcpKit setRemoteVideoRender:self.view pubId:pubId];
+}
+```
+
+##### 4.3 取消订阅
+
+取消已订阅的流可调用unSubscribe方法。
+
+**示例代码：**
+
+```
+[self.rtcpKit unSubscribe:self.pubId];
+```
+
+#### 5. 离开房间
+
+直播结束或离开房间需调用close方法。
+
+**示例代码：**
+
+```
+[self.rtcpKit close];
+```
+
+## 二、API接口文档
 
 ### ARRtcpEngine 接口类
 
@@ -758,7 +868,7 @@ netSpeed | int | 网络上行
 packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.1 （2019-05-24）**
 
@@ -772,41 +882,7 @@ netQuality | ARNetQuality | 网络质量
 
 * SDK版本升级2.0，梳理、完善SDK
 
-## 五、错误码对照表
 
-以下为介绍 iOS RTCPEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARRtcp_OK | 0 | 正常
-ARRtcp_UNKNOW | 1 | 未知错误
-ARRtcp_EXCEPTION | 2 | SDK调用异常
-ARRtcp_EXP_UNINIT | 3 | SDK未初始化
-ARRtcp_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARRtcp_EXP_NO_NETWORK | 5 | 没有网络链接
-ARRtcp_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARRtcp_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARRtcp_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARRtcp_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
-ARRtcp_NET_ERR | 100 | 网络错误 
-ARRtcp_NET_DISSCONNECT | 101 | 网络断开
-ARRtcp_LIVE_ERR | 102 | 直播出错
-ARRtcp_EXP_ERR | 103 | 异常错误
-ARRtcp_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
-ARRtcp_BAD_REQ | 201 | 服务不支持的错误请求
-ARRtcp_AUTH_FAIL | 202  | 认证失败
-ARRtcp_NO_USER | 203 | 此开发者信息不存在
-ARRtcp_SVR_ERR | 204 | 服务器内部错误
-ARRtcp_SQL_ERR | 205 | 服务器内部数据库错误
-ARRtcp_ARREARS | 206 | 账号欠费
-ARRtcp_LOCKED | 207 | 账号被锁定
-ARRtcp_SERVER_NOT_OPEN | 208 | 服务未开通
-ARRtcp_ALLOC_NO_RES | 209 | 没有服务器资源
-ARRtcp_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARRtcp_FORCE_EXIT | 211 | 强制离开
-ARRtcp_NOT_START | 800 | 会议未开始
-
-  
 
 
 

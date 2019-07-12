@@ -1,45 +1,18 @@
-# iOS
+## 一、快速开始
 
-## 一、概述
+### 集成指南
 
-### 简介
-
-多人音视频可以实现一对一单聊和多人群聊，适用于社交、会议、在线教育、培训等场景
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
-
-- [iOS Demo下载](https://www.pgyer.com/xoTQ)
-
-- [Android Demo下载](https://www.pgyer.com/eU0U)
-
-- [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-iOS)
-
-- [Android Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
-
-
-## 二、集成指南
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于iOS RTMeetEngine SDK 2.0.0 ~ 3.0.0版本。
 
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+。
 - iOS 8.0+ 真机（iPhone 或 iPad）。
 - 请确保你的项目已设置有效的开发者签名。
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -59,45 +32,150 @@ pod 'RTMeetEngine', '3.0.0'
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMeetEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMeetEngine.framework添加到你的工程目录中
-![ios_meet_01](/assets/images/ios_meet_01.png)
+![ios_meet_01](/assets/images/ios/ios_meet_01.png)
 
 * 打开General->Embedded Binaries中添加RTMeetEngine.framework
 
-![ios_meet_02](/assets/images/ios_meet_02.png)
+![ios_meet_02](/assets/images/ios/ios_meet_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTMeetEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
 * 添加设备使用「网络」的权限
 ```
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<key>NSAppTransportSecurity</key>
+<dict>
+<key>NSAllowsArbitraryLoads</key>
+<true/>
+</dict>
 ```
 
 * 添加设备使用「相机」的权限
 ```
-	<key>NSCameraUsageDescription</key>
-	<string>XXX请求访问相机用于...</string>
+<key>NSCameraUsageDescription</key>
+<string>XXX请求访问相机用于...</string>
 ```
 
 * 添加设备使用「麦克风」的权限
 
 ```
-	<key>NSMicrophoneUsageDescription</key>
-	<string>XXX请求访问麦克风用于...</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_meet_03](/assets/images/ios_meet_03.png)
+![ios_meet_03](/assets/images/ios/ios_meet_03.png)
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTMeetEngine/ARMeetSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARMeetEngine initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARMeetEngine configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 加入房间
+
+##### 2.1 实例化会议对象
+
+调用initWithDelegate:option:方法实例化会议对象，需实现ARMeetKitDelegate中的回调方法。第二个参数option为会议配置项，包括媒体类型、会议类型、帧率、码率、相机类型等。
+
+会议类型：
+
+* 一般模式（ARMeetTypeNomal）：大家进入会议互相观看
+
+* 主持模式（ARMeetTypeHoster）：主持人进入，可以看到所有人，其他人员只看到主持人
+
+* live模式（ARMeetTypeLive）：大班课模式
+
+* zoom模式（ARMeetTypeZoom）
+
+**示例代码：**
+
+```
+- (void)initializeMeet {
+//配置信息
+ARMeetOption *option = [ARMeetOption defaultOption];
+ARVideoConfig *config = [[ARVideoConfig alloc] init];
+config.cameraOrientation = ARCameraPortrait;
+option.videoConfig = config;
+//实例化会议对象
+self.meetKit = [[ARMeetKit alloc] initWithDelegate:self option:option];
+}
+```
+
+##### 2.2 设置本地视频采集窗口
+
+调用setLocalVideoCapturer:方法用于设置本地视频采集窗口。
+
+**示例代码：**
+
+```
+[self.meetKit setLocalVideoCapturer:self.view];
+```
+
+##### 2.3 加入会议
+
+调用joinRTCByToken:meetId:userId:userData:方法用于加入会议，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+
+**示例代码：**
+
+```
+[self.meetKit joinRTCByToken:nil meetId:self.meetId userId:[NSString stringWithFormat:@"%d",arc4random() % 100000] userData:@""];
+```
+
+##### 2.4 设置其他人视频显示窗口
+
+调用setRemoteVideoRender:pubId:方法设置其他人视频显示窗口，用于收到对方视频即将显示（onRTCOpenRemoteVideoRender）的回调时调用。
+
+**示例代码：**
+
+```
+//其他与会者加入(音视频)
+- (void)onRTCOpenRemoteVideoRender:(NSString *)peerId pubId:(NSString *)pubId userId:(NSString *)userId userData:(NSString *)userData {
+UIView *videoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 160)];
+[self.view addSubview:videoView];
+[self.meetKit setRemoteVideoRender:videoView pubId:pubId];
+}
+```
+
+#### 3. 离开房间
+
+调用leaveRTC方法用于离开房间。
+
+**示例代码：**
+
+```
+[self.meetKit leaveRTC];
+```
+
+## 二、API接口文档
 
 ### ARMeetEngine 接口类
 
@@ -1068,11 +1146,11 @@ peerId | NSString | RTC服务生成的标识Id (用于标识与会者，每次�
 
 ```
 - (void)onRTCZoomPageInfo:(ARZoomType)zoomType
-                  allPage:(int)allPage
-              currentPage:(int)currentPage
-             allRenderNum:(int)allRenderNum
-               beginIndex:(int)index
-                  showNum:(int)showNum;
+allPage:(int)allPage
+currentPage:(int)currentPage
+allRenderNum:(int)allRenderNum
+beginIndex:(int)index
+showNum:(int)showNum;
 ```
 **参数**
 
@@ -1128,7 +1206,7 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 
 打开共享的人关闭了共享。 
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.0 （2019-05-15）**
 
@@ -1137,44 +1215,3 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 **Version 2.0.0 （2017-09-30）**
 
 * SDK版本升级2.0，梳理、完善SDK
-
-## 五、错误码对照表
-
-以下为介绍 iOS RTMeetEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARMeet_OK | 0 | 正常
-ARMeet_UNKNOW | 1 | 未知错误
-ARMeet_EXCEPTION | 2 | SDK调用异常
-ARMeet_EXP_UNINIT | 3 | SDK未初始化
-ARMeet_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARMeet_EXP_NO_NETWORK | 5 | 没有网络链接
-ARMeet_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARMeet_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARMeet_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARMeet_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
-ARMeet_NET_ERR | 100 | 网络错误 
-ARMeet_NET_DISSCONNECT | 101 | 网络断开
-ARMeet_LIVE_ERR | 102 | 直播出错
-ARMeet_EXP_ERR | 103 | 异常错误
-ARMeet_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
-ARMeet_BAD_REQ | 201 | 服务不支持的错误请求
-ARMeet_AUTH_FAIL | 202  | 认证失败
-ARMeet_NO_USER | 203 | 此开发者信息不存在
-ARMeet_SVR_ERR | 204 | 服务器内部错误
-ARMeet_SQL_ERR | 205 | 服务器内部数据库错误
-ARMeet_ARREARS | 206 | 账号欠费
-ARMeet_LOCKED | 207 | 账号被锁定
-ARMeet_SERVER_NOT_OPEN | 208 | 服务未开通
-ARMeet_ALLOC_NO_RES | 209 | 没有服务器资源
-ARMeet_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARMeet_FORCE_EXIT | 211 | 强制离开
-ARMeet_NOT_STAAR | 700 | 房间未开始
-ARMeet_IS_FULL | 701 | 房间人员已满
-ARMeet_NOT_COMPARE | 702 | 房间类型不匹配
-
-  
-
-
-

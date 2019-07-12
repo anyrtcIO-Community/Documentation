@@ -1,44 +1,18 @@
-# iOS
+## 一、快速开始
 
-## 一、概述
+### 集成指南
 
-### 简介
-
-智能调度能够实现公网对讲、视频上报、音视频呼叫，满足公安、消防、政府机构、机场、铁路、港口、物流运输等场景
-
-### Demo 体验
-
-请根据需求选择渠道安装，安装完对讲调度Demo后，可体验多人实时对讲，智能调度等功能。
-
-- [iOS Demo下载](https://www.pgyer.com/SYA3)
-
-- [Android Demo下载](https://www.pgyer.com/GVI3)
-
-- [Web Demo 体验](https://demos.anyrtc.io/ar-talk/)
-
-### 源码 GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/AR-Talk-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/AR-Talk-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/AR-Talk-Web)
-
-## 二、集成指南
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于iOS RTMaxEngine SDK 3.0.0 以上版本。
 
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+。
 - iOS 8.0+ 真机（iPhone 或 iPad）。
 - 请确保你的项目已设置有效的开发者签名。
 
-### 导入SDK
+#### 导入SDK
 
 **CocoaPods导入**
 
@@ -59,45 +33,142 @@ pod 'RTMaxEngine', '3.0.0'
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMaxEngine.framework添加到你的工程目录中
 
-![ios_max_01](/assets/images/ios_max_01.png)
+![ios_max_01](/assets/images/ios/ios_max_01.png)
 * 打开General->Embedded Binaries中添加RTMaxEngine.framework
 
-![ios_max_02](/assets/images/ios_max_02.png)
+![ios_max_02](/assets/images/ios/ios_max_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTMaxEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
 * 添加设备使用「网络」的权限
 ```
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<key>NSAppTransportSecurity</key>
+<dict>
+<key>NSAllowsArbitraryLoads</key>
+<true/>
+</dict>
 ```
 
 * 添加设备使用「相机」的权限
 ```
-	<key>NSCameraUsageDescription</key>
-	<string>XXX请求访问相机用于...</string>
+<key>NSCameraUsageDescription</key>
+<string>XXX请求访问相机用于...</string>
 ```
 
 * 添加设备使用「麦克风」的权限
 
 ```
-	<key>NSMicrophoneUsageDescription</key>
-	<string>XXX请求访问麦克风用于...</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_max_03](/assets/images/ios_max_03.png)
+![ios_max_03](/assets/images/ios/ios_max_03.png)
+
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTMaxEngine/RTMaxEngineSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
 
 
-## 三、API接口文档
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+//配置开发者信息
+[ARMaxEngine initEngine:appID token:token];
+//配置私有云(默认无需配置)
+//[ARMaxEngine configServerForPriCloud:@"XXX" port:XXX];
+return YES;
+}
+```
+
+#### 2. 加入房间
+
+##### 2.1 实例化对讲调度对象
+
+调用initWithDelegate:方法实例化对讲调度对象，需实现ARMaxKitDelegate中的回调方法。
+
+**示例代码：**
+
+```
+self.maxKit = [[ARMaxKit alloc] initWithDelegate:self];
+```
+
+##### 2.2 加入对讲组
+
+调用joinTalkGroupByToken:groupId:userId:userData:方法加入对讲组，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)。
+
+**示例代码：**
+
+```
+NSDictionary *dict  = [[NSDictionary alloc] initWithObjectsAndKeys:self.userId,@"userId",nil];
+[self.maxKit joinTalkGroupByToken:nil groupId:@"123456789" userId:self.userId userData:[RMCommons fromDicToJSONStr:dict]];
+```
+
+##### 2.3 抢麦
+
+调用applyTalk:方法抢麦，参数priority为抢麦用户级别，数值越大，级别越小。当返回值为0时，代表抢麦成功。
+
+**示例代码：**
+
+```
+[self.maxKit applyTalk:1];
+```
+
+##### 2.4 设置本地视频采集窗口
+
+调用setLocalVideoCapturer:option:方法设置本地视频采集窗口，第二个参数option为配置信息，包括视频帧率、码率、方向等信息。
+
+**示例代码：**
+
+```
+//配置信息
+ARVideoConfig *config = [[ARVideoConfig alloc] init];
+//视频质量
+config.videoProfile = ARVideoProfile480x640;
+ARMaxOption *option = ARMaxOption.defaultOption;
+option.videoConfig = config;
+//设置本地视频采集窗口
+[self.maxKit setLocalVideoCapturer:videoView option:option];
+```
+
+##### 2.5 呼叫相关
+
+* 发起呼叫（makeCall:type:userData:）
+
+* 视频监看（monitorVideo:userData:）
+
+* 视频上报（reportVideo:）
+
+##### 2.6 离开对讲组
+
+调用leaveTalkGroup方法释放对讲调度资源。
+
+**示例代码：**
+
+```
+[self.maxKit leaveTalkGroup];
+```
+
+## 二、API接口文档
 
 ### ARMaxEngine 接口类
 
@@ -1296,7 +1367,7 @@ userHeaderUrl | NSString | 发送者的头像
 content | NSString | 消息内容
 
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.0 （2019-05-15）**
 
@@ -1309,55 +1380,6 @@ content | NSString | 消息内容
 **Version 2.0.0 （2017-09-30）**
 
 * SDK版本升级2.0，梳理、完善SDK
-
-## 五、错误码对照表
-
-以下为介绍 iOS ARMaxEngine SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARMax_OK | 0 | 正常
-ARMax_UNKNOW | 1 | 未知错误
-ARMax_EXCEPTION | 2 | SDK调用异常
-ARMax_EXP_UNINIT | 3 | SDK未初始化
-ARMax_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARMax_EXP_NO_NETWORK | 5 | 没有网络链接
-ARMax_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARMax_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARMax_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARMax_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
-ARMax_NET_ERR | 100 | 网络错误 
-ARMax_NET_DISSCONNECT | 101 | 网络断开
-ARMax_LIVE_ERR | 102 | 直播出错
-ARMax_EXP_ERR | 103 | 异常错误
-ARMax_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
-ARMax_BAD_REQ | 201 | 服务不支持的错误请求
-ARMax_AUTH_FAIL | 202  | 认证失败
-ARMax_NO_USER | 203 | 此开发者信息不存在
-ARMax_SVR_ERR | 204 | 服务器内部错误
-ARMax_SQL_ERR | 205 | 服务器内部数据库错误
-ARMax_ARREARS | 206 | 账号欠费
-ARMax_LOCKED | 207 | 账号被锁定
-ARMax_SERVER_NOT_OPEN | 208 | 服务未开通
-ARMax_ALLOC_NO_RES | 209 | 没有服务器资源
-ARMax_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-ARMax_FORCE_EXIT | 211 | 强制离开
-ARMax_APPLY_SVR_ERR | 800 | 申请麦但是服务器异常 (没有MCU服务器,暂停申请)
-ARMax_APPLY_BUSY | 801 | 当前你正在忙
-ARMax_APPLY_NO_PRIO | 802 | 当前麦被占用 (有人正在说话切你的权限不够)
-ARMax_APPLY_INITING | 803 | 正在初始化中 (自身的通道没有发布成功,不能申请)
-ARMax_APPLY_ING | 804 | 等待上麦
-ARMax_ROBBED | 810 | 麦被抢掉了
-ARMax_BREAKED | 811 | 麦被释放了
-ARMax_RELEASED_BY_P2P | 812 | 麦被释放了，因为要对讲
-ARMax_P2P_OFFLINE | 820 | 强插时，对方可能不在线了或异常离线
-ARMax_P2P_BUSY | 821 | 强插时，对方正忙
-ARMax_P2P_NOT_TALK | 822 |  强插时，对方不在麦上
-ARMax_V_MON_OFFLINE | 830 | 视频监看时，对方不在线，或下线了
-ARMax_V_MON_GRABED | 831 | 视频监看被抢占了
-ARMax_CALL_OFFLINE | 840 | 对方不在线或掉线了
-ARMax_CALL_NO_PRIO | 841 | 发起呼叫时自己有其他业务再进行(资源被占用)
-ARMax_CALL_NOT_FOUND | 842 | 会话不存在
 
 
 

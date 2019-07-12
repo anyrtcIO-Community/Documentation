@@ -1,41 +1,17 @@
-## 一、概述
+## 一、快速开始
 
-### 简介
+### 集成指南
 
-anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 提供了包括画笔、背景设置、标准图像、框选等基本功能，同时还支持文档展示和多段互动。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完RTMeeting Demo后，可体验在线会议功能。
-
-- [iOS Demo下载](https://www.pgyer.com/t1Dys)
-
-- [Android Demo下载](https://www.pgyer.com/yhUN)
-
-- [Web Demo 体验](https://demos.anyrtc.io/ar-whiteboard)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Whiteboard-Web)
-
-## 二、集成指南
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于Web ARWhiteboard SDK 3.0.0版本。
 
-### 兼容情况
+#### 兼容情况
 
-- Chrome、Firefox、safari 11(以上)或其他谷歌内核浏览器
-- H5支持chrome内核
+- Chrome、Firefox、safari 11(以上)等，具体使用[webRTC检测工具](https://docs.anyrtc.io/v1/tools/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC%E6%A3%80%E6%B5%8B.html)
+- H5支持chrome内核。
 
-### 导入SDK
+#### 导入SDK
 
 ##### npm 市场
 
@@ -57,9 +33,45 @@ import 'ar-whiteboard/lib/index.css';
 <script src="yourAssetsPath/ArWhiteBoard.3.0.0.js"></script>
 ```
 
-## 三、API接口文档
-### ARWhiteboard API方法介绍
+### 开发指南
+#### 1. 初始化SDK
+集成SDK后，还需对SDK在页面进行初始化操作。
+##### 1.1 导入头文件
+```
+import Board from 'ar-whiteboard';
+import 'ar-whiteboard/lib/index.css';
+```
+##### 1.2 实例化对象
+`DomId`div容器的id属性;
+```
+let Board = new Board(DomId);
+```
+
+##### 1.3 配置开发者信息
+配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
+```
+//配置开发者信息
+Board.initEngineWithARInfo(APP_ID, APP_TOKEN);
+
+//配置私有云(默认无需配置)
+//Board.configServer(SERVE_URL);
+```
+#### 2. 创建白板
+##### 2.1 实例化白板对象
+```
+Board.initWithRoomID(anyRTCId, fileId, userId, backgroundList);
+```
+#### 3. 白板操作        
+详细操作请看ArBoard 接口类。
+#### 4.退出画板
+退出。
+```
+Board.leave();
+```
+## 二、API接口文档
+### ArBoard 接口类
 #### 1.初始化实例
+
 ##### 示例
 ```
 let Board = new Board(DomId);
@@ -335,7 +347,8 @@ Board.leave();
 ##### 说明
 离开画板（房间）。
 
-### ARMeetKitDelegate 接口类
+### ArBoard 回调接口
+
 #### 1. 画板断开连接
 ##### 示例
 ```
@@ -449,23 +462,8 @@ error | String | 错误码
 监听画板错误详情参考错误码对照表。
 
 
-## 四、更新日志
+## 三、更新日志
 
 **Version 3.0.0 （2019-04-11）**
 
 * SDK版本升级3.0，API接口变更，更加简洁规范
-
-## 五、错误码对照表
-
-以下为介绍 Web RTMeetEngine SDK 的错误码。
-
-code           | Desciption
----|---
-AnyRTCBoardCodeParameterError | 参数为空或者参数错误
-AnyRTCBoardCodeNoNet | 当前无网络
-AnyRTCBoardCodeSessionPastDue | Session已过期
-AnyRTCBoardCodeDeveloperInfoError | 开发者信息错误
-AnyRTCBoardCodeDeveloperArrearage | 账号欠费
-AnyRTCBoardCodeDeveloperNotOpen | 该功能未开通
-AnyRTCBoardCodeDatabaseError | 数据库异常
-AnyRTCBoardCodeBackgroundListIsNull | 背景图片队列为空

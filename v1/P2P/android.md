@@ -6,7 +6,7 @@
 
 请根据需求选择渠道安装，安装完ARCall呼叫 Demo后，可体验点对点音视频呼叫，监看等功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_p2p_ios)
+- [iOS Demo下载](https://itunes.apple.com/cn/app/anyrtc点对点/id1316858730?mt=8)
 
 - [Android Demo下载](https://www.pgyer.com/3blO)
 
@@ -39,7 +39,7 @@
 
 ```
 dependencies {
-   compile 'org.ar:arcall_kit:3.0.7'
+   compile 'org.ar:arcall_kit:3.0.8'(最新版见上面图标版本号)
 }
 ```
 
@@ -48,13 +48,195 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>arcall_kit</artifactId>
-  <version>3.0.7</version>
+  <version>3.0.8</version>
   <type>pom</type>
 </dependency>
 ```
 
 
-### 权限说明
+---
+
+## 三、开发指南
+
+集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
+
+#### 1.1 初始化SDK并配置开发者信息
+
+调用 initEngine() 方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+public class ARApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ARCallEngine.Inst().initEngine(getApplicationContext(),  "AppId",  "AppToken");
+    }
+}
+
+```
+
+> 自定义的Application需在AndroidManifest.xml注册 
+
+#### 1.2 获取会议配置类并设置相关配置
+
+**示例代码：**
+
+``` 
+//获取ARCall配置类
+ARCallOption option=ARCallEngine.Inst().getARCallOption();
+option.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
+option.setVideoFps(ARVideoCommon.ARVideoFrameRate.ARVideoFrameRateFps20);
+
+```
+#### 1.3 实例化Call对象并设置回调
+
+**示例代码：**
+
+``` 
+ARCallKit arCallKit = new ARCallKit();
+arCallKit.setArCallEvent(ARCallEvent arCallEvent);
+```
+
+> 建议写成单例模式，具体参照demo
+
+#### 1.4 上线
+
+**示例代码：**
+
+```
+ //上线
+if (arCallKit.isTurnOff()) {
+    arCallKit.turnOn(“userID);
+}
+
+```
+> 上线成功会回调onConnected()，发布失败会回调onDisconnect()，**程序启动只需调用一次即可**
+
+#### 1.5 实例化视频显示View
+
+**示例代码：**
+
+``` 
+ARVideoView videoView = new ARVideoView(rl_video,  ARCallEngine.Inst().Egl(),this,false);
+
+videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
+
+```
+> ARVideoView 对象是显示视频，调整视频窗口摆放位置的类，可由开发者自定义，具体可参照Demo
+
+
+#### 1.6 打开本地摄像头采集
+
+**示例代码：**
+
+```
+mMeetKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+
+```
+> 注意安卓动态权限处理，这里需要录音和摄像头权限
+
+
+
+#### 1.7 呼叫其他人
+
+**示例代码：**
+
+```
+//主动呼叫
+arCallKit.makeCallUser(callId,ARUserOption,userData);
+
+```
+> 返回值为1时呼叫成功，被呼叫人会收到onRTCMakeCall()回调
+
+
+#### 1.8 取消呼叫他人/挂断
+
+**示例代码：**
+
+```
+arCallKit.endCall(callId);
+//如果打开了本地摄像头，还应调用
+arCallKit.stopCapturer();
+}
+
+```
+> 对方将收到onRTCEndCall()回调
+
+#### 1.9 拒绝他人呼叫
+
+**示例代码：**
+
+```
+arCallKit.rejectCall(callId);
+}
+
+```
+> 对方将收到onRTCRejectCall()回调
+
+
+#### 2.0 接受他人呼叫
+
+**示例代码：**
+
+```
+arCallKit.accpetCall(callId);
+
+```
+> 接受呼叫后，双方呼叫通道开启，将回调onRTCOpenRemoteVideoRender()方法，在该回调中设置显示对方视频，参考 2.1
+
+#### 2.1 呼叫接通后对方视频即将显示
+
+**示例代码：**
+
+```
+//显示对方视频
+final VideoRenderer render = mVideoView.openRemoteVideoRender(strVidRenderId);
+if (null != render) {
+    arCallKit.setRemoteVideoRender(strVidRenderId, render.GetRenderPointer());
+}
+
+```
+> 对方同意通话后会回调onRTCOpenRemoteVideoRender()方法，在该回调中应显示对方视频，参照上述代码，具体可查看demo
+
+#### 2.2  呼叫挂断后对方视频即将关闭
+
+**示例代码：**
+
+```
+//移除对方视频
+arVideoView.removeRemoteRender(strVidRenderId);
+arCallKit.setRTCRemoteVideoRender(strVidRenderId,0);
+
+```
+> 对方挂断通话后会回调onRTCCloseRemoteVideoRender()方法，在该回调中应移除对方视频，参照上述代码，具体可查看demo
+
+#### 2.3  下线
+
+**示例代码：**
+
+```
+//下线
+arCallKit.turnOff();
+
+```
+> 下线后将收不到任何呼叫
+
+#### 2.4 释放ARCall对象
+
+**示例代码：**
+
+```
+ arCallKit.clear();
+
+```
+> 如果不希望程序在退出后，还受到呼叫请求，则彻底释放对象并下线
+
+
+#### 2.5 权限说明
 
 使用ARCall SDK需以下权限
 
@@ -65,8 +247,8 @@ dependencies {
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
-### 混淆配置
-为了避免混淆SDK，在Proguard混淆文件中增加以下配置：
+####  2.6 混淆配置
+在Proguard混淆文件中增加以下配置：
 
 ```
 -dontwarn org.anyrtc.**
@@ -76,8 +258,9 @@ dependencies {
 -dontwarn org.webrtc.**
 -keep class org.webrtc.**{*;}
 ```
+
 ---
-## 三、API接口文档
+## 四 、API接口文档
 
 ### ARCallEngine 类
 
@@ -1115,48 +1298,44 @@ bVideo|boolean|视频打开或关闭
 
 ## 五、错误码对照表
 
-```
-    ARCall_OK = 0,                       // 正常
-    ARCall_UNKNOW = 1,                   // 未知错误
-    ARCall_EXCEPTION = 2,                // SDK调用异常
-    ARCall_EXP_UNINIT = 3,               // SDK未初始化
-    ARCall_EXP_PARAMS_INVALIDE = 4,      // 参数非法
-    ARCall_EXP_NO_NETWORK = 5,           // 没有网络链接
-    ARCall_EXP_NOT_FOUND_CAMERA = 6,     // 没有找到摄像头设备
-    ARCall_EXP_NO_CAMERA_PERMISSION = 7, // 没有打开摄像头权限
-    ARCall_EXP_NO_AUDIO_PERMISSION = 8,  // 没有音频录音权限
-    ARCall_EXP_NOT_SUPPORT_WEBRTC = 9,   // 浏览器不支持原生的webrtc
-    
-    
-    ARCall_NET_ERR = 100,                // 网络错误
-    ARCall_NET_DISSCONNECT = 101,        // 网络断开
-    ARCall_LIVE_ERR    = 102,            // 直播出错
-    ARCall_EXP_ERR = 103,                // 异常错误
-    ARCall_EXP_Unauthorized = 104,       // 服务未授权(仅可能出现在私有云项目)
-    
-    ARCall_BAD_REQ = 201,                // 服务不支持的错误请求
-    ARCall_AUTH_FAIL = 202,              // 认证失败
-    ARCall_NO_USER = 203,                // 此开发者信息不存在
-    ARCall_SVR_ERR = 204,                // 服务器内部错误
-    ARCall_SQL_ERR = 205,                // 服务器内部数据库错误
-    ARCall_ARREARS = 206,                // 账号欠费
-    ARCall_LOCKED = 207,                 // 账号被锁定
-    ARCall_SERVER_NOT_OPEN = 208,        // 服务未开通
-    ARCall_ALLOC_NO_RES = 209,           // 没有服务器资源
-    ARCall_SERVER_NOT_SURPPORT = 210,    // 不支持的服务
-    ARCall_FORCE_EXIT = 211,             // 强制离开
-    ARCall_AUTH_TIMEOUT = 212,           // 验证超时
-    ARCall_NEED_VERTIFY_TOKEN = 213,     // 需要验证userToken
-    ARCall_WEB_DOMIAN_ERROR = 214,       // Web应用的域名验证失败
-    ARCall_IOS_BUNDLE_ID_ERROR = 215,    // iOS应用的BundleId验证失败
-    ARCall_ANDROID_PKG_NAME_ERROR = 216, // Android应用的包名验证失败
-    
-    ARCall_PEER_BUSY = 800,              // 对方正忙
-    ARCall_OFFLINE = 801,                // 对方不在线
-    ARCall_NOT_SELF = 802,               // 不能呼叫自己
-    ARCall_EXP_OFFLINE = 803,            // 通话中对方意外掉线
-    ARCall_EXP_EXIT = 804,               // 对方异常导致(如：重复登录帐号将此前的帐号踢出)
-    ARCall_TIMEOUT = 805,                // 呼叫超时(45秒)
-    ARCall_NOT_SURPPORT = 806,           // 不支持
-```
+名称 | 值            | 备注
+---|------------------------------|----
+ARCall_OK | 0 | 正常
+ARCall_UNKNOW | 1 | 未知错误
+ARCall_EXCEPTION | 2 | SDK调用异常
+ARCall_EXP_UNINIT | 3 | SDK未初始化
+ARCall_EXP_PARAMS_INVALIDE | 4 | 参数非法
+ARCall_EXP_NO_NETWORK | 5 | 没有网络链接
+ARCall_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
+ARCall_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
+ARCall_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
+ARCall_EXP_NOT_SUPPORT_WEBRTC | 9 | 浏览器不支持原生的webrtc
+ARCall_NET_ERR | 100 | 网络错误
+ARCall_NET_DISSCONNECT | 101 | 网络断开
+ARCall_LIVE_ERR | 102 | 直播出错
+ARCall_EXP_ERR | 103 | 异常错误
+ARCall_EXP_Unauthorized | 104 | 服务未授权(仅可能出现在私有云项目)
+ARCall_BAD_REQ | 201 | 服务不支持的错误请求
+ARCall_AUTH_FAIL | 202 | 认证失败
+ARCall_NO_USER | 203 | 此开发者信息不存在
+ARCall_SVR_ERR | 204 | 服务器内部错误
+ARCall_SQL_ERR | 205 | 服务器内部数据库错误
+ARCall_ARREARS | 206 | 账号欠费
+ARCall_LOCKED | 207 | 账号被锁定
+ARCall_SERVER_NOT_OPEN | 208 | 服务未开通
+ARCall_ALLOC_NO_RES | 209 | 没有服务器资源
+ARCall_SERVER_NOT_SURPPORT | 210 | 不支持的服务
+ARCall_FORCE_EXIT | 211 | 强制离开
+ARCall_AUTH_TIMEOUT | 212 | 验证超时
+ARCall_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
+ARCall_WEB_DOMIAN_ERROR | 214 | Web应用的域名验证失败
+ARCall_IOS_BUNDLE_ID_ERROR | 215 | iOS应用的BundleId验证失败
+ARCall_ANDROID_PKG_NAME_ERROR | 216 | Android应用的包名验证失败
+ARCall_PEER_BUSY | 800 | 对方正忙
+ARCall_OFFLINE | 801 | 对方不在线
+ARCall_NOT_SELF | 802 | 不能呼叫自己
+ARCall_EXP_OFFLINE | 803 | 通话中对方意外掉线
+ARCall_EXP_EXIT | 804 | 对方异常导致(如：重复登录帐号将此前的帐号踢出)
+ARCall_TIMEOUT | 805 | 呼叫超时(45秒)
+ARCall_NOT_SURPPORT | 806 | 不支持
 

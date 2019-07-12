@@ -1,45 +1,18 @@
-# iOS
+## 一、快速开始
 
-## 一、概述
+### 集成指南
 
-### 简介
-
-anyRTC提供在线抓娃娃机场景的支持，RTCWaWaJiEngine SDK 提供极简接口，实现多平台快速接入。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完娃娃机 Demo后，可体验在线实时抓娃娃功能。
-
-- [iOS Demo下载](https://www.pgyer.com/fYGm)
-
-- [Android Demo下载](https://www.pgyer.com/3blO)
-
-- [Web Demo体验](http://wawaji.anyrtc.cc/)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-WaWa-Client-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-WaWa-Client-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-WaWa-Client-Web)
-
-
-## 二、集成指南
-
-### 适用范围
+#### 适用范围
 
 本集成文档适用于iOS RTCWaWaJiEngine SDK 2.0.0 ~ 3.0.0版本。
 
-### 准备环境
+#### 准备环境
 
 - Xcode 9.0+。
 - iOS 8.0+ 真机（iPhone 或 iPad）。
 - 请确保你的项目已设置有效的开发者签名。
 
-### 导入SDK
+#### 导入SDK
 
 **手动导入**
 
@@ -52,39 +25,124 @@ anyRTC提供在线抓娃娃机场景的支持，RTCWaWaJiEngine SDK 提供极简
 
 ![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
 
-### 权限说明
+#### 权限说明
 
 使用RTCWaWaJiEngine SDK 前，需要对设备进行授权。打开 info.plist ，点击 + 图标开始添加：
 
 * 添加设备使用「网络」的权限
 ```
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+<key>NSAppTransportSecurity</key>
+<dict>
+<key>NSAllowsArbitraryLoads</key>
+<true/>
+</dict>
 ```
 
 * 添加设备使用「相机」的权限
 ```
-	<key>NSCameraUsageDescription</key>
-	<string>XXX请求访问相机用于...</string>
+<key>NSCameraUsageDescription</key>
+<string>XXX请求访问相机用于...</string>
 ```
 
 * 添加设备使用「麦克风」的权限
 
 ```
-	<key>NSMicrophoneUsageDescription</key>
-	<string>XXX请求访问麦克风用于...</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>XXX请求访问麦克风用于...</string>
 ```
 
-### 后台模式(Background Modes)
+#### 后台模式(Background Modes)
 
 勾选Audio, AirPlay and Picture in Picture
 
 ![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
 
-## 三、API接口文档
+### 开发指南
+
+#### 1. 初始化SDK
+
+集成SDK后，还需对SDK进行初始化操作，建议在AppDelegate中完成。
+
+##### 1.1 导入头文件
+
+```
+#import <RTCWaWaJiEngine/ARWaWaJiSDK.h>
+```
+
+##### 1.2 配置开发者信息
+
+调用initEngine:token:方法配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)
+
+
+**示例代码：**
+
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// Override point for customization after application launch.
+[ARWaWaKit.sharedInstance initEngine:developerID appId:appID key:key toke:token];
+ARWaWaKit.sharedInstance.delegate = self;
+return YES;
+}
+```
+
+#### 2. 获取房间列表
+
+调用getRoomListWithBlock:方法获取娃娃机房间列表。
+
+
+**示例代码：**
+
+```
+[ARWaWaKit.sharedInstance getRoomListWithBlock:^(NSDictionary * _Nonnull listDic) {
+[self.refreshControl endRefreshing];
+[self.dataArr removeAllObjects];
+ATListModel *listModel = [ATListModel mj_objectWithKeyValues:listDic];
+for (NSInteger i = listModel.roomlist.count - 1; i >= 0; i--) {
+[self.dataArr addObject:listModel.roomlist[i]];
+}
+
+[self.collectionView reloadData];
+}];
+
+```
+
+#### 3. 加入房间
+
+##### 3.1 进入娃娃机房间
+
+调用joinRoom:userId:userName:userIcon:方法加入娃娃机房间
+
+**示例代码：**
+
+```
+//加入房间
+ARWaWaKit.sharedInstance.delegate = self;
+[ARWaWaKit.sharedInstance joinRoom:self.anyRtcId userId:[NSString stringWithFormat:@"iOS_%@",self.userId] userName:[ATCommon randomString:6] userIcon:@""];
+```
+
+##### 3.2 娃娃机相关操作
+
+* 预约（makeBook）
+
+* 取消预约（cancelBook）
+
+* 开始游戏（startPlay）
+
+* 取消游戏（cancelPlay:）
+
+* 控制命令（sendControlCmd:）
+
+##### 3.3 离开娃娃机房间
+
+调用leaveRoom方法用于离开房间。
+
+**示例代码：**
+
+```
+[ARWaWaKit.sharedInstance leaveRoom];
+```
+
+## 二、API接口文档
 
 ### ARWaWaKit 接口类
 
@@ -379,8 +437,3 @@ bookMember | int | 预约人数
 ```
 - (void)onPlayTimeout;
 ```
-
-  
-
-
-
