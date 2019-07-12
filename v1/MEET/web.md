@@ -34,7 +34,7 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.9.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.12.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -49,13 +49,36 @@ import ArMeetKit from 'ar-meet';
 import ArMeetKit from 'ar-meet';
 ```
 ##### 1.2 实例化对象
-options为会议配置项，包括媒体类型、会议类型、帧率、码率、相机类型等。
+options为会议配置项，包括用户信息、会议类型、视频分辨率、会议身份类型、码率自适应等。
 
 ```
 let meet = new ArMeetKit(options);
 ```
 
-##### 1.3 配置开发者信息
+##### 1.3 监听回调
+
+```
+//加入会议成功
+meet.on("join-success", () => {
+  
+});
+//加入会议失败
+//根据code码查询错误原因
+meet.on("join-failed", (code) => {
+  
+});
+//设置其他人视频显示窗口
+//对方（或己方）同意视频通话请求后，会收到此回调，收到后需要将`mediaRender`添加展示到页面上。
+meet.on("stream-subscribed", (peerUserId, pubId, userId, rtcUserData, mediaRender) => {
+  
+});
+//其他人离开移除视频显示窗口
+meet.on("stream-unsubscribed", (peerUserId, pubId, userId, rtcUserData) => {
+  
+});
+```
+
+##### 1.4 配置开发者信息
 配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
 ```
 //配置开发者信息
@@ -64,21 +87,25 @@ meet.initAppInfo(APP_ID, APP_TOKEN);
 //配置私有云(默认无需配置)
 //meet.configServer(SERVE_URL);
 ```
+
 #### 2. 加入房间
 ##### 2.1 设置本地视频采集窗口
-设置本地显示窗口，参数constraints为音视频配置项，包含视频帧率、码率、相机类型等。
+设置本地显示窗口，参数constraints为音视频配置项。
 ```
-meet.setLocalVideoCapturer(constraints)
+meet.setLocalVideoCapturer({
+  video: true,
+  audio: true
+}).then(res => {
+  document.body.appendChild(res.mediaRender);
+  //预览本地流成功之后的操作：比如加入房间
+}).catch(err => {
+  throw err;
+})
 ```
 ##### 2.2 加入会议
 roomID为房间号。
 ```
 meet.joinRTC(roomID);
-```
-##### 2.3 设置其他人视频显示窗口
-对方（或己方）同意视频通话请求后，会收到此回调，收到后需要将render添加展示到页面上。
-```
-meet.on("stream-subscribed", (peerUserId, pubId, rtcUserData, mediaRender)
 ```
 
 #### 3. 离开房间
@@ -165,7 +192,7 @@ meet.configServer(address);
 
 ##### 说明
 
-配置服务器地址，私有云需要配置，否则无需配置（如果网站是`HTPPS` 环境不支持IP）
+配置服务器地址，私有云需要配置，否则无需配置（如果网站是`HTPPS` 服务器地址不支持IP）
 
 #### 4. 获取SDK版本号
 
@@ -294,7 +321,7 @@ meet.switchDevice(constraints);
 
 ##### 说明
 
-切换设备获取新的媒体流，`mediaStream`视频流用于绑定咋video标签的src属性里面，`mediaRender`则是一串DOM元素，可直接绑定到页面。
+切换设备获取新的媒体流，`mediaStream`视频流用于绑定咋video标签的src属性里面，`mediaRender`则是DOM对象，可直接添加到页面。
 
 #### 4. 设置本地视频是否传输
 
@@ -1003,6 +1030,11 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 主持人关闭了`1V1`单聊。
 
 ## 三、更新日志
+
+**Version 3.0.12 （2019-07-12）**
+
+- 解决关闭视频之后导致后续参会人员黑屏的BUG
+- 添加重复订阅机制
 
 **Version 3.0.9 （2019-06-21）**
 

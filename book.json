@@ -91,7 +91,7 @@
       "label": "编辑本页"
     },
     "ar-intopic-toc": {
-      "selector": ".markdown-section h3",
+      "selector": ".markdown-section h2",
       "visible": true,
       "label": {
         "de": "",
