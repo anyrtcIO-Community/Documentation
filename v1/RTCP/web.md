@@ -56,7 +56,31 @@ import ArRtcpKit from 'ar-rtcp';
 let rtcp = new ArRtcpKit (options);
 ```
 
-##### 1.3 配置开发者信息
+##### 1.3 监听回调
+
+```
+//加入频道成功
+rtcp.on("join-success", () =>{
+
+);
+//加入频道失败
+//根据code码查询错误原因
+rtcp.on("join-failed", (code) => {
+  
+});
+
+//收到远程视频
+rtcp.on("stream-subscribed", (rtcpID, mediaRender) =>{
+
+});
+//收到辅流视频
+rtcp.on("exstream-subscribed", (rtcpID, mediaRender) =>{
+
+});
+```
+
+
+##### 1.4 配置开发者信息
 配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
 ```
 //配置开发者信息
@@ -68,7 +92,21 @@ rtcp.initAppInfo(APP_ID, APP_TOKEN);
 ##### 2.设置本地显示窗口
 设置本地显示窗口，参数constraints为音视频配置项，包含视频帧率、码率、相机类型等。
 ```
-rtcp.setLocalVideoCapturer(constraints);
+rtcp.setLocalVideoCapturer({
+  video: {
+    enabled: true,
+    deviceId: true
+  },
+  audio: {
+    enabled: true,
+    deviceId: true
+  }
+}).then(e => {
+  //将视频e.mediaRender绑定到页面
+  //可以在这里发布视频
+}).catch(err => {
+   console.log(err);
+});
 
 ```
 ##### 3.视频流操作
@@ -89,10 +127,6 @@ rtcp.unPublishEx();
 rtcp.unSubscribe(rtcpID)
 //取消订阅
 rtcp.unSubscribe();
-//收到远程视频
-rtcp.on("stream-subscribed", rtcpID, mediaRender);
-//收到辅流视频
-rtcp.on("exstream-subscribed", rtcpID, mediaRender);
 ```
 ##### 4.退出
 离开房间。
@@ -501,7 +535,9 @@ rtcp.close();
 ##### 示例
 
 ```
-rtcp.on("exstream-subscribed", function(pubId, mediaRender){});
+rtcp.on("exstream-subscribed", (pubId, mediaRender) =>{
+
+});
 ```
 
 ##### 参数
@@ -519,7 +555,9 @@ rtcp.on("exstream-subscribed", function(pubId, mediaRender){});
 ##### 示例
 
 ```
-rtcp.on("exstream-unsubscribed", function(pubId){});
+rtcp.on("exstream-unsubscribed", (pubId) =>{
+
+});
 ```
 
 ##### 参数
@@ -537,7 +575,9 @@ rtcp.on("exstream-unsubscribed", function(pubId){});
 ##### 示例
 
 ```
-rtcp.on("stream-subscribed", function(pubId, mediaRender){});
+rtcp.on("stream-subscribed", (pubId, mediaRender) =>{
+  
+});
 ```
 
 ##### 参数
@@ -555,7 +595,9 @@ rtcp.on("stream-subscribed", function(pubId, mediaRender){});
 ##### 示例
 
 ```
-rtcp.on("stream-unsubscribed", function(pubId){});
+rtcp.on("stream-unsubscribed", (pubId) =>{
+
+});
 ```
 
 ##### 参数
@@ -573,7 +615,9 @@ rtcp.on("stream-unsubscribed", function(pubId){});
 ##### 示例
 
 ```
-rtcp.on("audio-volume", function(isRemote, pubId, audioLevel){});
+rtcp.on("audio-volume", (isRemote, pubId, audioLevel) =>{
+
+});
 ```
 
 ##### 参数
@@ -593,7 +637,9 @@ rtcp.on("audio-volume", function(isRemote, pubId, audioLevel){});
 ##### 示例
 
 ```
-rtcp.on("network-status", function(isRemote, pubId, videoBytes, ARNetQuality){});
+rtcp.on("network-status", (isRemote, pubId, videoBytes, ARNetQuality) =>{
+
+});
 ```
 
 ##### 参数
@@ -614,7 +660,9 @@ rtcp.on("network-status", function(isRemote, pubId, videoBytes, ARNetQuality){})
 ##### 示例
 
 ```
-rtcp.on("join-success", function(){});
+rtcp.on("join-success", () =>{
+  
+});
 ```
 
 #### 8. 加入频道失败
@@ -622,7 +670,9 @@ rtcp.on("join-success", function(){});
 ##### 示例
 
 ```
-rtcp.on("join-failed", function(code){});
+rtcp.on("join-failed", (code) =>{
+
+});
 ```
 
 ##### 参数
@@ -636,7 +686,9 @@ rtcp.on("join-failed", function(code){});
 ##### 示例
 
 ```
-rtcp.on("stream-published", function(pubId){});
+rtcp.on("stream-published", (pubId) =>{
+
+});
 ```
 
 ##### 参数
@@ -654,7 +706,9 @@ rtcp.on("stream-published", function(pubId){});
 ##### 示例
 
 ```
-rtcp.on("stream-publish-failed", function(){});
+rtcp.on("stream-publish-failed", (code) =>{
+
+});
 ```
 
 发布媒体流失败。
@@ -664,7 +718,9 @@ rtcp.on("stream-publish-failed", function(){});
 ##### 示例
 
 ```
-rtcp.on("exstream-published", function(pubId){});
+rtcp.on("exstream-published", (pubId) =>{
+
+});
 ```
 
 ##### 参数
@@ -682,7 +738,9 @@ rtcp.on("exstream-published", function(pubId){});
 ##### 示例
 
 ```
-rtcp.on("server-disconnect", function(){});
+rtcp.on("server-disconnect", () =>{
+
+});
 ```
 
 ##### 说明

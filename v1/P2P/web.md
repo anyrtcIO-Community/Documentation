@@ -47,11 +47,40 @@ import ArCall from 'ar-call';
 import ArCall from 'ar-call';
 ```
 ##### 1.2 实例化对象
+options为实例配置，包括自定义数据、码率自适应是否开启、日志级别等。
 ```
 let call = new ArCall(options);
 ```
+##### 1.3 监听回调
+```
+//上线成功回调
+call.on("online-success", () => {
+    
+});
+//上线失败回调
+//根据code码查询错误原因
+call.on("online-failed", (errCode) => {
+    
+});
+//收到通话请求
+call.on("make-call", (roomId, peerUserId, callMode, peerUserData, callExtend) => {
+    
+});
+//其他人视频显示窗口
+//对方（或己方）同意视频通话请求后，会收到此回调，收到后需要将`mediaRender`添加展示到页面上。
+call.on("stream-subscribed", (peerUserId, pubId, rtcUserData, mediaRender) => {
+    
+});
+//其他人离开移除视频显示窗口
+call.on("stream-unsubscribed", (peerUserId, pubId, userId, rtcUserData) => {
 
-##### 1.3 配置开发者信息
+});
+//收到挂断或者下线
+call.on("end-call", (peerUserId, errCode) => {
+
+});
+```
+##### 1.4 配置开发者信息
 配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
 ```
 //配置开发者信息
@@ -83,12 +112,7 @@ call.setLocalVideoCapturer(constraints);
  ```
 call.makeCall(peerUserId, callMode, userData, callExtend);
 ```
-##### 3.3 设置其他视频显示窗口
-对方（或己方）同意视频通话请求后，会收到此回调，收到后需要将render添加展示到页面上。
-```
-call.on("stream-subscribed", (peerUserId, pubId, rtcUserData, mediaRender)
-```
-##### 3.4 通话操作
+##### 3.3 通话操作
 peerUserId为自定义用户ID。
 ```
 //同意呼叫
@@ -98,7 +122,7 @@ call.rejectCall(peerUserId);
 //结束通话
 call.endCall(peerUserId);
 ```
-##### 3.5用户下线
+##### 3.4用户下线
 退出。
 ```
 call.turnOff();
