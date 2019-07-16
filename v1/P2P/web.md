@@ -103,10 +103,10 @@ call.setLocalVideoCapturer(constraints);
 ```
 ##### 3.2 呼叫用户
 调用makeCall方法用于呼叫用户<br/>
-第一个参数peerUserId自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`<br/>
-第二个参数callMode为呼叫模式<br/>
-第三个参数userData则是用户自定义数据<br/>
-第四个参数callExtend为自定义拓展数据（选填）<br/>
+peerUserId自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`<br/>
+callMode为呼叫模式<br/>
+userData则是用户自定义数据<br/>
+callExtend为自定义拓展数据（选填）<br/>
 呼叫模式：
 `0`视频呼叫、`2`音频呼叫、`20`音频呼叫客服、`21`视频呼叫客服
  ```
@@ -356,12 +356,15 @@ call.makeCall(peerUserId, callMode, userData, callExtend);
 | ---------- | :----: | ------------------------------------------------------------ |
 | peerUserId | string | 自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`     |
 | callMode   | number | 呼叫模式: `0`  视频呼叫`、2`音频呼叫、 `20`音频呼叫客服 、 `21`视频呼叫客服 |
-| userData   | string | 自定义用户数据                                               |
+| ~~userData~~   | ~~string~~ | ~~自定义用户数据。~~ 3.0.16版本已移除 |
 | callExtend | object | 自定义拓展数据（选填）                                       |
 
 ##### 说明
 
-发起呼叫，被叫端会收到`make-call`回调。
+发起呼叫，被叫端会收到`make-call`回调。需要注意以下几点：
+1. 3.0.16版本移除了`userData`参数，因为与初始化实例时重复定义（参考new ArCall）
+2. 在`online-success`成功之后才可呼叫，否则可能会抛异常（未连接服务就发送消息）
+3. SIP外呼仅支持音频呼叫，也就是callMode为`2`时才可呼叫；
 
 #### 同意呼叫请求
 
