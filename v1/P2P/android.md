@@ -110,7 +110,7 @@ arCallKit.setArCallEvent(ARCallEvent arCallEvent);
 ```
  //上线
 if (arCallKit.isTurnOff()) {
-    arCallKit.turnOn(“userID);
+    arCallKit.turnOn("userId,"userData");
 }
 
 ```
@@ -147,7 +147,7 @@ mMeetKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer
 
 ```
 //主动呼叫
-arCallKit.makeCallUser(callId,ARUserOption,userData);
+arCallKit.makeCallUser(String callId,ARUserOption option);
 
 ```
 > 返回值为1时呼叫成功，被呼叫人会收到onRTCMakeCall()回调
@@ -419,7 +419,7 @@ userToken | String | token字符串:客户端向自己服务器申请
 **定义**
 
 ```
-boolean turnOn(String userId) 
+boolean turnOn(String userId,Stirng userData) 
 ```
 
 **参数**
@@ -427,6 +427,7 @@ boolean turnOn(String userId)
 参数名 | 类型 | 描述
 ---|:---:|---
 userId | String | 用户的userid（必填）
+userData|String|用户自定义数据 
 
 **返回值**
 
@@ -912,26 +913,42 @@ void onDisconnect(int code)
 ---|:---:|---
 code | int| 响应码
 
-
-### 3. 收到呼叫
+### 3. 加入房间成功
 
 **定义**
 
 ```
-void onRTCMakeCall(String meetId, String userId, ARCallMode callMode, String userData, String extend)
+void onRTCJoinRoomOk(String meetId)
 
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-meetId | String| 群组呼叫的会议id 
+meetId | String| 房间号
+
+**说明**  
+
+只有打开VIP或呼叫类型是AR_Call_Meet_Invite的时候才有回调，roomId参数仅供录像时使用。
+
+### 4. 收到呼叫
+
+**定义**
+
+```
+void onRTCMakeCall( String userId, ARCallMode callMode, String userData, String extend)
+
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
 userId | String| 呼叫的用户ID 
 callMode | ARCallMode| 呼叫模式
 userData | String| 呼叫用户自定义数据
 extend | String| 呼叫自定义数据
 
-### 4. 对方接受呼叫
+### 5. 对方接受呼叫
 
 **定义**
 
@@ -945,7 +962,7 @@ void onRTCAcceptCall(String userId)
 ---|:---:|---
 userId | String| 被呼叫用户的id 
 
-### 5. 对方拒绝呼叫
+### 6. 对方拒绝呼叫
 
 **定义**
 
@@ -960,7 +977,7 @@ void onRTCRejectCall(String userId, int code)
 userId | String| 被呼叫用户的id 
 code | int| 状态码 
 
-### 6. 对方挂断呼叫
+### 7. 对方挂断呼叫
 
 **定义**
 
@@ -975,7 +992,7 @@ code | int| 状态码
 userId | String| 被呼叫用户的id 
 code | int| 状态码 
 
-### 7. 是否支持sip呼叫
+### 8. 是否支持sip呼叫
 
 **定义**
 
@@ -991,7 +1008,7 @@ bPstn | Boolean| 是否支持手机呼叫
 bExtension | Boolean| 是否支持座机分机呼叫 
 bNull | Boolean| 拓展使用，暂时无用 
 
-### 8. 对方切换到音频通话模式
+### 9. 对方切换到音频通话模式
 
 **定义**
 
@@ -1000,7 +1017,7 @@ void onRTCSwithToAudioMode()
 
 ```
 
-### 9. 收到消息
+### 10. 收到消息
 
 **定义**
 
@@ -1016,7 +1033,7 @@ void onRTCUserMessage(String userId, String message)
 userId | String| 对方Id 
 message | String| 消息内容
 
-### 10. 对方视频接通视频即将显示回调
+### 11. 对方视频接通视频即将显示回调
 
 **定义**
 
@@ -1038,7 +1055,7 @@ userData | String | 用户的自定义数据
 
 开发者需调用设置其他与会者视频窗口（setRemoteVideoRender）方法。
 
-### 11. 对方视频挂断视频即将关闭回调
+### 12. 对方视频挂断视频即将关闭回调
 
 **定义**
 
@@ -1057,7 +1074,7 @@ vidRenderId | String | RTC服务生成的视频通道Id
 
 主叫与被叫的挂断后将会回调此方法。此时应将视频窗口移除
 
-### 12. 对方音频通道打开回调
+### 13. 对方音频通道打开回调
 
 **定义**
 
@@ -1076,7 +1093,7 @@ userData | String | 用户的自定义数据
 
 对方同意后，音频通道建立成功回调此方法。
 
-### 13. 对方音频通道关闭回调
+### 14. 对方音频通道关闭回调
 
 **定义**
 
@@ -1094,7 +1111,7 @@ userId | String | RTC服务生成的用户标识Id
 
 主叫与被叫的挂断后音频通道断开，将会回调此方法。
 
-### 14. 远端音量实时监测回调
+### 15. 远端音量实时监测回调
 
 **定义**
 
@@ -1114,7 +1131,7 @@ time | int | 监测时间监测（单位：毫秒）
 
 打开音频实时监测的情况下，回调该方法
 
-### 15. 本地音量实时监测回调
+### 16. 本地音量实时监测回调
 
 **定义**
 
@@ -1133,7 +1150,7 @@ time | int | 监测时间监测（单位：毫秒）
 
 打开音频实时监测的情况下，回调该方法
 
-### 16. 远端网络监测回调
+### 17. 远端网络监测回调
 
 **定义**
 
@@ -1154,7 +1171,7 @@ netQuality | ARNetQuality | 当前PeerUserId的丢包率
 
 打开实时网络监测开关后，回调此方法。
 
-### 17. 本地网络监测回调
+### 18. 本地网络监测回调
 
 **定义**
 
@@ -1174,7 +1191,7 @@ netQuality | ARNetQuality | 当前PeerUserId的丢包率
 
 打开实时网络监测开关后，回调此方法。
 
-### 18. Zoom模式状态回调
+### 19. Zoom模式状态回调
 
 **定义**
 
@@ -1197,7 +1214,7 @@ num | int | Zoom模式视频的总数目
 
 主叫与被叫的挂断后将会回调此方法。此时应将视频窗口移除
 
-### 19. Zoom模式下用户进去群组呼叫回调
+### 20. Zoom模式下用户进去群组呼叫回调
 
 **定义**
 
@@ -1217,7 +1234,7 @@ userData | String | 用户的自定义数据
 
 群组呼叫模式下， 用户进入群组呼叫回调此方法。
 
-### 20. Zoom模式下用户离开群组呼叫回调
+### 21. Zoom模式下用户离开群组呼叫回调
 
 **定义**
 
@@ -1236,7 +1253,7 @@ vidRenderId | String | 	RTC服务生成的视频通道Id
 
 群组呼叫模式下，用户的离开时回调此方法。
 
-### 21. 当前排队人数
+### 22. 当前排队人数
 
 **定义**
 
@@ -1254,7 +1271,7 @@ nQueueNum | int |当前排队人数
 
 坐席呼叫模式下，回调此方法。
 
-### 22. 坐席状态
+### 23. 坐席状态
 
 **定义**
 
@@ -1274,7 +1291,7 @@ nWorkingClerk|int|正在工作中座席数
 
 坐席呼叫模式下，回调此方法。。
 
-### 23. 音视频状态回调
+### 24. 音视频状态回调
 
 **定义**
 
@@ -1293,6 +1310,12 @@ bVideo|boolean|视频打开或关闭
 
 
 ## 四、更新日志
+
+- v 3.1.0
+1.   增加onRTCJoinRoomOk回调 
+1.   去除onRTCMakeCall回调中第一个MeetId参数 
+1.   turnOn方法增加userData参数   
+1.   ARUserOption等配置类中去除userData参数
 
 - 全新发布,替代老的P2P SDK，功能升级，全面优化
 
