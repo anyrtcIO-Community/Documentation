@@ -19,11 +19,11 @@
 * 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-WaWa-Client-iOS)，找到RTCWaWaJiEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTCWaWaJiEngine.framework添加到你的工程目录中
-![ios_rtcp_01](/assets/images/ios_rtcp_01.png)
+![ios_rtcp_01](/assets/images/ios/ios_rtcp_01.png)
 
 * 打开General->Embedded Binaries中添加RTCWaWaJiEngine.framework
 
-![ios_rtcp_02](/assets/images/ios_rtcp_02.png)
+![ios_rtcp_02](/assets/images/ios/ios_rtcp_02.png)
 
 #### 权限说明
 
@@ -55,7 +55,7 @@
 
 勾选Audio, AirPlay and Picture in Picture
 
-![ios_rtcp_03](/assets/images/ios_rtcp_03.png)
+![ios_rtcp_03](/assets/images/ios/ios_rtcp_03.png)
 
 ### 开发指南
 
