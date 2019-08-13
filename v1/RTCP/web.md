@@ -37,7 +37,7 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.4.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.7.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -134,7 +134,9 @@ rtcp.unSubscribe();
 rtcp.close();
 ```
 ## 二、API接口文档
+
 ### ArRtcpKit 接口
+
 #### 1. 实例化对象
 
 ```
@@ -423,7 +425,7 @@ rtcp.getLocalAudioEnable();
 ##### 示例
 
 ```
-rtcp.publish(mediaType);
+rtcp.publish(mediaType, roomId);
 ```
 
 ##### 参数
@@ -431,6 +433,7 @@ rtcp.publish(mediaType);
 | 参数名    | 类型   | 描述                          |
 | --------- | ------ | ----------------------------- |
 | mediaType | Number | 媒体类型：`0` 视音频，`1`音频 |
+| roomId | string | 房间ID，用于标识 |
 
 ##### 说明
 
@@ -514,7 +517,43 @@ rtcp.unSubscribe(rtcpId);
 
 取消媒体订阅。
 
-#### 14. 结束直播
+#### 14. 监听某个房间的媒体流变化 NEW
+
+##### 示例
+
+```
+rtcp.listen(roomId);
+```
+
+##### 参数
+
+| 参数名 | 类型   | 描述             |
+| ------ | ------ | ---------------- |
+| roomId | String | 媒体流发布书，指定的roomId |
+
+##### 说明
+
+监听某个房间的媒体流的发布与取消发布。
+
+#### 15. 取消监听某个房间的媒体流变化 NEW
+
+##### 示例
+
+```
+rtcp.unListen(roomId);
+```
+
+##### 参数
+
+| 参数名 | 类型   | 描述             |
+| ------ | ------ | ---------------- |
+| roomId | String | 媒体流发布书，指定的roomId |
+
+##### 说明
+
+取消监听某个房间的媒体流的发布与取消发布。
+
+#### 16. 结束直播
 
 ##### 示例
 
@@ -535,7 +574,7 @@ rtcp.close();
 ##### 示例
 
 ```
-rtcp.on("exstream-subscribed", (pubId, mediaRender) =>{
+rtcp.on("exstream-subscribed", function(pubId, mediaRender){
 
 });
 ```
@@ -555,7 +594,7 @@ rtcp.on("exstream-subscribed", (pubId, mediaRender) =>{
 ##### 示例
 
 ```
-rtcp.on("exstream-unsubscribed", (pubId) =>{
+rtcp.on("exstream-unsubscribed", function(pubId){
 
 });
 ```
@@ -575,8 +614,8 @@ rtcp.on("exstream-unsubscribed", (pubId) =>{
 ##### 示例
 
 ```
-rtcp.on("stream-subscribed", (pubId, mediaRender) =>{
-  
+rtcp.on("stream-subscribed", function(pubId, mediaRender){
+
 });
 ```
 
@@ -595,7 +634,7 @@ rtcp.on("stream-subscribed", (pubId, mediaRender) =>{
 ##### 示例
 
 ```
-rtcp.on("stream-unsubscribed", (pubId) =>{
+rtcp.on("stream-unsubscribed", function(pubId){
 
 });
 ```
@@ -615,7 +654,7 @@ rtcp.on("stream-unsubscribed", (pubId) =>{
 ##### 示例
 
 ```
-rtcp.on("audio-volume", (isRemote, pubId, audioLevel) =>{
+rtcp.on("audio-volume", function(isRemote, pubId, audioLevel){
 
 });
 ```
@@ -637,7 +676,7 @@ rtcp.on("audio-volume", (isRemote, pubId, audioLevel) =>{
 ##### 示例
 
 ```
-rtcp.on("network-status", (isRemote, pubId, videoBytes, ARNetQuality) =>{
+rtcp.on("network-status", function(isRemote, pubId, videoBytes, ARNetQuality){
 
 });
 ```
@@ -660,8 +699,8 @@ rtcp.on("network-status", (isRemote, pubId, videoBytes, ARNetQuality) =>{
 ##### 示例
 
 ```
-rtcp.on("join-success", () =>{
-  
+rtcp.on("join-success", function(){
+
 });
 ```
 
@@ -670,7 +709,7 @@ rtcp.on("join-success", () =>{
 ##### 示例
 
 ```
-rtcp.on("join-failed", (code) =>{
+rtcp.on("join-failed", function(code){
 
 });
 ```
@@ -686,7 +725,7 @@ rtcp.on("join-failed", (code) =>{
 ##### 示例
 
 ```
-rtcp.on("stream-published", (pubId) =>{
+rtcp.on("stream-published", function(pubId){
 
 });
 ```
@@ -706,7 +745,7 @@ rtcp.on("stream-published", (pubId) =>{
 ##### 示例
 
 ```
-rtcp.on("stream-publish-failed", (code) =>{
+rtcp.on("stream-publish-failed", function(){
 
 });
 ```
@@ -718,7 +757,7 @@ rtcp.on("stream-publish-failed", (code) =>{
 ##### 示例
 
 ```
-rtcp.on("exstream-published", (pubId) =>{
+rtcp.on("exstream-published", function(pubId){
 
 });
 ```
@@ -738,7 +777,7 @@ rtcp.on("exstream-published", (pubId) =>{
 ##### 示例
 
 ```
-rtcp.on("server-disconnect", () =>{
+rtcp.on("server-disconnect", function(){
 
 });
 ```
@@ -748,6 +787,15 @@ rtcp.on("server-disconnect", () =>{
 服务器断开连接。
 
 ## 三、更新日志
+
+**Version 3.0.7 （2019-08-13）**
+
+- `publish`添加参数`roomId`
+- 添加方法`listen`和`unListen`
+
+**Version 3.0.5 （2019-06-21）**
+
+- 优化
 
 **Version 3.0.4 （2019-05-27）**
 
