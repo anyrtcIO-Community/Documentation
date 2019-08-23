@@ -30,6 +30,8 @@ ARMax_SERVER_NOT_OPEN | 208 | 服务未开通
 ARMax_ALLOC_NO_RES | 209 | 没有服务器资源
 ARMax_SERVER_NOT_SURPPORT | 210 | 不支持的服务
 ARMax_FORCE_EXIT | 211 | 强制离开
+ARMax_AUTH_TIMEOUT | 212 | 验证超时
+ARMax_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
 ARMax_APPLY_SVR_ERR | 800 | 申请麦但是服务器异常 (没有MCU服务器,暂停申请)
 ARMax_APPLY_BUSY | 801 | 当前你正在忙
 ARMax_APPLY_NO_PRIO | 802 | 当前麦被占用 (有人正在说话切你的权限不够)
@@ -43,6 +45,9 @@ ARMax_P2P_BUSY | 821 | 强插时，对方正忙
 ARMax_P2P_NOT_TALK | 822 |  强插时，对方不在麦上
 ARMax_V_MON_OFFLINE | 830 | 视频监看时，对方不在线，或下线了
 ARMax_V_MON_GRABED | 831 | 视频监看被抢占了
+ARMax_V_MON_BUSY | 832 | 视频监看对方忙
+ARMax_V_MON_REJECT | 833 | 视频监看对方拒绝
 ARMax_CALL_OFFLINE | 840 | 对方不在线或掉线了
 ARMax_CALL_NO_PRIO | 841 | 发起呼叫时自己有其他业务再进行(资源被占用)
 ARMax_CALL_NOT_FOUND | 842 | 会话不存在
+ARMax_CALL_FORCE_OFF | 843 | 会话被强拆

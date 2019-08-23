@@ -30,6 +30,8 @@ ARMeet_SERVER_NOT_OPEN | 208 | 服务未开通
 ARMeet_ALLOC_NO_RES | 209 | 没有服务器资源
 ARMeet_SERVER_NO_SURPPOAR | 210 | 不支持的服务
 ARMeet_FORCE_EXIT | 211 | 强制离开
+ARMeet_AUTH_TIMEOUT | 212 | 验证超时
+ARMeet_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
 ARMeet_NOT_STAAR | 700 | 房间未开始
 ARMeet_IS_FULL | 701 | 房间人员已满
 ARMeet_NOT_COMPARE | 702 | 房间类型不匹配

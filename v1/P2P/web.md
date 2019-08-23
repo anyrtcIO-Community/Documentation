@@ -33,7 +33,7 @@ import ArCall from 'ar-call';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.15.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArCallKit.3.0.17.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -105,12 +105,11 @@ call.setLocalVideoCapturer(constraints);
 调用makeCall方法用于呼叫用户<br/>
 peerUserId自定义用户ID、SIP外呼请ID前面添加`+86`例如 `+86185****8888`<br/>
 callMode为呼叫模式<br/>
-userData则是用户自定义数据<br/>
 callExtend为自定义拓展数据（选填）<br/>
 呼叫模式：
 `0`视频呼叫、`2`音频呼叫、`20`音频呼叫客服、`21`视频呼叫客服
  ```
-call.makeCall(peerUserId, callMode, userData, callExtend);
+call.makeCall(peerUserId, callMode, callExtend);
 ```
 ##### 3.3 通话操作
 peerUserId为自定义用户ID。
@@ -524,6 +523,26 @@ call.on("online-failed", (errCode) => {
 | ------- | :----: | -------------- |
 | errCode | number | 上线失败错误码 |
 
+
+#### 进入房间成功
+
+##### 示例
+
+```
+call.on("join-room-success", (roomId) => {
+
+});
+```
+
+##### 参数
+
+| 参数名  |  类型  | 描述           |
+| ------- | :----: | -------------- |
+| roomId | string | 房间ID |
+
+##### 说明
+该回调仅在开发者后台开启录像功能之后才回调，进入房间成功之后才会开始录像（手动录像、服务端自动录像）。
+
 #### 被呼叫
 
 ##### 示例
@@ -719,6 +738,17 @@ call.on("user-message", (peerUserId, msgContent) => {
 接收到用户发送的实时消息。 
 
 ## 三、更新日志
+
+**Version 3.0.17 （2019-08-08）**
+
+- 修复排队优先级功能无效
+- 添加`join-room-success`回调
+
+**Version 3.0.16 （2019-07-16）**
+
+- `makeCall`去掉第三个参数`userData`，与初始化中的userData冲突
+- 消息通道优化
+- 用户下线优化
 
 **Version 3.0.15 （2019-06-12）**
 
