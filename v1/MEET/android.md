@@ -825,8 +825,50 @@ nIdx | int |当前页数
 **仅用于Zoom模式**，设置当前页数及显示个数
 
 
----
+### 33. 打开或关闭音频数据回调开关
 
+**定义**
+
+```
+void setAudioNeedPcm(boolean bEnable)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+bEnable | boolean |true 打开 false 关闭
+
+### 34. 设置音频采样率
+
+**定义**
+
+```
+void resamplerLocalAudio( int sample_hz,  int channel)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+sample_hz | int |音频采样率 （16000，32000，48000 ，8000，44100）
+sample_hz | int |音频声道，（1或者2）
+
+
+### 35. 设置视频编码器
+
+**定义**
+
+```
+boolean setVideoCodec( String strCodec)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+strCodec | String |视频编码格式（H264,VP8,VP9等编码器） 必须大写 比如 H264 VP8
+---
 
 ### ARMeetEvent 回调接口类
 
@@ -1311,7 +1353,6 @@ peerId | String | RTC服务生成的标识Id ，用于标识与会者
 ```
 void onRTCZoomPageInfo(ARMeetZoomMode zoomMode, int allPages, int curPage, int allRender, int screenIndex, int num);
 ```
-
 **参数**
 
 参数名 | 类型 | 描述
@@ -1326,9 +1367,38 @@ num | int |一页显示视频个数
 **说明**
 
 仅在**ZOOM模式**下回调
+### 28. 本地音频数据回调
+
+**定义**
+
+```
+void onRTCLocalAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
+```
+
+**说明**
+
+setAudioNeedPcm()设置为true时才会回调
+
+### 29. 其他人音频数据回调
+
+**定义**
+
+```
+void onRTCRemoteAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
+```
+**说明**
+
+setAudioNeedPcm()设置为true时才会回调
+
+
 
 
 ## 四、更新日志
+**Version 3.0.7（2019-08-23）**
+* 新增onRTCLocalAudioPcmData(),onRTCRemoteAudioPcmData()回调
+* 新增setVideoCodec()方法
+* 新增setAudioNeedPcm()方法
+* 新增resamplerLocalAudio()方法
 
 **Version 3.0.0 （2019-05-15）**
 

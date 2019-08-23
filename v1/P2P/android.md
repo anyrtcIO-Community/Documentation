@@ -110,7 +110,7 @@ arCallKit.setArCallEvent(ARCallEvent arCallEvent);
 ```
  //上线
 if (arCallKit.isTurnOff()) {
-    arCallKit.turnOn("userId,"userData");
+    arCallKit.turnOn("userId","userData");
 }
 
 ```
@@ -161,7 +161,6 @@ arCallKit.makeCallUser(String callId,ARUserOption option);
 arCallKit.endCall(callId);
 //如果打开了本地摄像头，还应调用
 arCallKit.stopCapturer();
-}
 
 ```
 > 对方将收到onRTCEndCall()回调
@@ -172,7 +171,6 @@ arCallKit.stopCapturer();
 
 ```
 arCallKit.rejectCall(callId);
-}
 
 ```
 > 对方将收到onRTCRejectCall()回调
@@ -251,8 +249,6 @@ arCallKit.turnOff();
 在Proguard混淆文件中增加以下配置：
 
 ```
--dontwarn org.anyrtc.**
--keep class org.anyrtc.**{*;}
 -dontwarn org.ar.**
 -keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
@@ -507,7 +503,6 @@ ARQueueOption类参数说明
 参数名 | 类型 | 描述
 ---|:---:|---
 callMode | ARCallMode | 呼叫模式（该模式呼叫只能用call_cit_audio , call_cit_video 两种）
-userData | String | 用户自定义内容
 level | int | 优先级：0等级最大，值越大，等级越小
 area | String | 服务地区
 business | String | 服务范围
@@ -659,7 +654,7 @@ render | long | 底层视频渲染对象
 
 **返回值**
 
-0/1/2/3：没哟相机权限/打开成功/打开相机失败/相机已打开， 未释放
+0/1/2/3：没有相机权限/打开成功/打开相机失败/相机已打开， 未释放
 
 ### 18. 重启本地视频采集窗口
 
@@ -677,7 +672,7 @@ render | long | 底层视频渲染对象
 
 **返回值**
 
-0/1/2/3：没哟相机权限/打开成功/打开相机失败/相机已打开， 未释放
+0/1/2/3：没有相机权限/打开成功/打开相机失败/相机已打开， 未释放
 
 ### 19. 设置其他人视频窗口
 
@@ -1045,7 +1040,6 @@ void onRTCOpenRemoteVideoRender(String userId, String vidRenderId, String userDa
 
 参数名 | 类型 | 描述
 ---|:---:|---
-
 userId | String | RTC服务生成的用户标识Id
 vidRenderId | String | RTC服务生成的视频通道Id
 userData | String | 用户的自定义数据
