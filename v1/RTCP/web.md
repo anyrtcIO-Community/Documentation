@@ -37,7 +37,7 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.8.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.9.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -789,7 +789,7 @@ rtcp.on("server-disconnect", function(){
 
 ## 三、更新日志
 
-**Version 3.0.8 （2019-09-11）**
+**Version 3.0.9 （2019-09-11）**
 
 - `stream-published`添加roomId回调参数
 - 更新文档
