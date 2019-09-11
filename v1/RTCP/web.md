@@ -37,7 +37,7 @@ import ArRtcpKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.7.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.8.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -725,7 +725,7 @@ rtcp.on("join-failed", function(code){
 ##### 示例
 
 ```
-rtcp.on("stream-published", function(pubId){
+rtcp.on("stream-published", function(pubId, roomId){
 
 });
 ```
@@ -735,10 +735,11 @@ rtcp.on("stream-published", function(pubId){
 | 参数名 | 类型   | 描述                          |
 | ------ | ------ | ----------------------------- |
 | pubId  | String | RTC服务生成媒体流的唯一标识ID |
+| roomId  | String | 自定义频道ID,可通过listen方法，监听房间内所有的（实时）视频流变化。 |
 
 ##### 说明
 
-发布媒体流成功，得到pubId。
+发布媒体流成功，返回roomId和pubId。
 
 #### 12. 发布媒体流失败
 
@@ -787,6 +788,11 @@ rtcp.on("server-disconnect", function(){
 服务器断开连接。
 
 ## 三、更新日志
+
+**Version 3.0.8 （2019-09-11）**
+
+- `stream-published`添加roomId回调参数
+- 更新文档
 
 **Version 3.0.7 （2019-08-13）**
 
