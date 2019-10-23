@@ -4,7 +4,7 @@
 
 #### 适用范围
 
-本集成文档适用于iOS RTMeetEngine SDK 2.0.0 ~ 3.0.0版本。
+本集成文档适用于iOS RTMeetEngine SDK 2.0.0 ~ 3.0.1版本。
 
 #### 准备环境
 
@@ -21,10 +21,10 @@
 ```
 pod 'RTMeetEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.1 版本为例）：
 
 ```
-pod 'RTMeetEngine', '3.0.0'
+pod 'RTMeetEngine', '3.0.1'
 ```
 
 **手动导入**
@@ -474,39 +474,81 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
 操作是否成功。 
 
-#### 17. 设置token验证
+#### 17. 截图功能
 
 **定义**
 
 ```
-- (BOOL)setUserToken:(NSString *)userToken;
+- (void)snapPicture:(NSString*)userId complete:(ScreenshotsBlock)block;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-userToken | NSString | token字符串，客户端向自己服务器申请
+userId | NSString | 用户Id
+block | ScreenshotsBlock | 数据回调
 
-**返回**
-
-设置验证是否成功。
-
-**说明**
-
-设置token验证必须放在joinRoom之前。
-
-#### 18. 加入会议
+#### 18. 设置使用外置摄像头
 
 **定义**
 
 ```
-- (BOOL)joinRTC:(NSString *)anyRTCId userId:(NSString *)userId userData:(NSString *)userData;
+- (void)setExternalCameraCapturer:(BOOL)enable dataType:(ARCaptureType)type;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-anyRTCId | NSString | 会议号（可以在anyRTC平台获得，也可以根据自己平台，分配唯一的一个Id号）
+enable | BOOL | 是否使用外置摄像头
+type | ARCaptureType | YUV420PType、RGBType
+
+#### 19. 向内部塞流
+
+**定义**
+
+```
+- (BOOL)sendExternalCameraCapturerBuffer:(CVPixelBufferRef)bufferRef rotation:(ARVideoRotation)rotation;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+bufferRef | CVPixelBufferRef | 视频流数据
+rotation | ARVideoRotation | 视频方向
+
+#### 20. 向内部塞流
+
+**定义**
+
+```
+- (BOOL)sendExternalCameraData:(NSData*)data rotation:(ARVideoRotation)rotation pixelsWidth:(int)width
+pixelsHeight:(int)height;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+data | NSData | 视频流数据（yuv420格式的，或者ARGB数据）
+rotation | ARVideoRotation | 视频方向
+width | int | 视频宽
+height | int | 视频高
+
+#### 21. 加入会议
+
+**定义**
+
+```
+- (BOOL)joinRTCByToken:(NSString* _Nullable)token
+  meetId:(NSString *)meetId
+  userId:(NSString *)userId
+userData:(NSString *)userData;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+token | NSString | 客户端向自己服务申请获得，参考企业级安全指南
+meetId | NSString | 会议号（可以在anyRTC平台获得，也可以根据自己平台，分配唯一的一个Id号）
 userId | NSString | 开发者自己平台的用户id
 userData | NSString | 开发者自己平台的相关信息（昵称，头像等），还可以加入字段来限制会议人数：MaxJoiner，可选。(限制512字节)
 
@@ -514,7 +556,7 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等�
 
 加入会议成功或者失败。 
 
-#### 19. 离开会议室
+#### 22. 离开会议室
 
 **定义**
 
@@ -526,7 +568,7 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等�
 
 相当于析构函数。 
 
-#### 20. 设置其他人视频显示窗口
+#### 23. 设置其他人视频显示窗口
 
 **定义**
 
@@ -544,7 +586,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
 该方法用于与会者接通后，与会者视频接通回调中(onRTCOpenRemoteVideoRender)使用。 
 
-#### 21. 设置某个人的显示模式
+#### 24. 设置某个人的显示模式
 
 **定义**
 
@@ -558,7 +600,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 videoRenderMode | ARVideoRenderMode | 显示模式，默认ARVideoRenderScaleToFill，等比例填充视图模式
 pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
-#### 22. 设置驾驶模式
+#### 25. 设置驾驶模式
 
 **定义**
 
@@ -571,7 +613,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 ---|:---:|---
 open | BOOL | 是否打开，默认关闭
 
-#### 23. 设置某路视频广播
+#### 26. 设置某路视频广播
 
 **定义**
 
@@ -585,7 +627,7 @@ open | BOOL | 是否打开，默认关闭
 enable | BOOL | 广播与取消广播
 peerId | NSString | 视频流Id
 
-#### 24. 1v1授课模式
+#### 27. 1v1授课模式
 
 **定义**
 
@@ -599,7 +641,7 @@ peerId | NSString | 视频流Id
 enable | BOOL | YES授课，NO取消授课
 peerId | NSString | 视频流Id
 
-#### 25. 发送消息
+#### 28. 发送消息
 
 **定义**
 
@@ -622,7 +664,7 @@ YES发送成功，NO发送失败
 
 默认普通消息，以上参数均会出现在参会者的消息回调方法中，如果加入RTC（joinRTC）没有设置userid，发送失败。
 
-#### 26. 设置网络质量是否打开
+#### 29. 设置网络质量是否打开
 
 **定义**
 
@@ -635,7 +677,7 @@ YES发送成功，NO发送失败
 ---|:---:|---
 enable | BOOL | YES打开，NO关闭，默认关闭
 
-#### 27. 获取当前网络状态是否打开
+#### 30. 获取当前网络状态是否打开
 
 **定义**
 
@@ -647,7 +689,42 @@ enable | BOOL | YES打开，NO关闭，默认关闭
 
 获取网络状态。 
 
-#### 28. 获取人员列表
+#### 31. 设置音频数据是否回调
+
+**定义**
+
+```
+- (void)setAudioDataCallBack:(BOOL)enable;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+enable | BOOL | YES打开回调，NO关闭回调，默认关闭
+
+#### 32. 获取当前音频回调是否打开
+
+**定义**
+
+```
+- (BOOL)audioDataCallBackEnabled;
+```
+
+#### 33. 重新采样率
+
+**定义**
+
+```
+- (BOOL)resamplerLocalAudio:(int)sampleRate channel:(int)channel;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+sampleRate | int |  采样率，仅支持 8000,16000,32000,44100,48000
+channel | int | 频道数量
+
+#### 34. 获取人员列表
 
 **定义**
 
@@ -659,7 +736,7 @@ enable | BOOL | YES打开，NO关闭，默认关闭
 
 人员列表。 
 
-#### 29. 判断是否可以共享
+#### 35. 判断是否可以共享
 
 **定义**
 
@@ -672,7 +749,7 @@ enable | BOOL | YES打开，NO关闭，默认关闭
 ---|:---:|---
 type | int | 共享类型，类型自己平台设定，例如1为白板，２为文档
 
-#### 30. 打开共享信息
+#### 36. 打开共享信息
 
 **定义**
 
@@ -689,7 +766,7 @@ shearInfo | NSString | 共享相关信息(限制512字节)
 
 打开白板成功与失败，参考onRTCShareEnable回调方法。 
 
-#### 31. 关闭共享
+#### 37. 关闭共享
 
 **定义**
 
@@ -697,7 +774,7 @@ shearInfo | NSString | 共享相关信息(限制512字节)
 - (void)closeShare;
 ```
 
-#### 32. 设置Zoom显示模式
+#### 38. 设置Zoom显示模式
 
 **定义**
 
@@ -714,7 +791,7 @@ type | ARZoomType | 模式，默认为ARZoomTypeSingle模式
 
 必须先设置会议模式为zoom模式才有效。 
 
-#### 33. 设置显示页码
+#### 39. 设置显示页码
 
 **定义**
 
@@ -731,7 +808,7 @@ page | int | 页码（从0开始，每页加上自己的视频流为4路）
 
 分屏显示ARZoomTypeNomal。 
 
-#### 34. 设置显示区域从nIndex 到第几个
+#### 40. 设置显示区域从nIndex 到第几个
 
 **定义**
 
@@ -745,6 +822,31 @@ page | int | 页码（从0开始，每页加上自己的视频流为4路）
 index | int | 开始标记
 showNum | int | 默认为4，onRTCZoomPageInfo回调里的showNum
 
+#### 41. 开始录制
+
+**定义**
+
+```
+- (int)startRecording:(NSString *)filePath recordVideo:(BOOL)video;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+filePath | NSString | 沙盒路径+文件名称
+video | BOOL | YES录制本地视频；NO不录制视频
+
+#### 42. 结束录制
+
+**定义**
+
+```
+- (int)stopRecording;
+```
+**返回**
+
+0成功，-1失败。 
+
 ### ARMeetKitDelegate 接口类
 
 #### 1. 加入会议成功
@@ -752,26 +854,26 @@ showNum | int | 默认为4，onRTCZoomPageInfo回调里的showNum
 **定义**
 
 ```
-- (void)onRTCJoinMeetOK:(NSString *)anyRTCId;
+- (void)onRTCJoinMeetOK:(NSString *)meetId;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-anyRTCId | NSString | anyRTCId 会议号(在开发者业务系统中保持唯一的Id)
+meetId | NSString | anyRTCId 会议号(在开发者业务系统中保持唯一的Id)
 
 #### 2. 加入会议失败
 
 **定义**
 
 ```
-- (void)onRTCJoinMeetFailed:(NSString *)anyRTCId code:(ARMeetCode)code reason:(NSString *)reason;
+- (void)onRTCJoinMeetFailed:(NSString *)meetId code:(ARMeetCode)code reason:(NSString *)reason;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-anyRTCId | NSString | 会议号(在开发者业务系统中保持唯一的Id)
+meetId | NSString | 会议号(在开发者业务系统中保持唯一的Id)
 code | ARMeetCode | 状态码
 token | NSString | 错误原因，RTC错误或者token错误(错误值自己平台定义)
 
@@ -1163,6 +1265,52 @@ allRenderNum | int | 当前服务上有多少个渲染，根据此数量来判�
 index | int | 开始位置
 showNum | int | 显示多少个
 
+#### 27. 获取视频的原始采集数据
+
+**定义**
+
+```
+- (CVPixelBufferRef)onRTCCaptureVideoPixelBuffer:(CMSampleBufferRef)sampleBuffer;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+sampleBuffer | CMSampleBufferRef | 视频数据
+
+#### 28. 本地音频数据回调
+
+**定义**
+
+```
+- (void)onRTCLocalAudioPcmBuffer:(const char * _Nullable)audioSamples sample:(int)sampleRate channel:(int)channel length:(int)length;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+audioSamples | char | pcm数据
+sampleRate | int | 采样率
+channel | int | 声道
+length | int | 数据长度
+
+#### 29. 远程音频数据回调
+
+**定义**
+
+```
+- (void)onRTCRemoteAudioPcmBuffer:(const char * _Nullable)audioSamples sample:(int)sampleRate channel:(int)channel length:(int)length peerId:(NSString *_Nullable)peerId;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+audioSamples | char | pcm数据
+sampleRate | int | 采样率
+channel | int | 声道
+length | int | 数据长度
+peerId | NSString | RTC服务生成的与会者标识Id（用于标识与会者用户，每次随机生成）
+
 ### ARShareDelegate 接口类
 
 #### 1. 判断是否可以开启共享回调
@@ -1207,6 +1355,14 @@ userData | NSString | 开发者自己平台的相关信息（昵称，头像等)
 打开共享的人关闭了共享。 
 
 ## 三、更新日志
+
+**Version 3.0.1 （2019-10-15）**
+
+* 新增塞流接口（setExternalCameraCapturer）；
+
+* 新增流量信息监测以及音频数据信息；
+
+* 新增录制相关方法（startRecording:recordVideo:）。
 
 **Version 3.0.0 （2019-05-15）**
 
