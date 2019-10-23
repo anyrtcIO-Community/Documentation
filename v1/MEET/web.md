@@ -34,7 +34,7 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.14.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.15.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -256,12 +256,12 @@ meet.setLocalVideoCapturer(constraints);
 | video    |  类型   | 描述                                         |
 | -------- | :-----: | -------------------------------------------- |
 | enable   | Boolean | `true`为采集摄像头， `false`;                |
-| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+| deviceId | String  | deviceId: 设备ID，可通过`getDevices`方法获取 |
 
 | audio    |  类型   | 描述                                         |
 | -------- | :-----: | -------------------------------------------- |
 | enable   | Boolean | `true`为采集麦克风， `false`;                |
-| devideId | String  | devideId: 设备ID，可通过`getDevices`方法获取 |
+| deviceId | String  | deviceId: 设备ID，可通过`getDevices`方法获取 |
 
 **Return**
 
@@ -1030,6 +1030,11 @@ meet.on('zoom-speaker', (zoomMode, pubId, zoomUserMember) => {});
 主持人关闭了`1V1`单聊。
 
 ## 三、更新日志
+
+**Version 3.0.15 （2019-10-23）**
+
+- 完善并优化SDK
+- 解决`关闭共享`抛出异常的BUG
 
 **Version 3.0.14 （2019-08-08）**
 
