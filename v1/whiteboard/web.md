@@ -6,11 +6,6 @@
 
 本集成文档适用于Web ARWhiteboard SDK 3.0.0版本。
 
-#### 兼容情况
-
-- Chrome、Firefox、safari 11(以上)等，具体使用[webRTC检测工具](https://docs.anyrtc.io/v1/tools/%E6%B5%8F%E8%A7%88%E5%99%A8WebRTC%E6%A3%80%E6%B5%8B.html)
-- H5支持chrome内核。
-
 #### 导入SDK
 
 ##### npm 市场
@@ -20,7 +15,7 @@
 ```
 npm install ar-whiteboard@latest --save-dev
 
-import Board from 'ar-whiteboard';
+import ArWhiteBoard from 'ar-whiteboard';
 import 'ar-whiteboard/lib/index.css';
 ```
 
@@ -38,13 +33,13 @@ import 'ar-whiteboard/lib/index.css';
 集成SDK后，还需对SDK在页面进行初始化操作。
 ##### 1.1 导入头文件
 ```
-import Board from 'ar-whiteboard';
+import ArWhiteBoard from 'ar-whiteboard';
 import 'ar-whiteboard/lib/index.css';
 ```
 ##### 1.2 实例化对象
 `DomId`div容器的id属性;
 ```
-let Board = new Board(DomId);
+let Board = new ArWhiteBoard(DomId);
 ```
 
 ##### 1.3 配置开发者信息
@@ -68,13 +63,14 @@ Board.initWithRoomID(anyRTCId, fileId, userId, backgroundList);
 ```
 Board.leave();
 ```
+
 ## 二、API接口文档
 ### ArBoard 接口类
-#### 1.初始化实例
+#### 初始化实例
 
 ##### 示例
 ```
-let Board = new Board(DomId);
+let Board = new ArWhiteBoard(DomId);
 ```
 
 ##### 参数
@@ -82,7 +78,22 @@ let Board = new Board(DomId);
 ---|:---:|---
 DomId | Element | Div容器的id属性
 
-#### 2. 连接画板服务
+#### 1. 配置私有云画板服务
+##### 示例
+```
+Board.configServerUrl(serverUrl); 
+
+```
+
+##### 参数
+参数名 | 类型 | 描述 
+---|---|---
+serverUrl | String | 画板服务URL
+
+##### 说明
+该方法需要在配置开发者信息之前调用。
+
+#### 2. 初始化画板
 ##### 示例
 ```
 Board.initEngineWithARInfo(appId, appToken); 
