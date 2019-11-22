@@ -29,7 +29,7 @@ ARRtcp_LOCKED | 207 | 账号被锁定
 ARRtcp_SERVER_NOT_OPEN | 208 | 服务未开通
 ARRtcp_ALLOC_NO_RES | 209 | 没有服务器资源
 ARRtcp_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARRtcp_FORCE_EXIT | 211 | 强制离开
+ARRtcp_FORCE_EXIT | 211 | 验证UserToken失败
 ARRtcp_AUTH_TIMEOUT | 212 | 验证超时
 ARRtcp_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
 ARRtcp_NOT_START | 800 | 会议未开始

@@ -29,7 +29,7 @@ ARRtmp_LOCKED | 207 | 账号被锁定
 ARRtmp_SERVER_NOT_OPEN | 208 | 服务未开通
 ARRtmp_ALLOC_NO_RES | 209 | 没有服务器资源
 ARRtmp_SERVER_NOT_SURPPORT | 210 | 不支持的服务
-ARRtmp_FORCE_EXIT | 211 | 强制离开
+ARRtmp_FORCE_EXIT | 211 | 验证UserToken失败
 ARRtmp_AUTH_TIMEOUT | 212 | 验证超时
 ARRtmp_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
 ARRtmp_NOT_START | 600 | 直播未开始
