@@ -1,34 +1,9 @@
-## 一、概述
 
-### 简介
-
-ARBoardSDK 即白板SDK,提供了包括画笔、背景设置、标准图像、框选等基本功能，同时还支持文档展示和多段互动。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完画板 Demo后，可体验实时互动画板功能。
-
-- [iOS Demo下载](https://www.pgyer.com/t1Dy)
-
-- [Android Demo下载](https://www.pgyer.com/yhUN)
-
-- [Web Demo 体验](https://demos.anyrtc.io/ar-whiteboard/)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-WhiteBoard-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/AR-WhiteBoard-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-WhiteBoard-Web)
-
-## 二、集成指南
+## 一、集成指南
 
 ### 适用范围
 
-本集成文档适用于Android ARCall SDK 3.0.0+版本。
+本集成文档适用于Android ARBoard SDK 3.0.0+版本。
 
 ### 准备环境
 
@@ -44,12 +19,12 @@ ARBoardSDK 即白板SDK,提供了包括画笔、背景设置、标准图像、�
 
 ```
 dependencies {
-    compile 'org.ar:board:3.0.2''
+    compile 'org.ar:board:3.0.3''
 }
 
 ```
 ---
-## 三、开发指南
+## 二、开发指南
 
 集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
 
@@ -143,7 +118,7 @@ arBoardView.undo()
 ```
 > 更多请参考API介绍
 
-## 四、API文档
+## 三、API文档
 
 **主要类文件概览** 
 
@@ -158,7 +133,7 @@ ARBoardConfig   | 白板配置类，包含设置画笔，颜色，粗细等相�
 
 方法 | 说明
 ---|---
-initEngineWithARInfo() | 配置开发者信息
+initEngine() | 配置开发者信息
 
 参数名 | 说明
 ---|---

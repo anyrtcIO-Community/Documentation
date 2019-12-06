@@ -1,30 +1,6 @@
-## 一、概述
 
-### 简介
 
-实时直播SDK能够实现一对一、一对多的纯音频和视频实时直播，相比RTMPC延时更低、极简API接口。适用于在线娃娃机、智能硬件、在线医疗、视频招聘、相亲交友等多种场景。
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
-
-- [iOS Demo下载](https://www.pgyer.com/kRHw)
-
-- [Android Demo下载](https://www.pgyer.com/so6a)
-
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-iOS)
-
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-RTCP-Web)
-
-## 二、集成指南
+## 一、集成指南
 
 
 ### 准备环境
@@ -42,7 +18,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtcp_kit:3.0.5'(最新版见上面图标版本号)
+  compile 'org.ar:rtcp_kit:3.0.8'(最新版见上面图标版本号)
 }
 ```
 
@@ -51,14 +27,14 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>rtcp_kit</artifactId>
-  <version>3.0.5</version>
+  <version>3.0.8</version>
   <type>pom</type>
 </dependency>
 ```
 
 
 
-## 三、开发指南
+## 二、开发指南
 
 集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
 
@@ -222,7 +198,7 @@ rtcpKit.clean();
 -keep class org.webrtc.**{*;}
 ```
 
-## 四、API接口文档
+## 三、API接口文档
 
 ### ARRtcpEngine 类
 
@@ -1012,40 +988,7 @@ netQuality | ARNetQuality | 网络质量
 
 * SDK版本升级2.0，梳理、完善SDK
 
-## 五、错误码对照表
 
-以下为介绍RTCP SDK 的错误码。
-
-名称 | 值            | 备注
----|------------------------------|----
-ARRtcp_OK | 0 | 正常
-ARRtcp_UNKNOW | 1 | 未知错误
-ARRtcp_EXCEPTION | 2 | SDK调用异常
-ARRtcp_EXP_UNINIT | 3 | SDK未初始化
-ARRtcp_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARRtcp_EXP_NO_NETWORK | 5 | 没有网络链接
-ARRtcp_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARRtcp_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARRtcp_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARRtcp_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
-ARRtcp_NET_ERR | 100 | 网络错误 
-ARRtcp_NET_DISSCONNECT | 101 | 网络断开
-ARRtcp_LIVE_ERR | 102 | 直播出错
-ARRtcp_EXP_ERR | 103 | 异常错误
-ARRtcp_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
-ARRtcp_BAD_REQ | 201 | 服务不支持的错误请求
-ARRtcp_AUTH_FAIL | 202  | 认证失败
-ARRtcp_NO_USER | 203 | 此开发者信息不存在
-ARRtcp_SVR_ERR | 204 | 服务器内部错误
-ARRtcp_SQL_ERR | 205 | 服务器内部数据库错误
-ARRtcp_ARREARS | 206 | 账号欠费
-ARRtcp_LOCKED | 207 | 账号被锁定
-ARRtcp_SERVER_NOT_OPEN | 208 | 服务未开通
-ARRtcp_ALLOC_NO_RES | 209 | 没有服务器资源
-ARRtcp_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARRtcp_FORCE_EXIT | 211 | 强制离开
-ARRtcp_NOT_START | 800 | 会议未开始
-  
   
 
 

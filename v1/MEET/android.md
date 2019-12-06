@@ -1,28 +1,5 @@
-## 一、概述
 
-### 简介
-
-### Demo体验
-
-请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
-
-- [iOS Demo下载](https://www.pgyer.com/xoTQ)
-
-- [Android Demo下载](https://www.pgyer.com/eU0U)
-
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/meeting)
-
-### 源码GitHub
-
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
-
-- [iOS Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-iOS)
-
-- [Android Demo 源码下载](https://github.com/AnyRTC/anyRTC-Meeting-Android)
-
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
-- 
-## 二、集成指南
+## 一、集成指南
 
 ### 适用范围
 
@@ -40,7 +17,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.0.5' (最新版见上面图标版本号)
+  compile 'org.ar:meet_kit:3.1.2' (最新版见上面图标版本号)
 }
 
 ```
@@ -49,13 +26,13 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>meet_kit</artifactId>
-  <version>3.0.4</version>
+  <version>3.1.2</version>
   <type>pom</type>
 </dependency>
 ```
 
 ---
-## 三、开发指南
+## 二、开发指南
 集成SDK后，还需对SDK进行初始化操作，建议在Application中完成。
 
 #### 1.1 初始化SDK并配置开发者信息
@@ -202,7 +179,7 @@ if (mMeetKit != null) {
 ```
 
 
-## 四、API接口文档
+## 三、API接口文档
 
 ### ARMeetEngine 类
 
@@ -868,6 +845,33 @@ boolean setVideoCodec( String strCodec)
 参数名 | 类型 | 描述
 ---|:---:|---
 strCodec | String |视频编码格式（H264,VP8,VP9等编码器） 必须大写 比如 H264 VP8
+
+### 36. 开始录制音视频
+
+**定义**
+
+```
+int startRecorder(boolean isNeedVideo,  String filePath)
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+isNeedVideo | boolean |是否需要视频
+filePath | String |录指文件存放路径
+
+**说明**  
+
+**请注意安卓动态权限处理，此方法需要文件写入权限**
+
+**isNeedVideo 为true时  文件路径需以mp4结尾**
+
+**isNeedVideo 为false时  文件路径需以mp3结尾**
+
+
+
+
 ---
 
 ### ARMeetEvent 回调接口类
@@ -1394,6 +1398,11 @@ setAudioNeedPcm()设置为true时才会回调
 
 
 ## 四、更新日志
+
+**Version 3.0.8 （2019-9-5）**
+
+* 增加本地录制音视频接口
+
 **Version 3.0.7（2019-08-23）**
 * 新增onRTCLocalAudioPcmData(),onRTCRemoteAudioPcmData()回调
 * 新增setVideoCodec()方法
@@ -1408,37 +1417,4 @@ setAudioNeedPcm()设置为true时才会回调
 
 * SDK版本升级2.0，梳理、完善SDK
 
-## 五、错误码对照表
-
-名称 | 值            | 备注
----|------------------------------|----
-ARMeet_OK | 0 | 正常
-ARMeet_UNKNOW | 1 | 未知错误
-ARMeet_EXCEPTION | 2 | SDK调用异常
-ARMeet_EXP_UNINIT | 3 | SDK未初始化
-ARMeet_EXP_PARAMS_INVALIDE | 4 | 参数非法
-ARMeet_EXP_NO_NETWORK | 5 | 没有网络链接
-ARMeet_EXP_NOT_FOUND_CAMERA | 6 | 没有找到摄像头设备
-ARMeet_EXP_NO_CAMERA_PERMISSION | 7 | 没有打开摄像头权限
-ARMeet_EXP_NO_AUDIO_PERMISSION | 8 | 没有音频录音权限
-ARMeet_EXP_NOT_SUPPOAR_WEBARC | 9 | 浏览器不支持原生的webrtc
-ARMeet_NET_ERR | 100 | 网络错误 
-ARMeet_NET_DISSCONNECT | 101 | 网络断开
-ARMeet_LIVE_ERR | 102 | 直播出错
-ARMeet_EXP_ERR | 103 | 异常错误
-ARMeet_EXP_UNAUTHORIZED | 104 | 服务未授权(仅可能出现在私有云项目)
-ARMeet_BAD_REQ | 201 | 服务不支持的错误请求
-ARMeet_AUTH_FAIL | 202  | 认证失败
-ARMeet_NO_USER | 203 | 此开发者信息不存在
-ARMeet_SVR_ERR | 204 | 服务器内部错误
-ARMeet_SQL_ERR | 205 | 服务器内部数据库错误
-ARMeet_ARREARS | 206 | 账号欠费
-ARMeet_LOCKED | 207 | 账号被锁定
-ARMeet_SERVER_NOT_OPEN | 208 | 服务未开通
-ARMeet_ALLOC_NO_RES | 209 | 没有服务器资源
-ARMeet_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARMeet_FORCE_EXIT | 211 | 强制离开
-ARMeet_NOT_STAAR | 700 | 房间未开始
-ARMeet_IS_FULL | 701 | 房间人员已满
-ARMeet_NOT_COMPARE | 702 | 房间类型不匹配
 
