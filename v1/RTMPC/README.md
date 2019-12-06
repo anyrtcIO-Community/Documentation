@@ -8,7 +8,7 @@
 
 请根据需求选择渠道安装，安装完直播互动连麦Demo后，可体验在线直播多人连麦功能。
 
-- [iOS Demo下载](https://www.pgyer.com/X9HH)
+- [iOS Demo下载](https://fir.im/pknv)
 
 - [Android Demo下载](https://www.pgyer.com/app/qrcode/Zuap)
 

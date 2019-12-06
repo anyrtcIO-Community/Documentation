@@ -10,7 +10,7 @@
 
 请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
 
-- [iOS Demo下载](https://www.pgyer.com/kRHw)
+- [iOS Demo下载](https://fir.im/a547)
 
 - [Android Demo下载](https://www.pgyer.com/so6a)
 

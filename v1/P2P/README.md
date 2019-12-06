@@ -8,7 +8,7 @@ AnyRTC提供对语音通话场景的支持，RTCallEngine SDK，支持视频、�
 
 请根据需求选择渠道安装，安装完P2P Demo后，可体验点对点呼叫功能。
 
-- [iOS Demo下载](https://www.pgyer.com/anyrtc_p2p_ios)
+- [iOS Demo下载](https://fir.im/sbue)
 
 - [Android Demo下载](https://www.pgyer.com/3blO)
 
