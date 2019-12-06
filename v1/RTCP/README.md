@@ -12,7 +12,7 @@
 
 - [iOS Demo下载](https://fir.im/a547)
 
-- [Android Demo下载](https://www.pgyer.com/so6a)
+- [Android Demo下载]( https://fir.im/h3u2)
 
 - [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
 

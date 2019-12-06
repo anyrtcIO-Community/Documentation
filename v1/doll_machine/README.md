@@ -8,10 +8,6 @@ anyRTC提供在线抓娃娃机场景的支持，RTCWaWaJiEngine SDK 提供极简
 
 请根据需求选择渠道安装，安装完娃娃机 Demo后，可体验在线实时抓娃娃功能。
 
-- [iOS Demo下载](https://www.pgyer.com/fYGm)
-
-- [Android Demo下载](https://www.pgyer.com/3blO)
-
 - [Web Demo体验](http://wawaji.anyrtc.cc/)
 
 ### 源码GitHub

@@ -10,7 +10,7 @@
 
 - [iOS Demo下载](https://fir.im/pknv)
 
-- [Android Demo下载](https://www.pgyer.com/app/qrcode/Zuap)
+- [Android Demo下载](https://fir.im/xuye)
 
 - [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
 

@@ -11,7 +11,7 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 
 - [iOS Demo下载](https://fir.im/1p6f)
 
-- [Android Demo下载](https://www.pgyer.com/eU0U)
+- [Android Demo下载](https://fir.im/a31v)
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
 

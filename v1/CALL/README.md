@@ -10,7 +10,7 @@ AnyRTC提供对语音通话场景的支持，RTCallEngine SDK，支持视频、�
 
 - [iOS Demo下载](https://fir.im/sbue)
 
-- [Android Demo下载](https://www.pgyer.com/3blO)
+- [Android Demo下载](https://fir.im/gyjh)
 
 ### 源码GitHub
 
