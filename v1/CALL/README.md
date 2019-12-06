@@ -12,6 +12,8 @@ AnyRTC提供对语音通话场景的支持，RTCallEngine SDK，支持视频、�
 
 - [Android Demo下载](https://fir.im/gyjh)
 
+- [Web Demo 体验](https://demos.anyrtc.io/ar-call)
+
 ### 源码GitHub
 
 源码仅供开发者参考，适用于SDK调试，便于快速集成。

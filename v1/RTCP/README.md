@@ -14,7 +14,7 @@
 
 - [Android Demo下载]( https://fir.im/h3u2)
 
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/rtcp)
+- [Web Demo 体验](http://demos.anyrtc.io/ar-rtcp)
 
 ### 源码GitHub
 
