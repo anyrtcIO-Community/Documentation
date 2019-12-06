@@ -14,9 +14,9 @@
 
 源码仅供开发者参考，适用于SDK调试，便于快速集成。
 
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-iOS)
+- [iOS Demo 源码下载](https://github.com/anyRTC/AR-Call-iOS)
 
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-P2P-Android)
+- [Android Demo 源码下载](https://github.com/anyRTC/AR-Call-Android)
 
 
 ## 二、集成指南

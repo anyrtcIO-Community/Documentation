@@ -1,110 +1,298 @@
-## 一、概述
+# 实时视频会议小程序SDK
 
-### 简介
+集成实时视频会议小程序SDK为小程序应用提供多人音视频通话能力，可实现一对一单聊和多人群聊，可运用于 社交、会议、在线教育、培训等场景。基于webRTC技术的超低延时音视频通讯解决方案 。几行代码就可赋予小程序实时音视频的能力。
 
-anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频、高安全性、全平台运行、丰富的会议管理功能，支持视频、语音多人会议，适用于会议、培训、互动等多人移动会议。
+### DEMO源码
 
-### Demo体验
+[获取源码]( https://github.com/anyRTC/anyRTC-Miniprogram )
 
-请根据需求选择渠道安装，安装完RTMeeting Demo后，可体验在线会议功能，以下Demo与小程序互通。
+### 准备工作
 
-- [iOS Demo下载](https://www.pgyer.com/xoTQ)
+在开始集成SDK之前，我们需要对小程序以及项目进行一些配置，大致分为：微信公众平台设置，小程序项目配置。
 
-- [Android Demo下载](http://www.pgyer.com/eU0U)
+#### 微信公众平台设置
 
-- [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
+- [设置小程序服务类别](#miniAppType)
+- [开启实时音视频权限](#miniAppAVSetting)
+- [配置服务域名](#miniAppSafeDomain)
 
-### 源码GitHub
+#### 小程序项目配置
 
-源码仅供开发者参考，适用于SDK调试，便于快速集成。
+- [安装SDK](#installSDK)
+- [构建npm](#buildSDK)
+- [选择依赖库](#selectLibrary)
 
-- [iOS Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-iOS)
+#### 说明
 
-- [Android Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Android)
+- [注意事项](#tips)
 
-- [Web Demo 源码下载](https://github.com/anyRTC/anyRTC-Meeting-Web)
 
-- [小程序 Demo 源码下载](https://github.com/anyRTC/anyRTC-Miniprogram)
 
-## 一、集成指南
+<h4 href="#miniAppType">设置小程序服务类别</h4>
+登录[微信公众号平台](https://mp.weixin.qq.com)，打开设置 -> 基本设置 -> 服务类目 -> 详情 -> 添加服务类目，查找小程序实时音视频支持的[服务类目](https://developers.weixin.qq.com/miniprogram/dev/component/live-pusher.html)，并按要求设置小程序服务类目。
 
-### 公众平台小程序配置
+![设置小程序服务类别](https://docs.anyrtc.io/assets/images/web/config_service.png)
 
-#### 设置小程序服务类别
-登录[公众号平台](https://mp.weixin.qq.com)，打开设置-基本设置-服务类目-详情-添加服务类目，目前小程序实时音视频支持这些[服务类目](https://developers.weixin.qq.com/miniprogram/dev/component/live-pusher.html)，请选择其中一种。
-![设置小程序服务类别](/assets/images/web/config_service.png)
+<h4 href="#miniAppAVSetting">开启实时音视频权限</h4>
+登录[微信公众号平台](https://mp.weixin.qq.com)，打开开发 -> 接口设置，开启实时播放音视频流并开启实时录制音视频流。
 
-#### 开启实时音视频权限
-登录[公众号平台](https://mp.weixin.qq.com)，打开开发-接口设置，开启实时播放音视频流并开启实时录制音视频流。
-![设置小程序服务类别](/assets/images/web/config_api_promise.png)
+![设置小程序服务类别](https://docs.anyrtc.io/assets/images/web/config_api_promise.png)
 
-#### 配置服务域名
-登录[公众号平台](https://mp.weixin.qq.com)，打开开发-开发设置-服务器域名-修改，配置服务域名白名单。
-![设置小程序服务类别](/assets/images/web/config_domain.png)
+<h4 href="#miniAppSafeDomain">配置服务域名</h4>
+登录[微信公众号平台](https://mp.weixin.qq.com)，打开开发 -> 开发设置 -> 服务器域名 -> 修改，配置服务域名白名单。
 
-#### npm构建
-打开开发者工具，打开设置-项目设置-勾选'使用npm模块'，npm安装`moniprogram-ar-meet`、`moniprogram-ar-push`、`moniprogram-ar-play`之后，点击工具-构建npm。
+![设置小程序服务类别](https://docs.anyrtc.io/assets/images/web/config_domain.png)
 
-#### 兼容情况
-微信小程序基础库需要大于`1.7.0`，低版本需做兼容处理。
+<h4 href="#installSDK">安装SDK</h4>
+安装 `miniprogram-ar-meet` SDK，在根目录下面执行`npm install miniprogram-ar-meet` 
 
-#### 真机调试
-开发者工具模拟器除特殊版本之外，不支持实时音视频功能，请使用真机调试。
+<h4 href="#buildSDK">构建npm</h4>
+打开微信开发者工具，打开设置 -> 项目设置 -> 勾选'使用npm模块'，npm安装`moniprogram-ar-meet`之后，点击工具 -> 构建npm，具体详情可查阅[官方 npm 文档](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)。
 
-### 导入SDK
+<h4 href="#selectLibrary">选择依赖库</h4>
+打开微信开发者工具，打开设置 -> 项目设置 -> 勾选'使用npm模块'，SDK需要依赖小程序基础库 2.2.1 及以上版本。
 
-##### npm 市场
+![image-20191121143725728](https://docs.anyrtc.io/assets/images/web/config_IDE.png)
 
-- 通过 [npm市场](https://www.npmjs.com/package/miniprogram-ar-meet) 下载：
+
+
+<h4 ref="#tips">注意事项</h4>
+- **兼容情况**
+
+  微信小程序基础库需要大于`1.7.0`，低版本需做兼容处理。
+
+- **真机调试**
+
+  开发者工具模拟器除特殊版本之外，不支持实时音视频功能，请使用真机调试。
+
+- **live-player 和 live-pusher 组件**
+
+  分别把 `live-player` 组件和 `live-pusher` 组件的 `mode` 属性设置为 `RTC`。如果需要开关摄像头或禁用麦克风，请参考 [推流API]( https://developers.weixin.qq.com/miniprogram/dev/api/media/live/wx.createLivePusherContext.html ) 或 [拉流API]( https://developers.weixin.qq.com/miniprogram/dev/api/media/live/wx.createLivePlayerContext.html ) 。
+
+
+
+# 快速集成
+
+1. 安装 SDK  
 
 ```
-npm install miniprogram-ar-meet@latest --save-dev
-
-import wxRTMeet from 'miniprogram-ar-meet';
+npm install --save miniprogram-ar-meet
 ```
 
-## 三、API接口文档
+2. 导入SDK
 
-请点击[查看](https://www.npmjs.com/package/miniprogram-ar-meet)
+```
+//导入SDK
 
-## 四、更新日志
+import wxRTMeet from "miniprogram-ar-meet";
+```
 
-**Version 3.0.0 （2019-05-18）**
+3. 会议初始化
 
-- SDK版本升级3.0，API接口变更，更加简洁规范
+```
+//导入SDK
+import wxRTMeet from "miniprogram-ar-meet";
 
-## 五、错误码对照表
+//创建实例
+let wxmeet = new wxRTMeet();
+that.setData({
+  wxmeet: wxmeet
+});
 
-以下为介绍 Web RTMeetEngine SDK 的错误码。
+//设置用户验证token(用于第三方认证，没有可以跳过)
+wxmeet.setUserToken("");
+//配置开发者应用信息
+wxmeet.initAppInfo(config.APP_ID, config.APP_TOKEN);
 
-| 名称                            | 值   | 备注                               |
-| ------------------------------- | ---- | ---------------------------------- |
-| ARMeet_OK                       | 0    | 正常                               |
-| ARMeet_UNKNOW                   | 1    | 未知错误                           |
-| ARMeet_EXCEPTION                | 2    | SDK调用异常                        |
-| ARMeet_EXP_UNINIT               | 3    | SDK未初始化                        |
-| ARMeet_EXP_PARAMS_INVALIDE      | 4    | 参数非法                           |
-| ARMeet_EXP_NO_NETWORK           | 5    | 没有网络链接                       |
-| ARMeet_EXP_NOT_FOUND_CAMERA     | 6    | 没有找到摄像头设备                 |
-| ARMeet_EXP_NO_CAMERA_PERMISSION | 7    | 没有打开摄像头权限                 |
-| ARMeet_EXP_NO_AUDIO_PERMISSION  | 8    | 没有音频录音权限                   |
-| ARMeet_EXP_NOT_SUPPOAR_WEBARC   | 9    | 浏览器不支持原生的webrtc           |
-| ARMeet_NET_ERR                  | 100  | 网络错误                           |
-| ARMeet_NET_DISSCONNECT          | 101  | 网络断开                           |
-| ARMeet_LIVE_ERR                 | 102  | 直播出错                           |
-| ARMeet_EXP_ERR                  | 103  | 异常错误                           |
-| ARMeet_EXP_UNAUTHORIZED         | 104  | 服务未授权(仅可能出现在私有云项目) |
-| ARMeet_BAD_REQ                  | 201  | 服务不支持的错误请求               |
-| ARMeet_AUTH_FAIL                | 202  | 认证失败                           |
-| ARMeet_NO_USER                  | 203  | 此开发者信息不存在                 |
-| ARMeet_SVR_ERR                  | 204  | 服务器内部错误                     |
-| ARMeet_SQL_ERR                  | 205  | 服务器内部数据库错误               |
-| ARMeet_ARREARS                  | 206  | 账号欠费                           |
-| ARMeet_LOCKED                   | 207  | 账号被锁定                         |
-| ARMeet_SERVER_NOT_OPEN          | 208  | 服务未开通                         |
-| ARMeet_ALLOC_NO_RES             | 209  | 没有服务器资源                     |
-| ARMeet_SERVER_NO_SURPPOAR       | 210  | 不支持的服务                       |
-| ARMeet_FORCE_EXIT               | 211  | 强制离开                           |
-| ARMeet_NOT_STAAR                | 700  | 房间未开始                         |
-| ARMeet_IS_FULL                  | 701  | 房间人员已满                       |
-| ARMeet_NOT_COMPARE              | 702  | 房间类型不匹配                     |
+```
+
+4. 加入房间
+
+```
+let roomId = "123";
+let userId = "6666";
+let userName = "SuperMan";
+let userData = JSON.stringify({ userId, userName });
+
+//加入房间
+wxmeet.joinRoom(roomId, userId, userName, userData, that.data.enableVideo, that.data.enableAudio);
+
+//加入房间成功回调 - 监听一次即可
+wxmeet.on("onJoinRoomOK", () => {
+  wx.showToast({
+    title: '加入房间成功',
+  });
+});
+
+//加入房间失败回调
+wxmeet.on("onJoinRoomFaild", (code, info) => {
+  console.log("加入房间失败：", code, info ? info : "");
+});
+```
+
+5. 收到推流地址
+
+```
+//收到推流URL回调，将URL绑定到live-pusher组件中，其他人将收到自己的视频
+wxmeet.on("onGetPushUrl", (code, data) => {
+  console.log('onGetPushUrl', code, data);
+  if (code === 0) {//成功
+    that.setData({
+      pushURL: data.pushURL
+    });
+  } else {
+    wx.showToast({
+      icon: 'none',
+      title: '获取房间签名失败',
+    });
+  }
+});
+```
+
+6. 退出房间
+
+```
+wxmeet.leaveRoom();
+```
+
+# API说明
+
+### 1. 设置第三方userToken验证
+
+**示例**
+
+```
+wxmeet.setUserToken();
+```
+
+**参数**
+
+| 参数名    | 类型   | 描述                                                         |
+| --------- | ------ | ------------------------------------------------------------ |
+| userToken | String | 如果配置了第三方授权认证，SDK登录服务器的时候会将userToken发送到授权服务器，如果授权成功才能登录成功。 |
+
+
+
+### 2.初始化开发者信息
+
+**示例**
+
+```
+wxmeet.initAppInfo(config.APP_ID, config.APP_TOKEN);
+```
+
+| 参数名   | 类型   | 描述      |
+| -------- | ------ | --------- |
+| appId    | String | 应用ID    |
+| apptoken | String | 应用token |
+
+
+
+### 3.加入房间
+
+**示例**
+
+```
+wxmeet.joinRoom(roomId, userId, userName, userData, enableVideo, enableAudio);
+```
+
+| 参数名      | 类型    | 描述           |
+| ----------- | ------- | -------------- |
+| roomId      | String  | 房间ID         |
+| userId      | String  | 用户ID         |
+| userName    | String  | 用户昵称       |
+| userData    | String  | 用户自定义信息 |
+| enableVideo | Boolean | 是否开启摄像头 |
+| enableAudio | Boolean | 是否开启麦克风 |
+
+### 4.加入房间成功回调
+
+**示例**
+
+```
+wxmeet.on("onJoinRoomOK", () => {
+	console.log("加入房间成功");
+});
+```
+
+### 5.加入房间失败回调
+
+**示例**
+
+```
+wxmeet.on("onJoinRoomFaild", (code, info) => {
+	console.log("onJoinRoomFaild", code, info);
+});
+```
+
+**参数**
+
+| 参数名 | 类型           | 描述     |
+| ------ | -------------- | -------- |
+| code   | Number         | 错误码   |
+| info   | String\|Object | 错误信息 |
+
+
+
+### 6.远程人员加入房间
+
+**示例**
+
+```
+wxmeet.on("onMemberJoin", (rtmpUrl, pubId, userId, rtcUserData) => {
+	console.log("onMemberJoin", rtmpUrl, pubId, userId, rtcUserData);
+});
+```
+
+**参数**
+
+| 参数名      | 类型   | 描述                                              |
+| ----------- | ------ | ------------------------------------------------- |
+| rtmpUrl     | String | 远程人员的视频流，使用 `live-player` 组件进行播放 |
+| pubId       | String | 媒体流标识ID                                      |
+| userId      | String | 远程人员用户ID                                    |
+| rtcUserData | String | 远程人员自定义用户数据                            |
+
+### 7.远程人员离开房间
+
+**示例**
+
+```
+wxmeet.on("onMemberLeave", (pubId) => {
+	console.log("onMemberLeave", pubId);
+});
+```
+
+### 8.获取推流地址成功
+
+**示例**
+
+```
+wxmeet.on("onGetPushUrl", (code, data) => {
+	console.log("onGetPushUrl", code, data);
+});
+```
+
+**参数**
+
+| 参数名 | 类型   | 描述                                                         |
+| ------ | ------ | ------------------------------------------------------------ |
+| code   | Number | 获取推流地址错误码                                           |
+| data   | Object | 获取推流地址信息，解析之后将获取到的 `pushURL` 放到推流组件 `live-pusher` 中进行推流 |
+
+### 9.被踢出会议回调
+
+**示例**
+
+```
+wxmeet.on("onLeaveMeet", (code, info) => {
+	console.log("onLeaveMeet", code, info);
+});
+```
+
+**参数**
+
+| 参数名 | 类型   | 描述                 |
+| ------ | ------ | -------------------- |
+| code   | Number | 被踢出会议的错误码   |
+| info   | Object | 被踢出会议的原因信息 |

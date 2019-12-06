@@ -29,7 +29,7 @@ ARMeet_LOCKED | 207 | 账号被锁定
 ARMeet_SERVER_NOT_OPEN | 208 | 服务未开通
 ARMeet_ALLOC_NO_RES | 209 | 没有服务器资源
 ARMeet_SERVER_NO_SURPPOAR | 210 | 不支持的服务
-ARMeet_FORCE_EXIT | 211 | 强制离开
+ARMeet_FORCE_EXIT | 211 | 验证UserToken失败
 ARMeet_AUTH_TIMEOUT | 212 | 验证超时
 ARMeet_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
 ARMeet_WEB_DOMIAN_ERROR | 214 | Web应用的域名验证失败
