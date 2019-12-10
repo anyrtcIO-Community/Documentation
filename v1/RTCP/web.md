@@ -24,7 +24,7 @@
 ```
 npm install ar-rtcp --save-dev
 
-import ArRtcpKit from 'ar-rtcp';
+import ArRTCPKit from 'ar-rtcp';
 ```
 
 - 安装或更新至最新版本：
@@ -32,7 +32,7 @@ import ArRtcpKit from 'ar-rtcp';
 ```
 npm install ar-rtcp@latest --save-dev
 
-import ArRtcpKit from 'ar-rtcp';
+import ArRTCPKit from 'ar-rtcp';
 ```
 
 ##### js 引用
@@ -49,11 +49,12 @@ import ArRtcpKit from 'ar-rtcp';
 集成SDK后，还需对SDK在页面进行初始化操作。
 ##### 1.1 导入头文件
 ```
-import ArRtcpKit from 'ar-rtcp';
+import ArRTCPKit from 'ar-rtcp';
 ```
 ##### 1.2 实例化对象
 ```
-let rtcp = new ArRtcpKit (options);
+let options = {};
+let rtcp = new ArRTCPKit (options);
 ```
 
 ##### 1.3 监听回调
@@ -95,11 +96,11 @@ rtcp.initAppInfo(APP_ID, APP_TOKEN);
 rtcp.setLocalVideoCapturer({
   video: {
     enabled: true,
-    deviceId: true
+    deviceId: ""
   },
   audio: {
     enabled: true,
-    deviceId: true
+    deviceId: ""
   }
 }).then(e => {
   //将视频e.mediaRender绑定到页面
@@ -140,7 +141,7 @@ rtcp.close();
 #### 1. 实例化对象
 
 ```
-var rtcp = new ARRtcpKit(Options);
+var rtcp = new ArRTCPKit(Options);
 ```
 
 ##### 参数
