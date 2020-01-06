@@ -34,7 +34,7 @@ import ArMeetKit from 'ar-meet';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.15.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArMeetKit.3.0.17.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -44,7 +44,7 @@ import ArMeetKit from 'ar-meet';
 ### 开发指南
 #### 1. 初始化SDK
 集成SDK后，还需对SDK在页面进行初始化操作。
-##### 1.1 导入头文件
+##### 1.1 导入js SDK
 ```
 import ArMeetKit from 'ar-meet';
 ```
