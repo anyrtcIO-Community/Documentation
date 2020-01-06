@@ -37,7 +37,7 @@ import ArRTCPKit from 'ar-rtcp';
 
 ##### js 引用
 
-- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.9.js)，`ctrl+s`或`command+s`保存到本地
+- 前往[SDK 下载页面](https://docs.anyrtc.io/download/js/ArRtcpKit.3.0.10.js)，`ctrl+s`或`command+s`保存到本地
 - 引用
 
 ```
@@ -79,7 +79,6 @@ rtcp.on("exstream-subscribed", (rtcpID, mediaRender) =>{
 
 });
 ```
-
 
 ##### 1.4 配置开发者信息
 配置开发者信息，开发者信息可在anyRTC管理后台中获得，详见[创建anyRTC账号](https://docs.anyrtc.io)。
