@@ -8,9 +8,9 @@ AnyRTC提供对语音通话场景的支持，RTCallEngine SDK，支持视频、�
 
 请根据需求选择渠道安装，安装完CALL Demo后，可体验点对点呼叫功能。
 
-- [iOS Demo下载](https://fir.im/sbue)
+- [iOS Demo下载](http://download.anyrtc.io/sbue)
 
-- [Android Demo下载](https://fir.im/gyjh)
+- [Android Demo下载](http://download.anyrtc.io/gyjh)
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-call)
 

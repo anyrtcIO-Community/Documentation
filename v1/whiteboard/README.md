@@ -8,9 +8,9 @@ anyRTC平台画板SDK是一款跨平台轻量级的白板SDK，易用、实时, 
 
 请根据需求选择渠道安装，安装完白板Demo后，可体验在线会议功能。
 
-- [iOS Demo下载](https://fir.im/3ydt)
+- [iOS Demo下载](http://download.anyrtc.io/3ydt)
 
-- [Android Demo下载](https://fir.im/a1zr)
+- [Android Demo下载](http://download.anyrtc.io/a1zr)
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-whiteboard)
 

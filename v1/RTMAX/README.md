@@ -8,9 +8,9 @@
 
 请根据需求选择渠道安装，安装完对讲调度Demo后，可体验多人实时对讲，智能调度等功能。
 
-- [iOS Demo下载](https://fir.im/hjgq)
+- [iOS Demo下载](http://download.anyrtc.io/hjgq)
 
-- [Android Demo下载](    https://fir.im/3by1)
+- [Android Demo下载](http://download.anyrtc.io/3by1)
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-talk/)
 

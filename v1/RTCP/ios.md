@@ -5,7 +5,7 @@
 
 #### 适用范围
 
-本集成文档适用于iOS RTCPEngine SDK 2.0.0 ~ 3.0.1版本。
+本集成文档适用于iOS RTCPEngine SDK 2.0.0 ~ 3.0.2版本。
 
 #### 准备环境
 
@@ -22,10 +22,10 @@
 ```
 pod 'RTCPEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.1 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.2 版本为例）：
 
 ```
-pod 'RTCPEngine', '3.0.1'
+pod 'RTCPEngine', '3.0.2'
 ```
 
 **手动导入**
@@ -95,8 +95,6 @@ pod 'RTCPEngine', '3.0.1'
 // Override point for customization after application launch.
 //配置开发者信息
 [ARRtcpEngine initEngine:appID token:token];
-//配置私有云(默认无需配置)
-//[ARRtcpEngine configServerForPriCloud:@"XXX" port:XXX];
 return YES;
 }
 ```
@@ -134,12 +132,12 @@ option.videoConfig = config;
 
 ##### 3.2 发布媒体
 
-调用publishByToken:mediaType:方法发布媒体，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)，第二个参数type为发布类型，音视频（ARMediaVideoType）、音频（ARMediaAudioType）。
+调用publishByToken:roomId:mediaType:isLive:方法发布媒体，第一个参数token为令牌，可为空，具体用法可参考[安全指南](https://docs.anyrtc.io/v1/security/服务级安全设置指南.html)，第二个参数type为发布类型，音视频（ARMediaVideoType）、音频（ARMediaAudioType）。
 
 **示例代码：**
 
 ```
-[self.rtcpKit publishByToken:nil mediaType:0];
+[self.rtcpKit publishByToken:nil roomId:[self randomAnyRTCString:6] mediaType:0 isLive:YES];
 ```
 
 ##### 3.3 设置本地视频采集窗口
@@ -292,7 +290,43 @@ userData | NSString | 用户自定义信息
 
 实时直播对象。
 
-#### 2. 设置本地视频采集窗口
+#### 2. 监听房间
+
+**定义**
+
+```
+- (void)listen:(NSString *)roomId;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+roomId | NSString | 房间号
+
+**说明**
+
+监听房间号，用户发布取消发布的回调可以监听到，可以监听多个房间。
+
+#### 3. 取消监听房间
+
+**定义**
+
+```
+- (void)unListen:(NSString *)roomId;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+roomId | NSString | 房间号
+
+**说明**
+
+取消监听房间号，用户发布取消发布的回调不在回调。
+
+#### 4. 设置本地视频采集窗口
 
 **定义**
 
@@ -307,7 +341,7 @@ userData | NSString | 用户自定义信息
 render | UIView | 视频显示对象
 option | ARRtcpOption | 配置信息
 
-#### 3. 设置本地显示模式
+#### 5. 设置本地显示模式
 
 **定义**
 
@@ -321,7 +355,7 @@ option | ARRtcpOption | 配置信息
 ---|:---:|---
 videoRenderMode | ARVideoRenderMode| 显示模式，默认ARVideoRenderScaleAspectFill，等比例填充视图模式
 
-#### 4. 设置本地音频是否传输
+#### 6. 设置本地音频是否传输
 
 **定义**
 
@@ -335,7 +369,7 @@ videoRenderMode | ARVideoRenderMode| 显示模式，默认ARVideoRenderScaleAspe
 ---|:---:|---
 enable | BOOL| YES传输音频，NO不传输音频，默认传输
 
-#### 5. 设置本地视频是否传输
+#### 7. 设置本地视频是否传输
 
 **定义**
 
@@ -349,7 +383,7 @@ enable | BOOL| YES传输音频，NO不传输音频，默认传输
 ---|:---:|---
 enable | BOOL| YES传输视频，NO为不传输视频，默认视频传输
 
-#### 6. 获取本地音频传输是否打开
+#### 8. 获取本地音频传输是否打开
 
 **定义**
 
@@ -361,7 +395,7 @@ enable | BOOL| YES传输视频，NO为不传输视频，默认视频传输
 
 音频传输与否
 
-#### 7. 获取本地视频传输是否打开
+#### 9. 获取本地视频传输是否打开
 
 **定义**
 
@@ -373,7 +407,7 @@ enable | BOOL| YES传输视频，NO为不传输视频，默认视频传输
 
 视频传输与否
 
-#### 8. 设置扬声器开关
+#### 10. 设置扬声器开关
 
 **定义**
 
@@ -387,7 +421,7 @@ enable | BOOL| YES传输视频，NO为不传输视频，默认视频传输
 ---|:---:|---
 on | BOOL | YES打开扬声器，NO关闭扬声器，默认打开扬声器
 
-#### 9. 切换前后摄像头
+#### 11. 切换前后摄像头
 
 **定义**
 
@@ -395,7 +429,7 @@ on | BOOL | YES打开扬声器，NO关闭扬声器，默认打开扬声器
 - (void)switchCamera;
 ```
 
-#### 10. 设置本地前置摄像头镜像是否打开
+#### 12. 设置本地前置摄像头镜像是否打开
 
 **定义**
 
@@ -413,7 +447,7 @@ enable | BOOL | YES打开，NO关闭
 
 本地前置摄像头镜像是否成功打开
 
-#### 11. 前置摄像头是否镜像
+#### 13. 前置摄像头是否镜像
 
 **定义**
 
@@ -425,7 +459,7 @@ enable | BOOL | YES打开，NO关闭
 
 是否镜像，默认打开。
 
-#### 12. 禁止接收某人视频
+#### 14. 禁止接收某人视频
 
 **定义**
 
@@ -444,7 +478,7 @@ pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发�
 
 操作是否成功
 
-#### 13. 禁止接收某人音频
+#### 15. 禁止接收某人音频
 
 **定义**
 
@@ -463,44 +497,24 @@ pubId | BOOL | RTCP服务生成的通道Id (用于标识通道，每次发布随
 
 操作是否成功
 
-#### 14. 设置token验证
+#### 16. 发布媒体
 
 **定义**
 
 ```
-- (BOOL)setUserToken:(NSString *)userToken;
+- (void)publishByToken:(NSString *_Nullable)token roomId:(NSString *)roomId mediaType:(ARMediaType)type isLive:(BOOL)live;
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-userToken | NSString | token字符串，客户端向自己服务器申请
+token | NSString | 令牌:客户端向自己服务申请获得，参考企业级安全指南
+roomId | NSString | 房间号
+type | ARMediaType | 0为发布音视频，1为只发布音频
+live | BOOL | 服务端不转直播;YES:服务端转直播;（使用该功能需联系客服开通）
 
-**返回**
-
-设置token验证是否成功。
-
-**说明**
-
-设置token验证必须放在publish、subscribe之前。
-
-#### 15. 发布媒体
-
-**定义**
-
-```
-- (void)publish:(int)mediaType anyRTCId:(NSString *)anyRTCId;
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-nMediaType | int | 0为发布音视频，1为只发布音频
-anyRTCId | NSString | 该参数可以随意填写，但是不能为空，如果发布成功，SDK会给你分配一个频道Id
-
-#### 16. 取消发布媒体
+#### 17. 取消发布媒体
 
 **定义**
 
@@ -511,21 +525,22 @@ anyRTCId | NSString | 该参数可以随意填写，但是不能为空，如果�
 
 取消发布媒体之后，下次再发布的时候，还需要在调用setLocalVideoCapturer
 
-#### 17. 订阅视频
+#### 18. 订阅视频
 
 **定义**
 
 ```
-- (void)subscribe:(NSString *)pubId;
+- (void)subscribeByToken:(NSString *_Nullable)token pubId:(NSString *)pubId;
 ```
 
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
+token | NSString | 令牌:客户端向自己服务申请获得，参考企业级安全指南
 pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发布随机生成)
 
-#### 18. 取消订阅媒体流
+#### 19. 取消订阅媒体流
 
 **定义**
 
@@ -539,7 +554,7 @@ pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发�
 ---|:---:|---
 pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发布随机生成)
 
-#### 19. 设置显示其他人的视频窗口
+#### 20. 设置显示其他人的视频窗口
 
 **定义**
 
@@ -558,7 +573,7 @@ pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发�
 
 该方法用于订阅成功通后，视频即将显示的回调中(onRTCRemoteOpenVideoRender)使用。
 
-#### 20. 设置其他人显示模式
+#### 21. 设置其他人显示模式
 
 **定义**
 
@@ -572,7 +587,7 @@ pubId | NSString | RTCP服务生成的通道Id (用于标识通道，每次发�
 ---|:---:|---
 videoRenderMode | ARVideoRenderMode | 显示模式，默认ARVideoRenderScaleAspectFill，等比例填充视图模式
 
-#### 20. 关闭离开
+#### 22. 关闭离开
 
 **定义**
 
@@ -580,7 +595,7 @@ videoRenderMode | ARVideoRenderMode | 显示模式，默认ARVideoRenderScaleAsp
 - (void)close;
 ```
 
-#### 21. 设置音频检测
+#### 23. 设置音频检测
 
 **定义**
 
@@ -594,7 +609,7 @@ videoRenderMode | ARVideoRenderMode | 显示模式，默认ARVideoRenderScaleAsp
 ---|:---:|---
 on | BOOL | 是否开启音频检测，默认打开
 
-#### 22. 获取音频检测是否打开
+#### 24. 获取音频检测是否打开
 
 **定义**
 
@@ -602,7 +617,7 @@ on | BOOL | 是否开启音频检测，默认打开
 - (BOOL)audioActiveCheck;
 ```
 
-#### 23. 设置视频网络状态是否打开
+#### 25. 设置视频网络状态是否打开
 
 **定义**
 
@@ -616,7 +631,7 @@ on | BOOL | 是否开启音频检测，默认打开
 ---|:---:|---
 enable | BOOL | YES打开，NO关闭，默认关闭
 
-#### 24. 获取当前视频网络状态是否打开
+#### 26. 获取当前视频网络状态是否打开
 
 **定义**
 
@@ -869,6 +884,10 @@ packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
 ## 三、更新日志
+
+**Version 3.0.2 （2020-02-12）**
+
+* 添加发布、取消发布的监听
 
 **Version 3.0.1 （2019-05-24）**
 

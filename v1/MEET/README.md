@@ -9,9 +9,9 @@ anyRTC提供对会议场景的支持，RTCMeeting SDK，高清流畅的音视频
 
 请根据需求选择渠道安装，安装完会议Demo后，可体验多人音视频会议功能。
 
-- [iOS Demo下载](https://fir.im/1p6f)
+- [iOS Demo下载](http://download.anyrtc.io/1p6f)
 
-- [Android Demo下载](https://fir.im/a31v)
+- [Android Demo下载](http://download.anyrtc.io/a31v)
 
 - [Web Demo 体验](https://demos.anyrtc.io/ar-meet/)
 

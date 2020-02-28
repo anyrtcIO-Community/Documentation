@@ -32,4 +32,7 @@ ARRtcp_SERVER_NO_SURPPOAR | 210 | 不支持的服务
 ARRtcp_FORCE_EXIT | 211 | 验证UserToken失败
 ARRtcp_AUTH_TIMEOUT | 212 | 验证超时
 ARRtcp_NEED_VERTIFY_TOKEN | 213 | 需要验证userToken
+ARRtcp_WEB_DOMIAN_ERROR | 214 | Web应用的域名验证失败
+ARRtcp_IOS_BUNDLE_ID_ERROR | 215 | iOS应用的BundleId验证失败
+ARRtcp_ANDROID_PKG_NAME_ERROR | 216 | Android应用的包名验证失败
 ARRtcp_NOT_START | 800 | 会议未开始

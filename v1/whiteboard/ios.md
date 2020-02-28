@@ -4,7 +4,7 @@
 
 #### 适用范围
 
-本集成文档适用于iOS ARBoardEngine SDK 2.0.0 ~ 3.0.2版本
+本集成文档适用于iOS ARBoardEngine SDK 2.0.0 ~ 3.0.3版本
 
 #### 准备环境
 
@@ -21,10 +21,10 @@
 ```
 pod 'ARBoardEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.2 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.3 版本为例）：
 
 ```
-pod 'ARBoardEngine', '3.0.2'
+pod 'ARBoardEngine', '3.0.3'
 ```
 
 **手动导入**
@@ -75,8 +75,6 @@ pod 'ARBoardEngine', '3.0.2'
 // Override point for customization after application launch.
 //配置开发者信息
 [ARBoardConfig initEngine:appID token:token];
-//配置私有云(默认无需配置)
-//[ARBoardConfig configServerForPriCloud:@"XXX" port:XXX];
 return YES;
 }
 ```
@@ -93,8 +91,8 @@ return YES;
 ```
 - (void)initializeBoard{
 NSMutableArray *imageArr = [NSMutableArray arrayWithCapacity:27];
-for (NSInteger i = 1; i <= 27; i++) {
-[imageArr addObject:[NSString stringWithFormat:@"http://oss.teameeting.cn/docs/140248771/20180929173501062526/document_20180929173501536430_%ld.jpg",(long)i]];
+for (NSInteger i = 1; i <= 15; i++) {
+    [imageArr addObject:[NSString stringWithFormat:@"http://oss.teameeting.cn/docs/140248771/20200224145240087767/document_20200224145239862898_%ld.jpg",(long)i]];
 }
 
 //初始化画板
@@ -164,25 +162,39 @@ token | NSString | token
 
 该方法为配置开发者信息，上述参数均可在[https://www.anyrtc.io/ ](https://www.anyrtc.io/)应用管理中获得，建议在AppDelegate.m调用。
 
-#### 2. 是否打印日志
+#### 2. 配置私有云
 
 **定义**
 
 ```
-+ (void)enableConsoleLog:(BOOL)isEnable;
++ (void)configServerForPriCloud:(NSString *)address port:(int)port;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-isEnable | BOOL | YES为打印，NO为不打印，默认YES
+address | NSString | 私有云地址
+port | int | 私有云端口
 
-#### 3. 获取SDK版本号
+#### 3. 是否打印日志
 
 **定义**
 
 ```
-+ (NSString*)getSdkVersion;
++ (void)enableConsoleLog:(BOOL)enable;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+enable | BOOL | YES为打印，NO为不打印，默认YES
+
+#### 4. 获取SDK版本号
+
+**定义**
+
+```
++ (NSString *)getSdkVersion;
 ```
 
 ### ARBoardView 接口类
@@ -192,10 +204,10 @@ isEnable | BOOL | YES为打印，NO为不打印，默认YES
 **定义**
 
 ```
-- (id)initWithRoomID:(NSString*)roomID
-withFileId:(NSString*)fileID
-withUserId:(NSString*)userID
-withUrlArray:(nullable NSArray*)urlArray;
+- (id)initWithRoomID:(NSString *)roomID
+withFileId:(NSString *)fileID
+withUserId:(NSString *)userID
+withUrlArray:(nullable NSArray *)urlArray;
 ```
 **参数**
 
@@ -239,7 +251,7 @@ brushModel | ARBoardBrushModel | 画笔类型
 **定义**
 
 ```
-- (void)setBrushColor:(NSString*)brushColor;
+- (void)setBrushColor:(NSString *)brushColor;
 ```
 **参数**
 
@@ -252,7 +264,7 @@ brushColor | NSString | 画笔颜色，16进制字符串
 **定义**
 
 ```
-- (NSString*)getBrushColor;
+- (NSString *)getBrushColor;
 ```
 **返回值**
 
@@ -295,7 +307,7 @@ brushWidth | int | 画笔粗细，默认2
 **定义**
 
 ```
-- (void)updateCurrentBgImageWithURL:(NSString*)imageURL;
+- (void)updateCurrentBgImageWithURL:(NSString *)imageURL;
 ```
 **参数**
 
@@ -308,7 +320,7 @@ imageURL | NSString | 背景url
 **定义**
 
 ```
-- (UIImage*)getCurrentSnapShotImage;
+- (UIImage *)getCurrentSnapShotImage;
 ```
 
 #### 11. 添加一页
@@ -316,7 +328,7 @@ imageURL | NSString | 背景url
 **定义**
 
 ```
-- (void)addBoard:(nullable NSString*)imageURL withFont:(BOOL)isFont;
+- (void)addBoard:(nullable NSString *)imageURL withFont:(BOOL)isFont;
 ```
 **参数**
 
@@ -378,7 +390,7 @@ sync | BOOL | 是否同步
 **定义**
 
 ```
-- (BOOL)sendMessage:(NSString*)message;
+- (BOOL)sendMessage:(NSString *)message;
 ```
 **参数**
 
@@ -447,13 +459,13 @@ color | UIColor | 背景颜色，默认白色
 **定义**
 
 ```
-- (void)onBoardError:(ARBoardCode)nCode;
+- (void)onBoardError:(ARBoardCode)code;
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
-nCode | ARBoardCode | 错误码
+code | ARBoardCode | 错误码
 
 #### 3. 与服务器断开连接
 
@@ -483,7 +495,7 @@ totalPage | int | 总页数
 **定义**
 
 ```
-- (void)onBoardMessage:(NSString*)message;
+- (void)onBoardMessage:(NSString *)message;
 ```
 **参数**
 
@@ -517,6 +529,10 @@ timestamp | uint32_t | 时间
 收到该回调，退出白板。
 
 ## 三、更新日志
+
+**Version 3.0.3 （2020-02-27）**
+
+* 修复Bug，SDK优化 
 
 **Version 3.0.0 （2019-05-15）**
 

@@ -4,7 +4,7 @@
 
 #### 适用范围
 
-本集成文档适用于iOS RTCallEngine SDK 3.0.0版本。
+本集成文档适用于iOS RTCallEngine SDK 2.0.0 ~ 3.0.2版本。
 
 #### 准备环境
 
@@ -21,10 +21,10 @@
 ```
 pod 'RTCallEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.0 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.2 版本为例）：
 
 ```
-pod 'RTCallEngine', '3.0.0'
+pod 'RTCallEngine', '3.0.2'
 ```
 
 **手动导入**
@@ -94,8 +94,6 @@ pod 'RTCallEngine', '3.0.0'
 // Override point for customization after application launch.
 //配置开发者信息
 [ARCallEngine initEngine:appID token:token];
-//配置私有云(默认无需配置)
-//[ARCallEngine configServerForPriCloud:@"XXX" port:XXX];
 return YES;
 }
 ```
@@ -351,7 +349,7 @@ delegate | id <ARCallKitDelegate> | RTC相关回调代理
 **定义**
 
 ```
-- (void)setAsClerk:(NSString*)queueId option:(ARClertOption*)option;
+- (void)setAsClerk:(NSString *)queueId option:(ARClertOption *)option;
 ```
 **参数**
 
@@ -387,24 +385,7 @@ userData | NSString | 用户信息自定义信息
 - (void)turnOff;
 ```
 
-#### 5. 挂起
-
-**定义**
-
-```
-- (void)setAvalible:(BOOL)enable;
-```
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-enable | BOOL | 挂起与否
-
-**说明**
-
-挂起后将不再接收呼叫。
-
-#### 6. 设置本地显示窗口
+#### 5. 设置本地显示窗口
 
 **定义**
 
@@ -420,9 +401,9 @@ option | ARCallOption | 配置项
 
 **说明**
 
-必须放到 makeCall方法之后调用。
+必须放到 makeCall方法之后调用或者收到onRTCMakeCall回调之后调用。
 
-#### 7. 设置滤镜
+#### 6. 设置滤镜
 
 **定义**
 
@@ -439,7 +420,7 @@ filter | ARCameraFilterMode | 滤镜模式
 
 只有使用美颜相机模式才有用。
 
-#### 8. 设置其他视频显示窗口
+#### 7. 设置其他视频显示窗口
 
 **定义**
 
@@ -453,7 +434,7 @@ filter | ARCameraFilterMode | 滤镜模式
 render | NSString | 视频显示窗口
 renderId | NSString | 渲染Id
 
-#### 9.设置某个人的显示模式
+#### 8.设置某个人的显示模式
 
 **定义**
 
@@ -467,7 +448,7 @@ renderId | NSString | 渲染Id
 renderMode | ARVideoRenderMode | 显示模式，默认ARVideoRenderScaleToFill，等比例填充视图模式
 renderId | NSString | 渲染Id
 
-#### 10. 呼叫用户
+#### 9. 呼叫用户
 
 **定义**
 
@@ -485,7 +466,7 @@ option | ARUserOption | 配置项
 
 操作是否成功。0：成功;-1:操作频繁;-2：不能呼叫自己;-3：呼叫列表不能为空;-4：呼叫session已存在;-5：呼叫ID不能为空:-6：userData:超过1024个字节:-7:   ARCallKit还未初始化。
 
-#### 11. 呼叫群组
+#### 10. 呼叫群组
 
 **定义**
 
@@ -503,7 +484,7 @@ option | ARGroupOption | 配置项
 
 操作是否成功。0：成功;-1:操作频繁;-2：不能呼叫自己;-3：呼叫列表不能为空;-4：呼叫session已存在;-5：呼叫ID不能为空:-6：userData:超过1024个字节:-7:ARCallKit还未初始化
 
-#### 12. 呼叫客服
+#### 11. 呼叫客服
 
 **定义**
 
@@ -521,7 +502,7 @@ option | NSString | 呼叫配置
 
 操作是否成功。0：成功;-1:操作频繁;-2：不能呼叫自己;-3：呼叫列表不能为空;-4：呼叫session已存在;-5：呼叫ID不能为空:-6：userData:超过1024个字节:-7:ARCallKit还未初始化。
 
-#### 13. 邀请用户
+#### 12. 邀请用户
 
 **定义**
 
@@ -542,7 +523,7 @@ userId | NSString | 用户Id
 
 只有建立会议呼叫之后才能调用。
 
-#### 14. 挂断通话
+#### 13. 挂断通话
 
 **定义**
 
@@ -555,7 +536,7 @@ userId | NSString | 用户Id
 ---|:---:|---
 userId | NSString | 呼叫的用户Id
 
-#### 15. 同意通话
+#### 14. 同意通话
 
 **定义**
 
@@ -568,7 +549,7 @@ userId | NSString | 呼叫的用户Id
 ---|:---:|---
 userId | NSString | 呼叫的用户Id
 
-#### 16. 拒绝通话
+#### 15. 拒绝通话
 
 **定义**
 
@@ -581,7 +562,7 @@ userId | NSString | 呼叫的用户Id
 ---|:---:|---
 userId | NSString | 呼叫的用户Id
 
-#### 17. 转呼手机
+#### 16. 转呼手机
 
 **定义**
 
@@ -593,7 +574,7 @@ userId | NSString | 呼叫的用户Id
 
 呼叫用户的时候才能用；如果呼叫模式为视频会自动转为音频模式。
 
-#### 18. 转呼座机
+#### 17. 转呼座机
 
 **定义**
 
@@ -605,7 +586,7 @@ userId | NSString | 呼叫的用户Id
 
 呼叫用户的时候才能用，如果呼叫模式为视频会自动转为音频模式。
 
-#### 19. 切换音频模式
+#### 18. 切换音频模式
 
 **定义**
 
@@ -617,7 +598,7 @@ userId | NSString | 呼叫的用户Id
 
 操作是否成功。成功之后，把本地视频视图清除掉。
 
-#### 20. 发送消息
+#### 19. 发送消息
 
 **定义**
 
@@ -630,7 +611,7 @@ userId | NSString | 呼叫的用户Id
 ---|:---:|---
 content | NSString | 发送消息的内容(限制1024字节)
 
-#### 21. 设置本地音频是否传输
+#### 20. 设置本地音频是否传输
 
 **定义**
 
@@ -643,7 +624,7 @@ content | NSString | 发送消息的内容(限制1024字节)
 ---|:---:|---
 enable | BOOL | YES为传输音频，NO为不传输音频，默认音频传输
 
-#### 22. 设置本地视频是否传输
+#### 21. 设置本地视频是否传输
 
 **定义**
 
@@ -656,7 +637,7 @@ enable | BOOL | YES为传输音频，NO为不传输音频，默认音频传输
 ---|:---:|---
 enable | BOOL | YES为传输视频，NO为不传输视频，默认视频传输
 
-#### 23. 获取本地音频传输是否打开
+#### 22. 获取本地音频传输是否打开
 
 **定义**
 
@@ -664,15 +645,15 @@ enable | BOOL | YES为传输视频，NO为不传输视频，默认视频传输
 - (BOOL)localAudioEnabled;
 ```
 
-#### 24. 获取本地视频传输是否打开
+#### 23. 获取本地视频传输是否打开
 
 **定义**
 
 ```
-- (BOOL)localAudioEnabled;
+- (BOOL)localVideoEnabled;
 ```
 
-#### 25. 切换前后摄像头
+#### 24. 切换前后摄像头
 
 **定义**
 
@@ -680,7 +661,7 @@ enable | BOOL | YES为传输视频，NO为不传输视频，默认视频传输
 - (void)switchCamera;
 ```
 
-#### 26. 设置扬声器开关
+#### 25. 设置扬声器开关
 
 **定义**
 
@@ -693,7 +674,7 @@ enable | BOOL | YES为传输视频，NO为不传输视频，默认视频传输
 ---|:---:|---
 on | BOOL | YES打开扬声器，NO关闭扬声器，默认扬声器打开
 
-#### 27. 获取人员列表
+#### 26. 获取人员列表
 
 **定义**
 
@@ -701,12 +682,12 @@ on | BOOL | YES打开扬声器，NO关闭扬声器，默认扬声器打开
 - (NSArray<ARUserItem *> *)getUserList;
 ```
 
-#### 28. 抓图
+#### 27. 抓图
 
 **定义**
 
 ```
-- (UIImage*)snapPicture:(NSString*)userId;
+- (UIImage*)snapPicture:(NSString *)userId;
 ```
 **参数**
 
@@ -714,7 +695,7 @@ on | BOOL | YES打开扬声器，NO关闭扬声器，默认扬声器打开
 ---|:---:|---
 userId | NSString | userId 用户Id
 
-#### 29. 设置会议模式
+#### 28. 设置会议模式
 
 **定义**
 
@@ -727,7 +708,7 @@ userId | NSString | userId 用户Id
 ---|:---:|---
 type | ARCallZoomType | 模式类型
 
-#### 30. 设置显示页码
+#### 29. 设置显示页码
 
 **定义**
 
@@ -740,7 +721,7 @@ type | ARCallZoomType | 模式类型
 ---|:---:|---
 page | int | 页码（从0开始，每页加上自己的视频流为4路）
 
-#### 31. 清空会话
+#### 30. 清空会话
 
 **定义**
 
@@ -779,7 +760,7 @@ code | ARCallCode | 状态码
 **定义**
 
 ```
-- (void)onRTCMakeCall:(NSString *)userId userData:(NSString *)userData callModel:(ARCallMode)callMode extend:(NSString*)extend;
+- (void)onRTCMakeCall:(NSString *)userId userData:(NSString *)userData callModel:(ARCallMode)callMode extend:(NSString *)extend;
 ```
 **参数**
 
@@ -788,7 +769,7 @@ code | ARCallCode | 状态码
 userId | NSString | 呼叫方的Id
 userData | NSString | 呼叫方的自定义信息
 callMode | ARCallMode | 呼叫类型
-extend | NSString | 扩展信息，用户自定义,呼叫群组的时候带的
+extend | NSString | 扩展信息，用户自定义，呼叫群组的时候带的
 
 #### 4. 加入房间成功
 
@@ -853,7 +834,7 @@ code | ARCallCode | 状态码
 **定义**
 
 ```
-- (void)onRTCOpenRemoteVideoRender:(NSString *)userId renderId:(NSString*)renderId userData:(NSString*)userData;
+- (void)onRTCOpenRemoteVideoRender:(NSString *)userId renderId:(NSString *)renderId userData:(NSString *)userData;
 
 ```
 **参数**
@@ -1080,6 +1061,10 @@ allClerk | int | 总客服数
 woringNum | int | 正在忙的客服
 
 ## 三、更新日志
+
+**Version 3.0.2 （2020-02-27）**
+
+* 修复Bug，SDK优化
 
 **Version 3.0.0 （2019-05-15）**
 

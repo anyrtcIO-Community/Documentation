@@ -479,7 +479,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 **定义**
 
 ```
-- (void)snapPicture:(NSString*)userId complete:(ScreenshotsBlock)block;
+- (void)snapPicture:(NSString *)userId complete:(ScreenshotsBlock)block;
 ```
 **参数**
 
@@ -736,12 +736,12 @@ channel | int | 频道数量
 
 人员列表。 
 
-#### 35. 判断是否可以共享
+#### 35. 打开共享
 
 **定义**
 
 ```
-- (void)canShare:(int)type;
+- (void)openShare:(int)type;
 ```
 **参数**
 
@@ -808,7 +808,7 @@ page | int | 页码（从0开始，每页加上自己的视频流为4路）
 
 分屏显示ARZoomTypeNomal。 
 
-#### 40. 设置显示区域从nIndex 到第几个
+#### 40. 设置显示区域从index 到第几个
 
 **定义**
 

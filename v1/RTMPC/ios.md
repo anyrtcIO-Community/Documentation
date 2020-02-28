@@ -29,7 +29,7 @@ pod 'RTMPCHybirdEngine', '3.0.1'
 
 **手动导入**
 
-* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTCP-iOS)，找到RTMPCHybirdEngine.framework；
+* 前往GitHub[下载Demo](https://github.com/anyRTC/anyRTC-RTMPC-iOS)，找到RTMPCHybirdEngine.framework；
 
 * 在Xcode中选择“Add files to 'Your project name'...”，将RTMPCHybirdEngine.framework添加到你的工程目录中
 ![ios_rtmpc_01](/assets/images/ios/ios_rtmpc_01.png)
@@ -94,8 +94,6 @@ pod 'RTMPCHybirdEngine', '3.0.1'
 // Override point for customization after application launch.
 //配置开发者信息
 [ARRtmpEngine initEngine:appID token:token];
-//配置私有云(默认无需配置)
-//[ARRtmpEngine configServerForPriCloud:@"XXX" port:XXX];
 return YES;
 }
 ```

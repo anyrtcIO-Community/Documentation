@@ -10,9 +10,9 @@
 
 请根据需求选择渠道安装，安装完RTCP Demo后，可体验实时直播功能。
 
-- [iOS Demo下载](https://fir.im/a547)
+- [iOS Demo下载](http://download.anyrtc.io/a547)
 
-- [Android Demo下载]( https://fir.im/h3u2)
+- [Android Demo下载](http://download.anyrtc.io/h3u2)
 
 - [Web Demo 体验](http://demos.anyrtc.io/ar-rtcp)
 
