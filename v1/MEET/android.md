@@ -3,7 +3,7 @@
 
 ### 适用范围
 
-本集成文档适用于Android ARMeet SDK 3.0.0版本。
+本集成文档适用于Android ARMeet SDK 3.0.0+版本。
 
 ### 准备环境
 
@@ -17,7 +17,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:meet_kit:3.1.2' (最新版见上面图标版本号)
+  compile 'org.ar:meet_kit:3.1.4' (最新版见上面图标版本号)
 }
 
 ```
@@ -26,7 +26,7 @@ dependencies {
 <dependency>
   <groupId>org.ar</groupId>
   <artifactId>meet_kit</artifactId>
-  <version>3.1.2</version>
+  <version>3.1.4</version>
   <type>pom</type>
 </dependency>
 ```
@@ -135,8 +135,8 @@ if (null != render) {
 ```
 //移除对方视频
 if (mMeetKit!=null&&mVideoView!=null) {
-mVideoView.removeRemoteRender(publishId);
-mMeetKit.setRemoteVideoRender(publishId, 0);
+    mVideoView.removeRemoteRender(publishId);
+    mMeetKit.setRemoteVideoRender(publishId, 0);
 }
 
 ```
@@ -170,8 +170,6 @@ if (mMeetKit != null) {
 在Proguard混淆文件中增加以下配置：
 
 ```
--dontwarn org.anyrtc.**
--keep class org.anyrtc.**{*;}
 -dontwarn org.ar.**
 -keep class org.ar.**{*;}
 -dontwarn org.webrtc.**
@@ -291,7 +289,19 @@ isHost|boolean|是否是主持人 默认false (主持人模式下生效)
 
 **说明**  
 
-可通过上面方法配置，也可单独设置
+可通过上面方法配置，也可单独设置  
+
+*会议模式说明*
+  类型 | 描述
+---|:---:|---
+ARMeetType.Normal 普通模式 |会议室内的用户都可互相看到
+ARMeetType.Host  主持人模式|会议室内仅主持人可看到所有人，其余用户只能看到主持人
+ARMeetType.ZOOM  ZOOM模式 | 翻页模式，一页4路像，最多32路
+
+
+
+
+
 
 ---
 
@@ -409,6 +419,9 @@ void setDriverMode(boolean enable)
 ---|:---:|---
 enable | boolean | bEnable 打开或关闭驾驶模式 true 打开 false 关闭。
 
+**说明**  
+
+用于ZOOM模式会议
 
 ### 7. 离开会议
 
@@ -869,7 +882,13 @@ filePath | String |录指文件存放路径
 
 **isNeedVideo 为false时  文件路径需以mp3结尾**
 
+### 37. 停止录制音视频
 
+**定义**
+
+```
+int stopRecorder()
+```
 
 
 ---

@@ -2,7 +2,7 @@
 
 ### 适用范围
 
-本集成文档适用于 Android ARRtmax SDK 3.0.0 版本。
+本集成文档适用于 Android ARRtmax SDK 3.0.0 + 版本。
 
 ### 准备环境
 
@@ -17,7 +17,7 @@
 
 ```
 dependencies {
-  compile 'org.ar:rtmax_kit:3.0.9'
+  implementation 'org.ar:rtmax_kit:3.1.2'
 }
 ```
 
@@ -41,7 +41,7 @@ public class ARApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ARMaxEngine.Inst().initEngine(getApplicationContext(), boolean useJaveRecord， "AppId",  "AppToken");
+        ARMaxEngine.Inst().initEngine(getApplicationContext(), false , "AppId",  "AppToken");
     }
 }
 
@@ -60,12 +60,14 @@ arMaxOption.setVideoProfile(ARVideoCommon.ARVideoProfile.ARVideoProfile480x640);
 //更多配置查看API文档
 
 ```
-#### 1.3 实例化ARMax对象并设置回调
+#### 1.3 实例化ARMaxKit对象并设置回调
 
 **示例代码：**
 
 ``` 
-ARMaxKit mRTMaxKit = new ARMaxKit(ARMaxEvent maxEvent);
+1- ARMaxKit mRTMaxKit = new ARMaxKit(ARMaxEvent maxEvent);
+
+2- ARMaxKit mRTMaxKit = new ARMaxKit(ARMaxEvent maxEvent,true);//是否需要检测网络类型
 ```
 #### 1.4 实例化视频显示View
 
@@ -97,7 +99,7 @@ mRTMaxKit.joinTalkGroup( String groupId,  String userId,  String userData);
 mRTMaxKit.applyTalk(int nPriority)
 
 ```
-> nPriority是申请抢麦用户的级别，数值越大，权限越小。返回值等于0的时候表示调用成功。成功后会回调onRTCApplyTalkOk()，接着回调onRTCTalkCouldSpeak()，表示语音通道已建立，可以开始说话了。
+> nPriority是申请抢麦用户的级别，数值越大，权限越小。返回值等于0的时候表示调用成功。成功后会回调onRTCApplyTalkOk()，表示语音通道已建立，可以开始说话了。
 
 #### 1.7 取消对讲
 
@@ -107,7 +109,7 @@ mRTMaxKit.applyTalk(int nPriority)
 mRTMaxKit.cancelTalk()
 
 ```
-> 调用取消对讲后将会回调 OnRtcTalkClosed()方法
+> 调用取消对讲后将会回调 onRTCApplyTalkClosed()方法
 
 
 #### 1.6 发起/停止监看
@@ -141,9 +143,10 @@ mRTMaxKit.rejectVideoMonitor()
 **示例代码：**
 
 ``` 
-打开本地摄像头
+打开本地摄像头采集
 mRTMaxKit.setLocalVideoCapturer(arVideoView.openLocalVideoRender().GetRenderPointer());
-关闭摄像头 移除本地像
+
+关闭摄像头采集 移除本地像
 arVideoView.removeLocalVideoRender();
 mRTMaxKit.closeLocalVideoCapture();
 
@@ -392,13 +395,17 @@ videoFps | ARVideoFrameRate |视频帧率  默认 Fps15
 ```
 ARMaxKit arMaxKit = new ARMaxKit(ARMaxEvent maxEvent)
 
+或
+
+ARMaxKit arMaxKit = new ARMaxKit(ARMaxEvent maxEvent，boolean bCheckNetType)
+
 ```
 **参数**
 
 参数名 | 类型 | 描述
 ---|:---:|---
 maxEvent | ARMaxEvent | ARMaxEvent回调实现类
-
+bCheckNetType | boolean | 是否需要监测网络类型
 ### 2. 加入对讲组
 
 **定义**
@@ -985,13 +992,66 @@ audioDetect | boolean |  true:打开; false: 关闭
 void leaveTalkGroup()
 ```
 
-### 40. 销毁初始化对象
+### 40. 销毁对象
 
 **定义**
 
 ```
 void clear()
 ```
+
+### 41. 设置单次上麦最上时间
+
+**定义**
+
+```
+void setTalkLimitTime(int time)
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+time | int |  时间（秒）
+
+### 42.群内视频上报
+
+**定义**
+
+```
+void reportGroupVideo()
+```
+**说明**
+
+群内视频上报，同一组内在线设备都可以收到上报请求（接收端收到上报请求时，调用monitorVideo进行视频查看）
+
+
+### 43.应用内视频上报
+
+**定义**
+
+```
+void reportAppVideo()
+```
+**说明**
+
+应用内视频上报，同一应用id内在线设备都可以收到上报请求（接收端收到上报请求时，调用monitorVideo进行视频查看）
+
+### 44.设置仅对讲模式
+
+**定义**
+
+```
+void setOnlyTalkMode(boolean enable)
+```
+
+### 45.打开或关闭音频数据回调
+
+**定义**
+
+```
+void setAudioNeedPcm(final boolean bEnable) 
+```
+
 --- 
 
 ### ARMaxEvent 回调类
@@ -1537,7 +1597,85 @@ filePath |String | 录音文件保存路径
 
 设置录音路径后录音保存路径的回调接口
 
+### 34. 网络差
+
+**定义**
+
+```
+ boolean OnRtcCheckNetSignalIsBad()
+```
+
+**说明**  
+
+网络变成2G 3G的时候回调
+
+### 35. 加入语音对讲组成功
+
+**定义**
+
+```
+ void OnRtcJoinMaxGroupOk(String groupId)
+```
+### 36. 临时断开语音对讲组
+
+**定义**
+
+```
+ void OnRtcTempLeaveMaxGroup(int nCode)
+```
+### 37. 加入语音对讲组失败
+
+**定义**
+
+```
+ void OnRtcJoinMaxGroupFailed(String strGroupId, int nCode, String strReason)
+```
+### 38. 离开语音对讲组
+
+**定义**
+
+```
+ void OnRtcLeaveMaxGroup(int nCode)
+```
+
+### 39. 本地原始音频数据
+
+**定义**
+
+```
+ void onRTCLocalAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
+```
+
+### 40. 远程用户原始音频数据
+
+**定义**
+
+```
+ void onRTCRemoteAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
+```
+
 ### 四、更新日志
+
+##### V 3.1.2 （2020-03-22）
+
+优化弱网环境语音传输
+
+新增方法：  
+new ARMaxKit(arMaxEvent,true)
+void setAudioNeedPcm( boolean bEnable)
+int setTalkLimitTime( int nLength)
+int reportGroupVideo()
+int reportAppVideo()
+void setOnlyTalkMode(boolean enable)
+
+新增回调：
+ boolean OnRtcCheckNetSignalIsBad()
+ void OnRtcJoinMaxGroupOk(String groupId)
+ void OnRtcTempLeaveMaxGroup(int nCode)
+ void OnRtcJoinMaxGroupFailed(String strGroupId, int nCode, String strReason)
+ void OnRtcLeaveMaxGroup(int nCode)
+ void onRTCLocalAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
+ void onRTCRemoteAudioPcmData(String peerId, byte[] data, int nLen, int nSampleHz, int nChannel);
 
 ##### V 3.0.0 （2019-05-15）
 
