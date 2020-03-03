@@ -19,7 +19,7 @@
 
 ```
 dependencies {
-    compile 'org.ar:board:3.0.3''
+    compile 'org.ar:board:3.0.7'
 }
 
 ```
@@ -42,6 +42,8 @@ public class ARApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ARBoardEngine.Inst().initEngine("AppId",  "AppToken");
+       // ARBoardEngine.Inst().configServerForPriCloud(String strAddr, int nPort, boolean isHttps); 
+       //私有云配置 没有可不写
     }
 }
 
@@ -271,3 +273,7 @@ onBoardDestroy|画板销毁：调了destoryBoard()方法
 203| 账号欠费
 206| 该功能未开通
 301| 数据库异常
+
+**更新说明**
+
+2020/3/3  3.0.7 修复截图可能导致崩溃
