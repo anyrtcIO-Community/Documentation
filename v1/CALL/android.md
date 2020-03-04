@@ -19,7 +19,7 @@
 
 ```
 dependencies {
-   compile 'org.ar:arcall_kit:3.1.5'(最新版见上面图标版本号)
+   compile 'org.ar:arcall_kit:3.1.7'(最新版见上面图标版本号)
 }
 ```
 
@@ -27,7 +27,7 @@ dependencies {
 ```
 <dependency>
   <groupId>org.ar</groupId>
-  <artifactId>3.1.5</version>
+  <artifactId>3.1.7</version>
   <type>pom</type>
 </dependency>
 ```
@@ -60,7 +60,7 @@ public class ARApplication extends Application {
 
 > 自定义的Application需在AndroidManifest.xml注册 
 
-#### 1.2 获取会议配置类并设置相关配置
+#### 1.2 获取配置类并设置相关配置
 
 **示例代码：**
 
@@ -93,7 +93,7 @@ if (arCallKit.isTurnOff()) {
 }
 
 ```
-> 上线成功会回调onConnected()，发布失败会回调onDisconnect()，**程序启动只需调用一次即可**
+> 上线成功会回调onConnected()，失败会回调onDisconnect()，**程序启动只需调用一次即可**
 
 #### 1.5 实例化视频显示View
 
@@ -113,7 +113,7 @@ videoView.setVideoViewLayout(true,Gravity.CENTER, LinearLayout.VERTICAL);
 **示例代码：**
 
 ```
-mMeetKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
+arCallKit.setLocalVideoCapturer(videoView.openLocalVideoRender().GetRenderPointer());
 
 ```
 > 注意安卓动态权限处理，这里需要录音和摄像头权限
@@ -173,7 +173,7 @@ arCallKit.accpetCall(callId);
 //显示对方视频
 final VideoRenderer render = mVideoView.openRemoteVideoRender(strVidRenderId);
 if (null != render) {
-    arCallKit.setRemoteVideoRender(strVidRenderId, render.GetRenderPointer());
+    arCallKit.setRTCRemoteVideoRender(strVidRenderId, render.GetRenderPointer());
 }
 
 ```
@@ -757,7 +757,7 @@ fileName | String| 文件名
 **定义**
 
 ```
-int startRecordVideo( String fileName) 
+int startRecordVideo( String filePath) 
 
 ```
 
@@ -765,7 +765,7 @@ int startRecordVideo( String fileName)
 
 参数名 | 类型 | 描述
 ---|:---:|---
-fileName | String| 文件名
+fileName | String| 录像保存文件的全路径
 
 **说明**  
 
