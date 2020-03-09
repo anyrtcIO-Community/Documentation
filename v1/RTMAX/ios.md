@@ -4,7 +4,7 @@
 
 #### 适用范围
 
-本集成文档适用于iOS RTMaxEngine SDK 3.0.0 以上版本。
+本集成文档适用于iOS RTMaxEngine SDK 3.0.0 ~ 3.0.3版本。
 
 #### 准备环境
 
@@ -21,10 +21,10 @@
 ```
 pod 'RTMaxEngine'
 ```
-* 如果需要安装指定版本则使用以下方式（以 3.0.1.7 版本为例）：
+* 如果需要安装指定版本则使用以下方式（以 3.0.1.8 版本为例）：
 
 ```
-pod 'RTMaxEngine', '~> 3.0.1.7'
+pod 'RTMaxEngine', '~> 3.0.1.8'
 ```
 
 **手动导入**
@@ -94,8 +94,6 @@ pod 'RTMaxEngine', '~> 3.0.1.7'
 // Override point for customization after application launch.
 //配置开发者信息
 [ARMaxEngine initEngine:appID token:token];
-//配置私有云(默认无需配置)
-//[ARMaxEngine configServerForPriCloud:@"XXX" port:XXX];
 return YES;
 }
 ```
@@ -332,7 +330,21 @@ priority | int | 申请抢麦用户的级别（0权限最大（数值越大，�
 - (void)cancleTalk;
 ```
 
-#### 7. 设置本地视频采集窗口
+#### 7. 设置只有对讲模式
+
+**定义**
+
+```
+- (void)setOnlyTalkMode:(BOOL)enable;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+enable | BOOL | YES:只有对讲；NO:包含所有功能
+
+#### 8. 设置本地视频采集窗口
 
 **定义**
 
@@ -347,7 +359,7 @@ priority | int | 申请抢麦用户的级别（0权限最大（数值越大，�
 render | UIView | 视频显示对象
 option | ARMaxOption | 视频配置
 
-#### 8. 切换前后摄像头
+#### 9. 切换前后摄像头
 
 **定义**
 
@@ -355,7 +367,7 @@ option | ARMaxOption | 视频配置
 - (void)switchCamera;
 ```
 
-#### 9. 设置音量检测
+#### 10. 设置音量检测
 
 **定义**
 
@@ -373,7 +385,7 @@ on | BOOL | YES为打开音量检测；NO为关闭音量检测
 
 默认打开
 
-#### 10. 获取音频检测是否打开
+#### 11. 获取音频检测是否打开
 
 **定义**
 
@@ -381,7 +393,7 @@ on | BOOL | YES为打开音量检测；NO为关闭音量检测
 - (BOOL)audioActiveCheck;
 ```
 
-#### 11. 设置本地音频是否传输
+#### 12. 设置本地音频是否传输
 
 **定义**
 
@@ -399,7 +411,7 @@ enable | BOOL | YES为传输音频,NO为不传输音频
 
 默认传输
 
-#### 12. 设置本地视频是否传输
+#### 13. 设置本地视频是否传输
 
 **定义**
 
@@ -413,7 +425,7 @@ enable | BOOL | YES为传输音频,NO为不传输音频
 ---|:---:|---
 enable | BOOL | YES为传输视频，NO为不传输视频，默认传输
 
-#### 13. 设置录像
+#### 14. 设置录像
 
 **定义**
 
@@ -433,7 +445,7 @@ talkP2PPath | NSString | 强插P2P录像的保存路径（文件夹路径）
 
 0为设置失败，1为设置成功。
 
-#### 14. 设置远端用户是否可以接收自己的音视频
+#### 15. 设置远端用户是否可以接收自己的音视频
 
 **定义**
 
@@ -449,7 +461,7 @@ userId | NSString | 远端用户userId
 enable | BOOL | YES：接收音频，NO：不接收音频
 enable | BOOL | YES：接收视频，NO：不接收视频
 
-#### 15. 设置不接收指定通道的音视频
+#### 16. 设置不接收指定通道的音视频
 
 **定义**
 
@@ -465,7 +477,7 @@ peerId | NSString | 视频通道的peerId
 enable | BOOL | YES：接收音频，NO：不接收音频
 enable | BOOL | YES：接收视频，NO：不接收视频
 
-#### 16. 启用/关闭扬声器播放
+#### 17. 启用/关闭扬声器播放
 
 **定义**
 
@@ -479,7 +491,7 @@ enable | BOOL | YES：接收视频，NO：不接收视频
 ---|:---:|---
 enableSpeaker | BOOL | YES切换到外放，NO切换到听筒。如果设备连接了耳机，则语音路由走耳机
 
-#### 17. 查询扬声器启用状态
+#### 18. 查询扬声器启用状态
 
 **定义**
 
@@ -487,7 +499,20 @@ enableSpeaker | BOOL | YES切换到外放，NO切换到听筒。如果设备连�
 - (BOOL)isSpeakerphoneEnabled;
 ```
 
-#### 18. 打开或者关闭网络状态回调
+#### 19. 重置音频录音和播放
+
+**定义**
+
+```
+- (void)doRestartAudioRecord;
+```
+
+**说明**
+
+使用AVplayer播放后调用该方法。
+
+
+#### 20. 打开或者关闭网络状态回调
 
 **定义**
 
@@ -501,7 +526,7 @@ enableSpeaker | BOOL | YES切换到外放，NO切换到听筒。如果设备连�
 ---|:---:|---
 enable | BOOL | YES打开网络状态回调，NO关闭网络状态回调，默认关闭
 
-#### 19. 获取网络状态是否打开
+#### 21. 获取网络状态是否打开
 
 **定义**
 
@@ -513,7 +538,7 @@ enable | BOOL | YES打开网络状态回调，NO关闭网络状态回调，默�
 
 YES网络状态打开，NO网络状态关闭。
 
-#### 20. 关闭P2P通话
+#### 22. 关闭P2P通话
 
 **定义**
 
@@ -525,7 +550,7 @@ YES网络状态打开，NO网络状态关闭。
 
 在控制台强插对讲后，关闭和控制台之间的P2P通话。
 
-#### 21. 发起呼叫
+#### 23. 发起呼叫
 
 **定义**
 
@@ -545,7 +570,7 @@ userData | NSString | 用户的自定义数据
 
 0为调用OK，-1未登录，-2没有通话，-3视频资源占用中，-5:本操作不支持自己对自己，-6:会话未创建（没有被呼叫用户）。
 
-#### 22. 邀请用户
+#### 24. 邀请用户
 
 **定义**
 
@@ -564,7 +589,7 @@ userData | NSString | 用户的自定义数据
 
 0为调用OK，-1未登录，-2没有通话，-3视频资源占用中，-5:本操作不支持自己对自己，-6:会话未创建（没有被呼叫用户）。
 
-#### 23. 主叫端结束某一路正在进行的通话
+#### 25. 主叫端结束某一路正在进行的通话
 
 **定义**
 
@@ -578,7 +603,7 @@ userData | NSString | 用户的自定义数据
 ---|:---:|---
 userId | NSString | 结束的这路视频的用户ID
 
-#### 24. 同意呼叫
+#### 26. 同意呼叫
 
 **定义**
 
@@ -597,7 +622,7 @@ callId | NSString | 呼叫请求时收到的Id
 0调用OK，-1未登录，-2会话不存在，-3视频资源占用中。
 
 
-#### 25. 拒绝通话
+#### 27. 拒绝通话
 
 **定义**
 
@@ -611,7 +636,7 @@ callId | NSString | 呼叫请求时收到的Id
 ---|:---:|---
 callId | NSString | 呼叫的Id
 
-#### 26. 被叫端离开通话
+#### 28. 被叫端离开通话
 
 **定义**
 
@@ -624,7 +649,7 @@ callId | NSString | 呼叫的Id
 调用该方法后，把本地视频窗口从父视图上删除。
 
 
-#### 27. 设置显示其他端视频窗口
+#### 29. 设置显示其他端视频窗口
 
 **定义**
 
@@ -644,7 +669,7 @@ pubId | NSString |  RTC服务生成流的ID (用于标识与会者发布的流)
 该方法用于与会者接通后，与会者视频接通回调中（onRTCRemoteOpenVideoRender）使用。
 
 
-#### 28. 发起视频监看（或者收到视频上报请求时查看视频）
+#### 30. 发起视频监看（或者收到视频上报请求时查看视频）
 
 **定义**
 
@@ -663,7 +688,7 @@ userData | NSString | 用户的自定义数据
 
 0调用OK，-1未登录，-5本操作不支持自己对自己。
 
-#### 29. 同意别人视频监看
+#### 31. 同意别人视频监看
 
 **定义**
 
@@ -685,7 +710,7 @@ userId | NSString |  被监看用户Id
 
 0调用OK，-1未登录，-3:视频资源占用中，-5本操作不支持自己对自己。
 
-#### 30. 拒绝监看
+#### 32. 拒绝监看
 
 **定义**
 
@@ -699,7 +724,7 @@ userId | NSString |  被监看用户Id
 ---|:---:|---
 userId | NSString |  发起人的用户Id
 
-#### 31. 监看发起者关闭视频监看（谁监看谁关闭）
+#### 33. 监看发起者关闭视频监看（谁监看谁关闭）
 
 **定义**
 
@@ -718,7 +743,7 @@ userId | NSString |  被监看的用户Id
 关闭成功会有回掉（onRTCRemoteCloseVideoRender），把显示的视图从父视图上删除掉
 
 
-#### 32. 视频上报（接收端收到上报请求时，调用monitorVideo进行视频查看）
+#### 34. 视频上报（接收端收到上报请求时，调用monitorVideo进行视频查看）
 
 **定义**
 
@@ -737,7 +762,7 @@ userId | NSString |  上报对象的用户的Id
 0调用OK，-1未登录，-3:视频资源占用中，-5本操作不支持自己对自己。
 
 
-#### 33. 上报者关闭上报
+#### 35. 上报者关闭上报
 
 **定义**
 
@@ -750,7 +775,7 @@ userId | NSString |  上报对象的用户的Id
 上报功能只能自己关闭。
 
 
-#### 32. 发送消息
+#### 36. 发送消息
 
 **定义**
 
@@ -777,7 +802,135 @@ YES/NO 发送成功/发送失败
 
 ### ARMaxKitDelegate 回调类
 
-#### 1. 加入对讲组成功/切换对讲组成功回调
+#### 1. 加入群组成功回调
+
+**定义**
+
+```
+- (void)onRTCJoinMaxGroupOk:(NSString*)groupId;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+groupId | NSString | 组ID
+
+#### 2. 加入群组失败回调
+
+**定义**
+
+```
+- (void)onRTCJoinMaxGroupFailed:(NSString*)groupId code:(ARMaxCode)code reason:(NSString*)reason;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+groupId | NSString | 组ID
+code | ARMaxCode | 错误码
+reason | NSString | 错误原因,rtc错误，或者token错误（错误值自己平台定义）
+
+#### 3. 临时离开群组回调
+
+**定义**
+
+```
+- (void)onRTCTempLeaveMaxGroup:(ARMaxCode)code;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+code | ARMaxCode | 错误码；0是正常退出；100：网络错误；207：强制退出。其他值参考错误码
+
+#### 4. 离开群组回调
+
+**定义**
+
+```
+- (void)onRTCLeaveMaxGroup:(ARMaxCode)code;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+code | ARMaxCode | 错误码；0是正常退出；100：网络错误；207：强制退出。其他值参考错误码
+
+#### 5. 申请语音上麦成功回调
+
+**定义**
+
+```
+- (void)onRTCApplyTalkOk;
+```
+
+#### 6. 申请语音上麦失败回调
+
+**定义**
+
+```
+- (void)onRTCApplyTalkClosed:(ARMaxCode)code userId:(NSString *)userId userData:(NSString *)userData;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+code | ARMaxCode | 错误码；0是正常退出；100：网络错误；207：强制退出。其他值参考错误码
+userId | NSString | 用户Id
+userData | NSString | 用户自定义数据
+
+#### 7. 其他人上麦成功回调
+
+**定义**
+
+```
+- (void)onRTCTalkOn:(NSString*)userId userData:(NSString*)userData;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+userId | NSString | 用户Id
+userData | NSString | 用户自定义数据
+
+#### 8. 其他人下麦回调
+
+**定义**
+
+```
+- (void)onRTCTalkClosed:(ARMaxCode)code userId:(NSString *)userId userData:(NSString *)userData;
+```
+
+**参数**
+参数名 | 类型 | 描述
+---|:---:|---
+code | ARMaxCode | 错误码 0：正常结束对讲；其他参考错误码
+userId | NSString | 用户Id
+userData | NSString | 用户自定义数据
+
+#### 9. SDK向应用层获取当前的网络状态
+
+**定义**
+
+```
+- (BOOL)onRTCCheckNetSignalIsBad;
+```
+
+**说明**
+
+如果是2G、3G网络，是弱网；如果是4G和WIFI，为非弱网。SDK为弱网传输做了深度优化
+
+**返回值**
+
+YES弱网，NO非弱网。
+
+#### 10. 加入对讲组成功/切换对讲组成功回调
 
 **定义**
 
@@ -791,7 +944,7 @@ YES/NO 发送成功/发送失败
 ---|:---:|---
 groupId | NSString | 组ID
 
-#### 2. 加入对讲组失败/切换对讲组失败回调
+#### 11. 加入对讲组失败/切换对讲组失败回调
 
 **定义**
 
@@ -807,7 +960,21 @@ groupId | NSString | 组ID
 code | ARMaxCode | 错误码
 reason | NSString | 错误原因,rtc错误，或者token错误（错误值自己平台定义）
 
-#### 3. 离开对讲组回调
+#### 12. 临时断开群组回调
+
+**定义**
+
+```
+- (void)onRTCTempLeaveTalkGroup:(ARMaxCode)code;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+code | ARMaxCode | 错误码
+
+#### 13. 离开对讲组回调
 
 **定义**
 
@@ -821,59 +988,7 @@ reason | NSString | 错误原因,rtc错误，或者token错误（错误值自己
 ---|:---:|---
 code | ARMaxCode | 错误码；0是正常退出；100：网络错误；207：强制退出。其他值参考错误码
 
-#### 4. 申请对讲成功回调
-
-**定义**
-
-```
-- (void)onRTCApplyTalkOk;
-```
-
-#### 5. 其他人正在对讲组中讲话的回调
-
-**定义**
-
-```
-- (void)onRTCTalkOn:(NSString *)userId userData:(NSString *)userData;
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-userId | NSString | 用户Id
-userData | NSString | 用户自定义数据
-
-#### 6. 对讲结束回调
-
-**定义**
-
-```
-- (void)onRTCTalkClosed:(ARMaxCode)code userId:(NSString *)userId userData:(NSString *)userData;
-```
-
-**参数**
-参数名 | 类型 | 描述
----|:---:|---
-code | ARMaxCode | 错误码 0：正常结束对讲；其他参考错误码
-userId | NSString | 用户Id
-userData | NSString | 用户自定义数据
-
-#### 7. 当前对讲组在线人数回调
-
-**定义**
-
-```
-- (void)onRTCMemberNum:(int)num;
-```
-
-**参数**
-
-参数名 | 类型 | 描述
----|:---:|---
-num | int | 当前在线人员数量
-
-#### 8. 当用户处于对讲状态时，控制台强制发起P2P通话的回调
+#### 14. 当用户处于对讲状态时，控制台强制发起P2P通话的回调
 
 **定义**
 
@@ -888,7 +1003,7 @@ num | int | 当前在线人员数量
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 9. 与控制台的P2P讲话结束回调
+#### 15. 与控制台的P2P讲话结束回调
 
 **定义**
 
@@ -902,7 +1017,7 @@ userData | NSString | 用户自定义数据
 ---|:---:|---
 userData | NSString | 用户自定义数据
 
-#### 10. 收到监看请求回调
+#### 16. 收到监看请求回调
 
 **定义**
 
@@ -917,7 +1032,7 @@ userData | NSString | 用户自定义数据
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 11. 视频监看结束回调
+#### 17. 视频监看结束回调
 
 **定义**
 
@@ -932,8 +1047,7 @@ userData | NSString | 用户自定义数据
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-
-#### 12. 视频监看请求结果回调
+#### 18. 视频监看请求结果回调
 
 **定义**
 
@@ -949,8 +1063,7 @@ userId | NSString | 用户Id
 code | ARMaxCode | 错误码
 userData | NSString | 用户自定义数据
 
-
-#### 13. 收到视频上报请求回调
+#### 19. 收到视频上报请求回调
 
 **定义**
 
@@ -965,7 +1078,7 @@ userData | NSString | 用户自定义数据
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 14. 收到视频上报结束回调
+#### 20. 收到视频上报结束回调
 
 **定义**
 
@@ -979,7 +1092,7 @@ userData | NSString | 用户自定义数据
 ---|:---:|---
 userId | NSString | 用户Id
 
-#### 15. 主叫方发起通话成功回调
+#### 21. 主叫方发起通话成功回调
 
 **定义**
 
@@ -993,7 +1106,7 @@ userId | NSString | 用户Id
 ---|:---:|---
 callId | NSString | 呼叫Id
 
-#### 16. 主叫方收到被叫方同意通话回调
+#### 22. 主叫方收到被叫方同意通话回调
 
 **定义**
 
@@ -1008,7 +1121,7 @@ callId | NSString | 呼叫Id
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 17. 主叫方收到被叫方通话拒绝的回调
+#### 23. 主叫方收到被叫方通话拒绝的回调
 
 **定义**
 
@@ -1024,8 +1137,7 @@ userId | NSString | 用户Id
 code | ARMaxCode | 错误码
 userData | NSString | 用户自定义数据
 
-
-#### 18. 被叫方调用leaveCall方法时，主叫方收到的回调
+#### 24. 被叫方调用leaveCall方法时，主叫方收到的回调
 
 **定义**
 
@@ -1039,7 +1151,7 @@ userData | NSString | 用户自定义数据
 ---|:---:|---
 userId | NSString | 用户Id
 
-#### 19. 主叫方收到通话结束（被叫方和邀请发已全部退出或者主叫方挂断所有参与者）回调
+#### 25. 主叫方收到通话结束（被叫方和邀请发已全部退出或者主叫方挂断所有参与者）回调
 
 **定义**
 
@@ -1053,7 +1165,7 @@ userId | NSString | 用户Id
 ---|:---:|---
 callId | NSString | 呼叫Id
 
-#### 20. 被叫方收到通话请求回调
+#### 26. 被叫方收到通话请求回调
 
 **定义**
 
@@ -1070,7 +1182,7 @@ callType | int | 呼叫类型:0:视频;1:音频
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 21. 被叫方收到主叫方挂断通话(收到该回掉，把本地视图从父视图删除)回调
+#### 27. 被叫方收到主叫方挂断通话(收到该回掉，把本地视图从父视图删除)回调
 
 **定义**
 
@@ -1086,7 +1198,7 @@ callId | NSString | 呼叫Id
 userId | NSString | 用户Id
 code | ARMaxCode | 错误码
 
-#### 22. 其他与会者加入（音视频）回调
+#### 28. 其他与会者加入（音视频）回调
 
 **定义**
 
@@ -1103,7 +1215,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)�
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 23. 其他与会者离开（音视频）回调
+#### 29. 其他与会者离开（音视频）回调
 
 **定义**
 
@@ -1120,7 +1232,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)�
 userId | NSString | 用户Id
 
 
-#### 24. 其他与会者加入（音频）回调
+#### 30. 其他与会者加入（音频）回调
 
 **定义**
 
@@ -1136,7 +1248,7 @@ peerId | NSString | RTC服务生成的标识Id (用于标识与会者，每次�
 userId | NSString | 用户Id
 userData | NSString | 用户自定义数据
 
-#### 25. 其他与会者离开（音频）回调
+#### 31. 其他与会者离开（音频）回调
 
 **定义**
 
@@ -1151,7 +1263,7 @@ userData | NSString | 用户自定义数据
 peerId | NSString | RTC服务生成的标识Id (用于标识与会者，每次加入会议随机生成)；
 userId | NSString | 用户Id
 
-#### 26. 本地视频第一帧
+#### 32. 本地视频第一帧
 
 **定义**
 
@@ -1165,7 +1277,7 @@ userId | NSString | 用户Id
 ---|:---:|---
 size | CGSize | 视频窗口大小
 
-#### 27. 远程视频第一帧
+#### 33. 远程视频第一帧
 
 **定义**
 
@@ -1180,7 +1292,7 @@ size | CGSize | 视频窗口大小
 size | CGSize | 视频窗口大小
 pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
-#### 28. 本地窗口大小的回调
+#### 34. 本地窗口大小的回调
 
 **定义**
 
@@ -1194,7 +1306,7 @@ pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 ---|:---:|---
 size | CGSize | 视频窗口大小
 
-#### 29. 远程窗口大小的回调
+#### 35. 远程窗口大小的回调
 
 **定义**
 
@@ -1210,7 +1322,7 @@ size | CGSize | 视频窗口大小
 pubId | NSString | RTC服务生成流的Id (用于标识与会者发布的流)
 
 
-#### 30. 其他与会者对音视频的操作回调
+#### 36. 其他与会者对音视频的操作回调
 
 **定义**
 
@@ -1226,7 +1338,7 @@ peerId | NSString | RTC服务生成的标识Id (用于标识与会者，每次�
 audio | BOOL | YES为打开音频，NO为关闭音频
 video | BOOL | YES为打开视频，NO为关闭视频
 
-#### 31. 别人对自己音视频的操作回调
+#### 37. 别人对自己音视频的操作回调
 
 **定义**
 
@@ -1242,7 +1354,7 @@ audio | BOOL | YES为打开音频，NO为关闭音频
 video | BOOL | YES为打开视频，NO为关闭视频
 
 
-#### 32. 其他与会者的声音大小回调
+#### 38. 其他与会者的声音大小回调
 
 **定义**
 
@@ -1262,7 +1374,7 @@ time | int | 音频检测在nTime毫秒内不会再回调该方法（单位：�
 
 与会者关闭音频后（setLocalAudioEnable为NO）,该回调将不再回调。对方关闭音频检测后（setAudioActiveCheck为NO）,该回调也将不再回调。
 
-#### 33. 本地声音大小回调
+#### 39. 本地声音大小回调
 
 **定义**
 
@@ -1280,7 +1392,7 @@ time | int | 音频检测在nTime毫秒内不会再回调该方法（单位：�
 
 本地关闭音频后（setLocalAudioEnable为NO）,该回调将不再回调。本地关闭音频检测后（setAudioActiveCheck为NO）,该回调也将不再回调。
 
-#### 34. 其他与会者网络质量回调
+#### 40. 其他与会者网络质量回调
 
 **定义**
 
@@ -1297,7 +1409,7 @@ netSpeed | int | 网络上行
 packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
-#### 35. 本地网络质量回调
+#### 41. 本地网络质量回调
 
 **定义**
 
@@ -1312,12 +1424,28 @@ netSpeed | int | 网络上行
 packetLost | int | 丢包率
 netQuality | ARNetQuality | 网络质量
 
-#### 36. 录像地址回调信息回调
+#### 42. 流量状态
 
 **定义**
 
 ```
-- (void)onRTCGotRecordFile:(int)recordType userData:(NSString*)userData filePath:(NSString *)filePath;
+- (void)onRTCNetStatsAll:(int)allBytes sendBytes:(int)sendBytes recvBytes:(int)recvBytes detail:(NSString*)details;
+```
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+allBytes | int | 总的流量
+sendBytes | int | 发送的流量
+recvBytes | int | 接收的流量
+details | NSString | 详情
+
+#### 43. 录像地址回调信息回调
+
+**定义**
+
+```
+- (void)onRTCGotRecordFile:(int)recordType userData:(NSString *)userData filePath:(NSString *)filePath;
 ```
 **参数**
 
@@ -1327,7 +1455,7 @@ recordType | int | 录音的类型（0/1/2/3：对讲本地录音/对讲远端�
 userData | NSString | 用户自定义数据
 filePath | NSString | 录音文件的路径
 
-#### 37. 收到消息回调
+#### 44. 收到消息回调
 
 **定义**
 
@@ -1342,6 +1470,34 @@ userId | NSString | 发送消息者在自己平台下的Id
 userName | NSString | 发送消息者的昵称
 userHeaderUrl | NSString | 发送者的头像
 content | NSString | 消息内容
+
+#### 45. 当前对讲组在线人数回调
+
+**定义**
+
+```
+- (void)onRTCMemberNum:(int)num;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+num | int | 当前在线人员数量
+
+#### 46. 第三方用户平台自定义消息通知
+
+**定义**
+
+```
+- (void)onRTCUserDataNotify:(NSString*)userData;
+```
+
+**参数**
+
+参数名 | 类型 | 描述
+---|:---:|---
+userData | NSString | 自定义消息内容
 
 
 ## 三、更新日志
