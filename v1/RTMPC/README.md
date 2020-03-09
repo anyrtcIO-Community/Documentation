@@ -12,7 +12,7 @@
 
 - [Android Demo下载](http://download.anyrtc.io/xuye)
 
-- [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai)
+<!-- - [Web Demo 体验](https://beyond.anyrtc.io/demo/lianmai) -->
 
 ### 源码GitHub
 
